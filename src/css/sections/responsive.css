@@ -1,0 +1,993 @@
+/* 8. BẢO VỆ GIAO DIỆN KHI RESIZE (MÀN HÌNH PC/TABLET)                       */
+/* ========================================================================= */
+@media (min-width: 993px) {
+    .sidebar {
+        transform: translateX(0) !important;
+        width: 260px !important;
+        display: flex !important;
+    }
+
+    .content-wrapper {
+        margin-left: 260px !important;
+    }
+}
+
+@media (min-width: 769px) and (max-width: 992px) {
+    .sidebar {
+        transform: translateX(0) !important;
+        width: 240px !important;
+        display: flex !important;
+    }
+
+    .content-wrapper {
+        margin-left: 240px !important;
+    }
+}
+
+/* ========================================================================= */
+/* 9. GIAO DIỆN DÀNH CHO MOBILE APP (ĐIỆN THOẠI) - CÁCH LY TUYỆT ĐỐI        */
+/* ========================================================================= */
+
+@media (max-width: 768px) {
+    .sidebar {
+        transform: translateX(-100%);
+    }
+
+    html,
+    body {
+        height: auto !important;
+        min-height: 100vh !important;
+    }
+
+    .content-wrapper {
+        margin-left: 0 !important;
+        padding-bottom: 80px !important;
+        min-height: auto !important;
+    }
+
+    .main-container {
+        padding: 10px 12px !important;
+        min-height: auto !important;
+        height: auto !important;
+        padding-bottom: 20px !important;
+    }
+
+    /* NAV BOTTOM 3 NÚT RỘNG RÃI */
+    .bottom-nav-mobile {
+        display: flex !important;
+        justify-content: space-around;
+        align-items: center;
+        position: fixed !important;
+        bottom: 0 !important;
+        left: 0 !important;
+        width: 100% !important;
+        height: 65px !important;
+        background: var(--app-dark-bg) !important;
+        z-index: 9999 !important;
+        border-top: 1px solid var(--app-dark-border) !important;
+        transition: transform 0.22s ease, opacity 0.22s ease, visibility 0.22s ease;
+    }
+
+    /* Bàn phím ảo: ẩn thanh nav (focus ô nhập hoặc viewport co do keyboard) */
+    body.mobile-input-active .bottom-nav-mobile,
+    body.mobile-vk-open .bottom-nav-mobile {
+        transform: translateY(110%) !important;
+        opacity: 0 !important;
+        visibility: hidden !important;
+        pointer-events: none !important;
+    }
+
+    .bottom-nav-mobile .nav-item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        color: var(--text-secondary) !important;
+        font-size: 0.75rem;
+        font-weight: 600;
+        cursor: pointer;
+        width: 25% !important;
+        height: 100%;
+    }
+
+    .bottom-nav-mobile .nav-item.active {
+        color: var(--primary) !important;
+    }
+
+    .bottom-nav-mobile .nav-item i {
+        font-size: 1.2rem;
+        margin-bottom: 4px;
+    }
+
+    /* XÓA CÁC NÚT QUAY LẠI CŨ THỪA THÃI TRÊN MOBILE */
+    #mobile-wizard-back,
+    .btn-3d-back,
+    #btn-back-admin-panel {
+        display: none !important;
+    }
+
+    /* HEADER MOBILE */
+    .mobile-header {
+        background-color: #111827 !important;
+        border-bottom: 1px solid var(--app-dark-border) !important;
+        display: flex !important;
+        justify-content: space-between !important;
+        align-items: center !important;
+        height: 65px !important;
+        padding: 0 15px !important;
+    }
+
+    .mobile-header h5 {
+        color: #ffffff !important;
+        margin: 0 !important;
+        font-weight: 800 !important;
+        font-size: 0.95rem !important;
+        flex: 1;
+        text-align: center;
+    }
+
+    .btn-glass-logout,
+    .btn-glass-back {
+        background: rgba(255, 255, 255, 0.1) !important;
+        backdrop-filter: blur(5px) !important;
+        border: 1px solid rgba(255, 255, 255, 0.2) !important;
+        color: #ffffff !important;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1) !important;
+        border-radius: 8px !important;
+        width: 36px !important;
+        height: 36px !important;
+        display: flex !important;
+        justify-content: center !important;
+        align-items: center !important;
+        transition: all 0.3s ease !important;
+        padding: 0 !important;
+    }
+
+    .btn-glass-logout:active,
+    .btn-glass-back:active {
+        transform: scale(0.9) !important;
+        background: rgba(255, 255, 255, 0.2) !important;
+    }
+
+    body .corner-title,
+    body #dashboard-title,
+    body #nhap-lieu-title,
+    body #quan-ly-title,
+    body #tai-khoan-title {
+        display: none !important;
+    }
+
+    /* MENU ĐĂNG XUẤT (CĂN GIỮA MÀN HÌNH NẰM NGANG) */
+    .logout-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+        z-index: 9998;
+        display: none;
+    }
+
+    .logout-overlay.show {
+        display: block;
+    }
+
+    .mobile-logout-menu {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 80%;
+        max-width: 300px;
+        background: #ffffff;
+        border-radius: 12px;
+        padding: 20px;
+        z-index: 9999;
+        display: none;
+        flex-direction: column;
+        gap: 10px;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        text-align: center;
+    }
+
+    .mobile-logout-menu.show {
+        display: flex;
+    }
+
+    .mobile-logout-menu h4 {
+        margin-top: 0;
+        margin-bottom: 15px;
+        font-weight: 800;
+        font-size: 1.1rem;
+        color: #1e293b;
+    }
+
+    .mobile-logout-menu button {
+        width: 100%;
+        font-weight: bold;
+        border-radius: 8px;
+        padding: 12px;
+        cursor: pointer;
+        border: none;
+        transition: 0.2s;
+    }
+
+    .btn-update {
+        background: #f1f5f9;
+        color: #334155;
+        border: 1px solid #cbd5e1;
+    }
+
+    .btn-update:hover {
+        background: #e2e8f0;
+    }
+
+    .btn-logout-final {
+        background: #ef4444;
+        color: white;
+    }
+
+    .btn-logout-final:hover {
+        background: #dc2626;
+    }
+
+    /* ÉP 2 NÚT ĐĂNG NHẬP NẰM NGANG TRÊN MOBILE */
+    .login-role-options {
+        flex-wrap: nowrap !important;
+        gap: 10px !important;
+    }
+
+    .login-btn-wrapper {
+        min-width: 0 !important;
+        flex: 1 1 50% !important;
+        margin: 0 !important;
+    }
+
+    .login-btn {
+        height: 110px !important;
+        font-size: 0.85rem !important;
+        padding: 10px !important;
+    }
+
+    .login-btn i {
+        font-size: 1.5rem !important;
+    }
+
+    /* LOGIN ADMIN (TRẮNG ĐEN - CÁCH LY) */
+    #admin-login-screen {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: #ffffff;
+        z-index: 100000;
+        display: none;
+        justify-content: center;
+        align-items: center;
+        padding: 20px;
+    }
+
+    #admin-login-screen.show {
+        display: flex;
+    }
+
+    .login-card-light {
+        background: #ffffff;
+        border: 1px solid #e2e8f0;
+        padding: 40px 30px;
+        border-radius: 16px;
+        max-width: 400px;
+        width: 100%;
+        text-align: left;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    }
+
+    .login-card-light h3 {
+        color: #000000;
+        font-weight: 900;
+        font-size: 1.5rem;
+        margin-top: 0;
+        margin-bottom: 25px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-bottom: 2px solid #f1f5f9;
+        padding-bottom: 15px;
+    }
+
+    .login-card-light label {
+        display: block;
+        font-size: 0.9rem;
+        font-weight: 700;
+        color: #334155;
+        margin-bottom: 8px;
+        margin-top: 15px;
+    }
+
+    .login-card-light input {
+        width: 100%;
+        border: 1px solid #cbd5e1;
+        border-radius: 8px;
+        padding: 14px 15px;
+        font-size: 1rem;
+        outline: none;
+        background: #f8fafc;
+        color: #0f172a;
+        transition: 0.3s;
+    }
+
+    .login-card-light input:focus {
+        border-color: var(--primary);
+        box-shadow: 0 0 0 3px rgba(22, 163, 74, 0.15);
+    }
+
+    .btn-submit {
+        background: var(--primary);
+        color: white;
+        border: none;
+        border-radius: 8px;
+        padding: 14px;
+        font-size: 1.1rem;
+        font-weight: bold;
+        cursor: pointer;
+        width: 100%;
+        margin-top: 25px;
+        transition: all 0.2s;
+        box-shadow: 0 4px 0 #14532d;
+    }
+
+    .btn-submit:active {
+        transform: translateY(4px);
+        box-shadow: 0 0 0 #14532d;
+    }
+
+    .btn-cancel {
+        color: #64748b;
+        background: transparent;
+        border: none;
+        font-weight: 600;
+        cursor: pointer;
+        transition: 0.2s;
+        width: 100%;
+        margin-top: 15px;
+    }
+
+    .btn-cancel:hover {
+        color: #0f172a;
+    }
+
+    /* DASHBOARD TRANG CHỦ MOBILE */
+    .top-toolbar {
+        background: transparent !important;
+        box-shadow: none !important;
+        padding: 0 !important;
+    }
+
+    .toolbar-title {
+        display: none !important;
+    }
+
+    #admin-toolbar-grid {
+        display: grid !important;
+        grid-template-columns: repeat(4, 1fr) !important;
+        gap: 20px 10px !important;
+        background-color: transparent !important;
+        padding: 10px 0 20px 0 !important;
+        margin-top: 15px !important;
+        width: 100% !important;
+    }
+
+    #admin-toolbar-grid::before {
+        content: "CHỨC NĂNG";
+        grid-column: 1 / -1;
+        font-size: 1.1rem !important;
+        font-weight: 800 !important;
+        color: #1e293b !important;
+        margin-bottom: 5px !important;
+    }
+
+    #admin-toolbar-grid .btn-toolbar {
+        background: transparent !important;
+        border: none !important;
+        width: 100% !important;
+        height: auto !important;
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center !important;
+        box-shadow: none !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        font-size: 0 !important;
+        color: transparent !important;
+    }
+
+    #admin-toolbar-grid .dashboard-shortcut::before,
+    #admin-toolbar-grid .dashboard-shortcut::after {
+        content: none !important;
+        display: none !important;
+    }
+
+    #admin-toolbar-grid .dashboard-shortcut-icon {
+        width: 38px !important;
+        height: 38px !important;
+        border-radius: 13px !important;
+        margin: 0 auto 7px !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        background: #f8fafc !important;
+        box-shadow: inset 0 0 0 1px rgba(148, 163, 184, 0.18) !important;
+    }
+
+    #admin-toolbar-grid .dashboard-shortcut-icon i {
+        display: block !important;
+        font-size: 1.25rem !important;
+    }
+
+    #admin-toolbar-grid .dashboard-shortcut-label {
+        font-family: 'Roboto', sans-serif !important;
+        font-size: 0.7rem !important;
+        font-weight: 700 !important;
+        color: #475569 !important;
+        text-align: center !important;
+        display: block !important;
+        line-height: 1.2 !important;
+    }
+
+    #admin-toolbar-grid .dashboard-shortcut-facility .dashboard-shortcut-icon {
+        background: #eff6ff !important;
+        color: #3b82f6 !important;
+    }
+
+    #admin-toolbar-grid .dashboard-shortcut-teachers .dashboard-shortcut-icon {
+        background: #eef2ff !important;
+        color: #6366f1 !important;
+    }
+
+    #admin-toolbar-grid .dashboard-shortcut-system-list .dashboard-shortcut-icon {
+        background: #faf5ff !important;
+        color: #a855f7 !important;
+    }
+
+    #admin-toolbar-grid .dashboard-shortcut-export .dashboard-shortcut-icon {
+        background: #dcfce7 !important;
+        color: #10b981 !important;
+    }
+
+    body .bg-dashboard-gray {
+        background-color: transparent !important;
+        border: none !important;
+        box-shadow: none !important;
+        padding: 0 !important;
+        margin-top: 15px !important;
+    }
+
+    body .bg-dashboard-gray .widget-title-modern {
+        display: block !important;
+        font-size: 1.1rem !important;
+        font-weight: 800 !important;
+        color: #1e293b !important;
+        margin-bottom: 12px !important;
+        border-left: none !important;
+        padding-left: 0 !important;
+    }
+
+    body .bg-dashboard-gray .widget-title-modern i {
+        display: none !important;
+    }
+
+    .dashboard-facilities-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 8px;
+    }
+
+    .dashboard-facility-card {
+        min-height: 112px;
+        padding: 13px 10px 11px;
+        border-width: 1px;
+        box-shadow: 0 7px 15px rgba(15, 23, 42, 0.09);
+    }
+
+    .dashboard-facility-heading {
+        gap: 10px;
+    }
+
+    .dashboard-facility-badge {
+        padding: 4px 9px;
+        font-size: 0.54rem;
+        letter-spacing: 0.7px;
+    }
+
+    .dashboard-facility-code {
+        font-size: 1.45rem;
+    }
+
+    .dashboard-facility-action {
+        gap: 4px;
+        font-size: 0.58rem;
+    }
+
+    .dashboard-facility-watermark {
+        right: -4px;
+        bottom: -8px;
+        font-size: 4.5rem;
+        opacity: 0.58;
+    }
+
+    .mobile-widget-toggles {
+        display: none !important;
+    }
+
+    /* Ẩn biểu đồ 7 ngày trên mobile */
+    #chartModal {
+        display: none !important;
+    }
+
+    #dashboard-widgets-row {
+        display: flex !important;
+        flex-wrap: nowrap !important;
+        overflow-x: hidden !important;
+        overflow-y: hidden !important;
+        margin-top: 25px !important;
+        gap: 15px !important;
+    }
+
+    #dashboard-widgets-row::-webkit-scrollbar {
+        display: none !important;
+    }
+
+    #dashboard-widgets-row .widget-col {
+        flex: 0 0 100% !important;
+        width: 100% !important;
+    }
+
+    /* Bo tròn thẻ tin tức trên mobile */
+    /* ADMIN PANELS */
+    #admin-management-panels .smooth-box {
+        display: block !important;
+        opacity: 1 !important;
+        visibility: visible !important;
+    }
+
+    #ui-facility-tao-khoi,
+    #ui-khoi-tao,
+    #ui-khoi-gv {
+        display: grid !important;
+        grid-template-columns: 1fr 1fr !important;
+        gap: 10px !important;
+        visibility: visible !important;
+    }
+
+    .btn-khoi-box {
+        width: 100% !important;
+        margin: 0 !important;
+        padding: 14px 5px !important;
+        font-size: 0.8rem !important;
+        height: 60px !important;
+        display: flex !important;
+        justify-content: center !important;
+        align-items: center !important;
+    }
+
+    /* FORM NHẬP LIỆU BƯỚC 1: NÚT CƠ SỞ 3D CÓ TRƯỜNG HỌC       */
+    /* KHUNG 4 THANH CÔNG CỤ */
+    #filter-4-bars {
+        background: #ffffff;
+        border-radius: 12px;
+        padding: 15px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+        border: 1px solid #e2e8f0;
+        margin-bottom: 15px;
+    }
+
+    #toggle-4-bars-btn {
+        display: none;
+    }
+
+    body[data-wizard-step="3"] #filter-4-bars {
+        display: block;
+    }
+
+    .custom-mobile-row {
+        display: flex !important;
+        flex-wrap: wrap !important;
+        gap: 15px 10px !important;
+        margin: 0 !important;
+    }
+
+    .custom-mobile-row>div {
+        flex: 0 0 calc(50% - 5px) !important;
+        max-width: calc(50% - 5px) !important;
+        margin-bottom: 0 !important;
+        padding: 0 !important;
+    }
+
+    .custom-mobile-row label {
+        font-size: 0.7rem !important;
+        margin-bottom: 6px !important;
+        white-space: nowrap;
+        color: #16a34a !important;
+    }
+
+    .seamless-input {
+        padding: 6px 10px !important;
+        font-size: 0.8rem !important;
+        height: 42px !important;
+        border-radius: 8px !important;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
+        width: 100% !important;
+    }
+
+    .seamless-input.form-select {
+        padding-right: 2rem !important;
+        background-position: right 0.65rem center;
+    }
+
+    /* GỘP 2 THANH TÌM KIẾM NẰM NGANG */
+    .search-row-mobile {
+        display: flex !important;
+        flex-direction: row !important;
+        gap: 10px !important;
+        flex-wrap: nowrap !important;
+        width: 100% !important;
+    }
+
+    .search-row-mobile>div {
+        flex: 1 1 50% !important;
+        min-width: 0 !important;
+        margin: 0 !important;
+    }
+
+    #search-student-container .search-navy-input,
+    #search-student-container .search-green-input {
+        padding: 8px 12px !important;
+        height: 44px !important;
+        border-radius: 25px !important;
+        width: 100% !important;
+        text-overflow: ellipsis;
+        border: none !important;
+    }
+
+    #search-student-container .search-navy-input {
+        background-color: #1e293b !important;
+        color: #f8fafc !important;
+        box-shadow: 0 4px 10px rgba(30, 41, 59, 0.2) !important;
+    }
+
+    #search-student-container .search-green-input {
+        background-color: #20c997 !important;
+        color: #ffffff !important;
+        box-shadow: 0 4px 10px rgba(32, 201, 151, 0.25) !important;
+    }
+
+    /* LƯỚT NGANG THẺ HỌC SINH */
+    body[data-wizard-step="3"] .card-custom {
+        padding: 12px 15px !important;
+        border-radius: 12px !important;
+        height: 180px !important;
+        display: flex !important;
+        flex-direction: column !important;
+        justify-content: space-between !important;
+    }
+
+    body[data-wizard-step="3"] .dynamic-inputs-container {
+        display: flex !important;
+        flex-wrap: nowrap !important;
+        overflow-x: auto !important;
+        -webkit-overflow-scrolling: touch !important;
+        gap: 10px !important;
+        padding-bottom: 5px !important;
+        width: 100% !important;
+    }
+
+    body[data-wizard-step="3"] .dynamic-inputs-container::-webkit-scrollbar {
+        height: 4px !important;
+    }
+
+    body[data-wizard-step="3"] .nx-item {
+        flex: 0 0 110px !important;
+        min-width: 110px !important;
+    }
+
+    body[data-wizard-step="3"] .input-nx-dynamic {
+        height: 36px !important;
+        padding: 5px 10px !important;
+    }
+
+    /* Thẻ học sinh trong #area-cards: ghi đè chiều cao cố định + nowrap (specificity cao hơn các rule trên) */
+    body[data-wizard-step="3"] #area-cards .student-card.card-custom {
+        height: auto !important;
+        min-height: 0 !important;
+        justify-content: flex-start !important;
+        gap: 6px !important;
+    }
+
+    body[data-wizard-step="3"] #area-cards .student-card>.d-flex.justify-content-between.align-items-center {
+        margin-bottom: 4px !important;
+        margin-top: 0 !important;
+    }
+
+    body[data-wizard-step="3"] #area-cards .student-card .dynamic-inputs-container {
+        display: flex !important;
+        flex-wrap: wrap !important;
+        overflow-x: visible !important;
+        padding-bottom: 0 !important;
+        margin-top: 0 !important;
+        gap: 8px !important;
+        align-content: flex-start !important;
+    }
+
+    body[data-wizard-step="3"] #area-cards .student-card .input-nd {
+        flex: 1 1 100% !important;
+        width: 100% !important;
+        min-width: 100% !important;
+        max-width: 100% !important;
+    }
+
+    body[data-wizard-step="3"] #area-cards .student-card .input-nx-dynamic {
+        flex: 1 1 calc(33.333% - 6px) !important;
+        min-width: min(100%, 104px) !important;
+        max-width: 100% !important;
+        width: auto !important;
+    }
+
+    /* ======================================================= */
+    /* CHỈNH SỬA XEM ĐÁNH GIÁ (MOBILE)                         */
+    /* ======================================================= */
+    #a2-filter-area {
+        background: transparent !important;
+        box-shadow: none !important;
+        padding: 0 !important;
+        border: none !important;
+    }
+
+    #a2-filter-area .section-title {
+        background-color: #ffedd5 !important;
+        color: #c2410c !important;
+        padding: 12px 20px !important;
+        border-radius: 12px !important;
+        border-left: none !important;
+        display: flex !important;
+        justify-content: center !important;
+        align-items: center !important;
+        text-align: center !important;
+        margin-top: 15px !important;
+        margin-bottom: 15px !important;
+        font-weight: 800 !important;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05) !important;
+        cursor: pointer !important;
+        transition: all 0.2s ease !important;
+    }
+
+    #a2-filter-area .section-title::after {
+        content: " \25BC" !important;
+        font-size: 0.8rem;
+        margin-left: 8px;
+    }
+
+    #a2-filter-area .section-title:active {
+        transform: scale(0.97) !important;
+    }
+
+    #a2-filter-area .row {
+        display: none !important;
+    }
+
+    #a2-search-area {
+        position: relative;
+        z-index: 1050 !important;
+        overflow: visible !important;
+    }
+
+    .dropdown-list {
+        z-index: 99999 !important;
+    }
+
+    #a2-filter-area.show-filter .section-title::after {
+        content: " \25B2" !important;
+    }
+
+    #a2-filter-area.show-filter .row {
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 10px !important;
+        margin: 0 !important;
+    }
+
+    #a2-search-area.hide-search {
+        display: none !important;
+    }
+
+    /* YÊU CẦU 2 (MOBILE ONLY): KHI GẬP XUỐNG THÌ ẨN DANH SÁCH THẺ */
+    #a2-filter-area:not(.show-filter) #filter-students-list {
+        display: none !important;
+    }
+
+    /* YÊU CẦU 1: Thanh tìm kiếm màu trắng */
+    #a2-search-area .search-input-wrapper input {
+        background-color: #ffffff !important;
+        color: #1e293b !important;
+        border: 1px solid #cbd5e1 !important;
+        border-radius: 30px !important;
+        height: 48px !important;
+    }
+
+    /* YÊU CẦU 2: Dropdown không che tên */
+    #dropdownListA2Global .dropdown-item-custom .text-truncate {
+        white-space: normal !important;
+        font-size: 0.85rem !important;
+        max-width: 100% !important;
+        line-height: 1.3 !important;
+        margin-bottom: 4px !important;
+    }
+
+    #dropdownListA2Global .dropdown-item-custom .d-flex {
+        flex-direction: column !important;
+        align-items: flex-start !important;
+    }
+
+    #dropdownListA2Global .dropdown-item-custom .badge {
+        font-size: 0.65rem !important;
+        padding: 4px 8px !important;
+    }
+
+    /* ==================================================================== */
+    /* DANH SÁCH HỌC SINH DẠNG LIST (ICON + TÊN + BADGE + MŨI TÊN)        */
+    /* ==================================================================== */
+
+    .filter-student-list-mobile {
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 8px !important;
+        padding: 8px !important;
+    }
+
+    .filter-student-item {
+        display: flex !important;
+        align-items: center !important;
+        background: #ffffff !important;
+        border: 1px solid #e2e8f0 !important;
+        border-radius: 12px !important;
+        padding: 14px 12px !important;
+        cursor: pointer !important;
+        transition: all 0.15s ease !important;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04) !important;
+        gap: 10px !important;
+        min-height: 52px !important;
+    }
+
+    .filter-student-item:active {
+        background: #f1f5f9 !important;
+        transform: scale(0.98) !important;
+    }
+
+    .fsi-icon {
+        width: 36px !important;
+        height: 36px !important;
+        border-radius: 50% !important;
+        background: #d1fae5 !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        flex-shrink: 0 !important;
+    }
+
+    .fsi-icon i {
+        font-size: 0.9rem !important;
+        color: #16a34a !important;
+    }
+
+    .fsi-name {
+        flex: 1 !important;
+        font-size: 0.95rem !important;
+        font-weight: 700 !important;
+        color: #1e293b !important;
+        white-space: nowrap !important;
+        overflow: hidden !important;
+        text-overflow: ellipsis !important;
+        min-width: 0 !important;
+    }
+
+    .fsi-badge {
+        flex-shrink: 0 !important;
+        font-size: 0.7rem !important;
+        font-weight: 700 !important;
+        padding: 4px 10px !important;
+        border-radius: 6px !important;
+        white-space: nowrap !important;
+    }
+
+    .fsi-arrow {
+        flex-shrink: 0 !important;
+        color: #94a3b8 !important;
+        font-size: 0.8rem !important;
+    }
+
+    /* Ẩn old-style filter card elements nếu vẫn còn */
+    body #filter-students-list .filter-student-card {
+        display: none !important;
+    }
+
+    /* BẢNG ĐÁNH GIÁ (LƯỚT NGANG) */
+    .eval-section#a2-result-area {
+        padding: 0 !important;
+    }
+
+    #area-so-a2 {
+        display: flex !important;
+        flex-direction: column !important;
+        overflow-x: auto !important;
+        -webkit-overflow-scrolling: touch !important;
+        width: 100% !important;
+        padding-bottom: 10px;
+    }
+
+    #area-so-a2>.btn-3d-back,
+    #area-so-a2 .btn-3d-back {
+        display: none !important;
+    }
+
+    #area-so-a2>.d-flex {
+        order: -1 !important;
+        flex-wrap: wrap !important;
+        gap: 8px !important;
+        margin-bottom: 15px !important;
+        justify-content: flex-start !important;
+    }
+
+    #area-so-a2>div:not(.d-flex) {
+        order: 0 !important;
+        width: 100% !important;
+    }
+
+    .excel-table-wrapper {
+        overflow-x: auto !important;
+        -webkit-overflow-scrolling: touch !important;
+    }
+
+    .eval-custom-table {
+        display: table !important;
+        width: 100% !important;
+        min-width: 800px !important;
+        font-size: 0.8rem !important;
+        border-collapse: collapse !important;
+        order: 0 !important;
+    }
+
+    .eval-custom-table th,
+    .eval-custom-table td {
+        white-space: normal !important;
+        word-break: break-word !important;
+        min-width: 120px !important;
+        padding: 10px !important;
+        border: 1px solid #cbd5e1 !important;
+    }
+
+    /* THANH CÔNG CỤ NHỎ GỌN */
+    .eval-section .btn-3d-rounded,
+    .eval-section .btn-3d-back,
+    .eval-section .btn-pastel-edit,
+    .eval-section .btn-pastel-export,
+    .eval-section .btn-pastel-delete {
+        padding: 8px 15px !important;
+        font-size: 0.75rem !important;
+        border-radius: 50px !important;
+        flex: 0 0 auto !important;
+        min-width: fit-content !important;
+        text-align: center !important;
+        display: inline-flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        box-shadow: 0 2px 0 rgba(0, 0, 0, 0.1) !important;
+        margin: 0 !important;
+    }
+
+    .eval-section .btn-3d-rounded i {
+        font-size: 0.75rem !important;
+        margin-right: 4px !important;
+    }
+}

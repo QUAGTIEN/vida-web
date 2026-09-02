@@ -1,0 +1,1082 @@
+/* Evaluation page
+   Scoped to the review page and export dialog so legacy screens keep their styles. */
+
+#quan-ly.evaluation-page {
+    color: #172033;
+}
+
+#quan-ly .evaluation-page-header {
+    margin-bottom: 22px;
+}
+
+#quan-ly .evaluation-page-header .page-title {
+    margin-bottom: 0;
+    color: #172033;
+}
+
+#quan-ly .evaluation-shell {
+    display: grid;
+    gap: 16px;
+}
+
+#quan-ly .evaluation-search-card,
+#quan-ly .evaluation-filter-card {
+    margin: 0;
+    padding: 20px;
+    border: 1px solid #dbe3ee;
+    border-radius: 8px;
+    background: #ffffff;
+    box-shadow: 0 8px 24px rgba(15, 23, 42, 0.06);
+}
+
+#quan-ly .evaluation-search-card {
+    position: relative;
+    z-index: 105;
+    background: #f5fbfa !important;
+    border-color: #bfe8e2 !important;
+}
+
+#quan-ly .evaluation-section-heading {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-height: 34px;
+    margin: 0 0 16px;
+    padding: 0;
+    border: 0 !important;
+    color: #172033 !important;
+    font-size: 0.96rem;
+    font-weight: 800;
+    letter-spacing: 0;
+    line-height: 1.25;
+}
+
+#quan-ly .evaluation-section-heading::before {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 34px;
+    height: 34px;
+    flex: 0 0 34px;
+    border-radius: 8px;
+    font-family: "Font Awesome 5 Free";
+    font-size: 0.86rem;
+    font-weight: 900;
+}
+
+#quan-ly .evaluation-search-heading::before {
+    content: "\f002";
+    color: #0f766e;
+    background: #ccfbf1;
+}
+
+#quan-ly .evaluation-filter-heading::before {
+    content: "\f0b0";
+    color: #b45309;
+    background: #fff7ed;
+}
+
+#quan-ly .evaluation-search-controls {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 12px;
+}
+
+#quan-ly .evaluation-search-field {
+    min-width: 0;
+    width: 100%;
+    z-index: 106;
+}
+
+#quan-ly #global-hs-search-input.evaluation-search-input {
+    width: 100%;
+    height: 46px;
+    padding: 0 15px;
+    border: 1px solid #cbd7e6 !important;
+    border-radius: 8px !important;
+    background: #ffffff !important;
+    color: #172033 !important;
+    font-size: 0.94rem;
+    font-weight: 600;
+    box-shadow: none !important;
+}
+
+#quan-ly #global-hs-search-input.evaluation-search-input::placeholder {
+    color: #94a3b8;
+    font-weight: 500;
+}
+
+#quan-ly #global-hs-search-input.evaluation-search-input:focus {
+    border-color: #14b8a6 !important;
+    box-shadow: 0 0 0 3px rgba(20, 184, 166, 0.14) !important;
+}
+
+#quan-ly .evaluation-search-button {
+    min-width: 122px;
+    height: 46px;
+    padding: 0 18px !important;
+    border: 1px solid #0f9488 !important;
+    border-radius: 8px !important;
+    background: #14b8a6 !important;
+    color: #ffffff !important;
+    font-size: 0.86rem;
+    font-weight: 800;
+    letter-spacing: 0;
+    box-shadow: 0 6px 16px rgba(20, 184, 166, 0.18) !important;
+}
+
+#quan-ly .evaluation-search-button:hover,
+#quan-ly .evaluation-search-button:focus-visible {
+    background: #0f9488 !important;
+    border-color: #0f766e !important;
+}
+
+#quan-ly .evaluation-search-dropdown {
+    top: calc(100% + 6px);
+    margin: 0 !important;
+    border: 1px solid #dbe3ee;
+    border-radius: 8px;
+    background: #ffffff;
+    box-shadow: 0 14px 30px rgba(15, 23, 42, 0.14) !important;
+    overflow: hidden;
+}
+
+#quan-ly .evaluation-search-dropdown .dropdown-item-custom {
+    min-height: 52px;
+    padding: 10px 12px;
+    border-bottom: 1px solid #edf1f6;
+    color: #334155;
+}
+
+#quan-ly .evaluation-search-dropdown .dropdown-item-custom:last-child {
+    border-bottom: 0;
+}
+
+#quan-ly .evaluation-search-dropdown .dropdown-item-custom:hover {
+    padding-left: 12px;
+    background: #f0fdfa;
+    color: #0f766e;
+}
+
+#quan-ly .evaluation-search-result-row {
+    gap: 10px;
+}
+
+#quan-ly .evaluation-search-result-name {
+    max-width: 75%;
+    color: #172033;
+    font-weight: 700;
+}
+
+#quan-ly .evaluation-search-result-badge {
+    padding: 5px 9px;
+    border: 1px solid rgba(15, 118, 110, 0.2);
+    border-radius: 999px;
+    color: var(--evaluation-badge-color, #0f766e);
+    background: var(--evaluation-badge-bg, #ecfdf5);
+    font-size: 0.7rem;
+    font-weight: 800;
+    white-space: nowrap;
+}
+
+#quan-ly #a2-filter-area.evaluation-filter-card {
+    display: block;
+    padding: 18px 20px !important;
+    border: 1px solid #dbe3ee !important;
+    border-radius: 8px !important;
+    background: #ffffff !important;
+    box-shadow: 0 8px 24px rgba(15, 23, 42, 0.05) !important;
+}
+
+#quan-ly #a2-filter-area .evaluation-filter-heading {
+    cursor: default;
+}
+
+#quan-ly #a2-filter-area .evaluation-filter-heading::after {
+    display: none;
+}
+
+#quan-ly .evaluation-filter-grid {
+    display: grid;
+    grid-template-columns: minmax(150px, 1fr) minmax(180px, 1.1fr) minmax(220px, 1.4fr) 132px;
+    align-items: center;
+    gap: 10px;
+    margin: 0;
+}
+
+#quan-ly .evaluation-filter-grid > * {
+    width: auto;
+    max-width: none;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+#quan-ly .evaluation-filter-field .form-select {
+    width: 100%;
+    height: 44px !important;
+    padding: 0 36px 0 12px;
+    border: 1px solid #cbd7e6 !important;
+    border-radius: 8px !important;
+    background-color: #f8fafc !important;
+    color: #334155 !important;
+    font-size: 0.84rem !important;
+    font-weight: 700 !important;
+    box-shadow: none !important;
+}
+
+#quan-ly .evaluation-filter-field .form-select:focus {
+    border-color: #14b8a6 !important;
+    background-color: #ffffff !important;
+    box-shadow: 0 0 0 3px rgba(20, 184, 166, 0.12) !important;
+}
+
+#quan-ly .evaluation-filter-button {
+    height: 44px !important;
+    border: 1px solid #15803d !important;
+    border-radius: 8px !important;
+    background: #16a34a !important;
+    color: #ffffff !important;
+    font-size: 0.84rem !important;
+    font-weight: 800;
+    box-shadow: 0 5px 14px rgba(22, 163, 74, 0.16) !important;
+}
+
+#quan-ly .evaluation-student-results {
+    max-height: 420px;
+    margin-top: 14px;
+    padding: 2px 4px 2px 0;
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: #94a3b8 transparent;
+}
+
+#quan-ly .evaluation-student-results .filter-student-list-mobile {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 10px;
+    padding: 0;
+}
+
+#quan-ly .evaluation-student-results .filter-student-item {
+    display: grid;
+    grid-template-columns: 34px minmax(0, 1fr) auto 14px;
+    align-items: center;
+    gap: 9px;
+    min-width: 0;
+    min-height: 64px;
+    padding: 10px;
+    border: 1px solid #dbe3ee;
+    border-radius: 8px;
+    background: #ffffff;
+    color: #334155;
+    box-shadow: 0 4px 12px rgba(15, 23, 42, 0.05);
+    cursor: pointer;
+    transition: border-color 0.16s ease, box-shadow 0.16s ease, transform 0.16s ease;
+}
+
+#quan-ly .evaluation-student-results .filter-student-item:hover {
+    border-color: #99e3da;
+    background: #f8fffd !important;
+    box-shadow: 0 8px 18px rgba(15, 118, 110, 0.09);
+    transform: translateY(-1px);
+}
+
+#quan-ly .evaluation-student-results .fsi-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 34px;
+    height: 34px;
+    margin: 0;
+    border-radius: 8px;
+    background: #ccfbf1;
+    color: #0f766e;
+}
+
+#quan-ly .evaluation-student-results .fsi-name {
+    min-width: 0;
+    color: #172033;
+    font-size: 0.82rem;
+    font-weight: 800;
+    line-height: 1.25;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+#quan-ly .evaluation-student-results .fsi-badge {
+    max-width: 120px;
+    padding: 4px 7px;
+    border: 1px solid rgba(15, 118, 110, 0.2) !important;
+    border-radius: 999px;
+    color: var(--evaluation-badge-color, #0f766e) !important;
+    background: var(--evaluation-badge-bg, #ecfdf5) !important;
+    font-size: 0.62rem;
+    font-weight: 800;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+#filter-students-list .fsi-badge {
+    border: 1px solid var(--fsi-badge-border, #bbd7c5);
+    background: var(--fsi-badge-bg, #f0fdf4);
+    color: var(--fsi-badge-text, #166534);
+}
+
+#quan-ly .evaluation-student-results .fsi-arrow {
+    color: #94a3b8;
+    font-size: 0.72rem;
+}
+
+#quan-ly .evaluation-empty-state,
+#quan-ly .evaluation-loading-state,
+#quan-ly .evaluation-error-state {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 9px;
+    min-height: 76px;
+    padding: 16px;
+    border: 1px dashed #cbd7e6;
+    border-radius: 8px;
+    background: #f8fafc;
+    color: #64748b;
+    font-size: 0.84rem;
+    font-weight: 700;
+    text-align: center;
+}
+
+#quan-ly .evaluation-loading-state {
+    color: #0f766e;
+}
+
+#quan-ly .evaluation-error-state {
+    border-color: #fecaca;
+    color: #b91c1c;
+    background: #fff7f7;
+}
+
+#quan-ly #a2-result-area.evaluation-result-section {
+    margin: 0;
+    padding: 0 !important;
+    border: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+}
+
+#quan-ly .evaluation-results {
+    min-width: 0;
+}
+
+#quan-ly .evaluation-student-summary {
+    min-height: 68px;
+    margin: 0 0 14px;
+    padding: 13px 15px;
+    border: 1px solid #dbe3ee;
+    border-radius: 8px;
+    background: #ffffff;
+    box-shadow: 0 6px 18px rgba(15, 23, 42, 0.05);
+}
+
+#quan-ly .eval-student-name {
+    color: #172033;
+    font-size: 1.1rem;
+    font-weight: 900;
+    letter-spacing: 0;
+}
+
+#quan-ly .eval-student-tags span {
+    min-height: 24px;
+    padding: 4px 8px;
+    border: 1px solid #99e3da;
+    border-radius: 999px;
+    background: #ecfdf5;
+    color: #0f766e;
+    font-size: 0.68rem;
+}
+
+#quan-ly .eval-action-btn {
+    width: 34px;
+    height: 34px;
+    min-width: 34px;
+    min-height: 34px;
+    border: 1px solid #dbe3ee;
+    border-radius: 8px;
+    box-shadow: none;
+}
+
+#quan-ly .eval-action-btn:hover {
+    border-color: #b7c5d8;
+    box-shadow: 0 4px 10px rgba(15, 23, 42, 0.08);
+}
+
+#quan-ly .eval-action-edit {
+    background: #fffaf0;
+}
+
+#quan-ly .eval-action-export {
+    background: #f0f7ff;
+}
+
+#quan-ly .eval-action-delete {
+    background: #fff5f5;
+}
+
+#quan-ly .evaluation-zoom-toolbar {
+    display: none;
+}
+
+.print-capture-container {
+    position: absolute;
+    top: -9999px;
+    left: -9999px;
+    display: none;
+    opacity: 0;
+    pointer-events: none;
+}
+
+#quan-ly .evaluation-table-card {
+    width: 100%;
+    margin: 0 0 16px;
+    border: 1px solid #cbd7e6;
+    border-radius: 8px;
+    background: #ffffff;
+    box-shadow: 0 6px 18px rgba(15, 23, 42, 0.05);
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    page-break-inside: avoid;
+    break-inside: avoid;
+}
+
+#quan-ly .evaluation-table {
+    min-width: 800px;
+    table-layout: fixed;
+    border-collapse: collapse;
+    page-break-inside: avoid;
+    break-inside: avoid;
+}
+
+#quan-ly .evaluation-table .evaluation-label-column {
+    width: 12%;
+}
+
+#quan-ly .evaluation-table .evaluation-data-column {
+    width: 14.66%;
+}
+
+#quan-ly .evaluation-table .evaluation-data-cell {
+    vertical-align: middle;
+}
+
+#quan-ly .evaluation-table .evaluation-content-cell {
+    font-size: 0.95rem;
+    text-align: center;
+}
+
+#quan-ly .evaluation-table .evaluation-month-cell {
+    background: #dbe3ec;
+    color: #172033;
+    font-size: 1.05rem;
+    font-weight: 800;
+}
+
+#quan-ly .evaluation-table th,
+#quan-ly .evaluation-table td {
+    padding: 11px 9px;
+    border-color: #cbd7e6 !important;
+    color: #334155;
+    font-size: 0.84rem;
+    line-height: 1.4;
+    text-align: center;
+    vertical-align: middle;
+}
+
+#quan-ly .evaluation-table tr:first-child td {
+    background: #dbe3ec !important;
+    color: #172033 !important;
+    font-size: 0.9rem !important;
+    font-weight: 850 !important;
+}
+
+#quan-ly .evaluation-table th.grad-thang,
+#quan-ly .evaluation-table th.grad-gv,
+#quan-ly .evaluation-table th.grad-ngay,
+#quan-ly .evaluation-table th.grad-nd,
+#quan-ly .evaluation-table th.grad-nx {
+    min-width: 100px;
+    padding: 12px 9px !important;
+    border-right-color: rgba(255, 255, 255, 0.12) !important;
+    font-size: 0.82rem !important;
+    letter-spacing: 0;
+    box-shadow: none;
+}
+
+#quan-ly .evaluation-table th.grad-thang,
+#quan-ly .evaluation-table th.grad-gv,
+#quan-ly .evaluation-table th.grad-ngay {
+    background: #08735c !important;
+}
+
+#quan-ly .evaluation-table th.grad-nd {
+    background: #0b9674 !important;
+}
+
+#quan-ly .evaluation-table th.grad-nx {
+    background: #18b989 !important;
+}
+
+#quan-ly .evaluation-table .eval-comment-cell {
+    font-size: 0.84rem !important;
+}
+
+#quan-ly .evaluation-table .nx-label {
+    color: #334155;
+    font-size: 0.8rem;
+}
+
+#quan-ly .evaluation-table .nx-val {
+    color: #dc2626;
+    font-size: 0.82rem;
+}
+
+#quan-ly .evaluation-pagination {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 14px;
+}
+
+#quan-ly .evaluation-pagination .pagination-btn {
+    min-width: 34px;
+    height: 34px;
+    padding: 0 10px;
+    border: 1px solid #cbd7e6;
+    border-radius: 8px;
+    background: #ffffff;
+    color: #475569;
+    font-size: 0.76rem;
+    font-weight: 800;
+}
+
+#quan-ly .evaluation-pagination .pagination-btn.active {
+    border-color: #0f9488;
+    background: #0f9488;
+    color: #ffffff;
+}
+
+.evaluation-export-modal {
+    z-index: 12000;
+}
+
+.evaluation-export-modal .evaluation-export-dialog {
+    width: min(500px, calc(100vw - 28px));
+    max-width: 500px;
+    padding: 0;
+    border: 1px solid #dbe3ee;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 24px 64px rgba(15, 23, 42, 0.24);
+}
+
+.evaluation-export-modal .evaluation-export-header {
+    min-height: 58px;
+    margin: 0;
+    padding: 14px 18px;
+    border-bottom: 1px solid #253249;
+    border-radius: 0;
+    background: #172033;
+    color: #ffffff;
+}
+
+.evaluation-export-modal .evaluation-export-title {
+    margin: 0;
+    color: #ffffff !important;
+    font-size: 1rem;
+    font-weight: 800;
+}
+
+.evaluation-export-modal .evaluation-export-close {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 34px;
+    height: 34px;
+    padding: 0;
+    border: 0;
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.08);
+    color: #cbd5e1;
+    font-size: 1rem;
+    cursor: pointer;
+}
+
+.evaluation-export-modal .evaluation-export-body {
+    padding: 20px;
+}
+
+.evaluation-export-modal .evaluation-export-section-title {
+    display: flex;
+    align-items: center;
+    margin: 0 0 12px;
+    color: #334155 !important;
+    font-size: 0.86rem;
+}
+
+.evaluation-export-modal .evaluation-export-option {
+    margin-bottom: 8px;
+}
+
+.evaluation-export-modal .evaluation-export-option label {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    min-height: 42px;
+    margin: 0;
+    padding: 9px 11px;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    background: #f8fafc;
+    color: #334155;
+    font-size: 0.84rem;
+    font-weight: 650;
+    cursor: pointer;
+}
+
+.evaluation-export-modal .evaluation-export-option input {
+    width: 16px;
+    height: 16px;
+    accent-color: #0f9488;
+}
+
+.evaluation-export-modal .evaluation-export-month {
+    margin-top: 8px;
+    padding: 12px;
+    border: 1px solid #dbe3ee;
+    border-radius: 8px;
+    background: #ffffff;
+}
+
+.evaluation-export-modal .evaluation-export-format-title {
+    margin-top: 18px;
+}
+
+.evaluation-export-modal .evaluation-export-actions {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+}
+
+.evaluation-export-modal .evaluation-export-action {
+    display: inline-flex !important;
+    align-items: center;
+    justify-content: center;
+    min-width: 0;
+    height: 42px;
+    padding: 0 12px !important;
+    border-radius: 8px !important;
+    font-size: 0.8rem;
+    box-shadow: none !important;
+}
+
+.evaluation-export-modal .btn-export-pdf {
+    display: inline-flex !important;
+}
+
+@media (max-width: 992px) {
+    #quan-ly .evaluation-filter-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    #quan-ly .evaluation-filter-action {
+        grid-column: span 2;
+    }
+}
+
+@media (max-width: 768px) {
+    #quan-ly.evaluation-page {
+        background: transparent !important;
+    }
+
+    #quan-ly .evaluation-page-header {
+        margin-bottom: 16px;
+        padding-bottom: 12px;
+        border-bottom: 1px solid #d7dee8;
+    }
+
+    #quan-ly .evaluation-page-header .page-title {
+        color: #1f2937;
+        font-size: 1.4rem !important;
+        font-weight: 800;
+        letter-spacing: -0.02em !important;
+    }
+
+    #quan-ly .evaluation-shell {
+        gap: 12px;
+    }
+
+    #quan-ly .evaluation-search-card,
+    #quan-ly #a2-filter-area.evaluation-filter-card {
+        padding: 0 !important;
+        border: 1px solid #d8e1e8 !important;
+        border-radius: 10px !important;
+        background: #ffffff !important;
+        box-shadow: 0 2px 5px rgba(15, 23, 42, 0.05) !important;
+    }
+
+    #quan-ly .evaluation-section-heading {
+        min-height: 48px;
+        margin: 0 !important;
+        padding: 0 14px !important;
+        border-bottom: 1px solid #e0e7ed !important;
+        border-radius: 9px 9px 0 0 !important;
+        background: #f3f6f8 !important;
+        color: #2f3b4d !important;
+        font-size: 0.86rem !important;
+        font-weight: 800;
+    }
+
+    #quan-ly .evaluation-section-heading::before {
+        width: 26px;
+        height: 26px;
+        flex-basis: 26px;
+        border-radius: 7px;
+        background: #e2f3e9;
+        color: #237a4b;
+        font-size: 0.72rem;
+    }
+
+    #quan-ly .evaluation-search-card {
+        overflow: visible;
+    }
+
+    #quan-ly .evaluation-search-controls {
+        display: grid !important;
+        grid-template-columns: minmax(0, 1fr) auto !important;
+        gap: 8px !important;
+        padding: 12px 14px 14px !important;
+        border-radius: 0 0 9px 9px;
+        background: #ffffff;
+    }
+
+    #quan-ly #global-hs-search-input.evaluation-search-input,
+    #quan-ly .evaluation-search-button {
+        height: 46px !important;
+        border-radius: 10px !important;
+    }
+
+    #quan-ly #global-hs-search-input.evaluation-search-input {
+        border-color: #cbd5e1 !important;
+        background: #ffffff !important;
+        color: #172033 !important;
+        box-shadow: none !important;
+    }
+
+    #quan-ly #global-hs-search-input.evaluation-search-input:focus {
+        border-color: #16a34a !important;
+        box-shadow: 0 0 0 3px rgba(22, 163, 74, 0.12) !important;
+    }
+
+    #quan-ly .evaluation-search-button {
+        width: auto !important;
+        min-width: 104px !important;
+        padding: 0 14px !important;
+        border-color: #237a4b !important;
+        background: #237a4b !important;
+        font-size: 0.78rem !important;
+        box-shadow: none !important;
+    }
+
+    #quan-ly .evaluation-search-button:hover,
+    #quan-ly .evaluation-search-button:focus-visible {
+        border-color: #19633b !important;
+        background: #19633b !important;
+    }
+
+    #quan-ly #a2-filter-area .evaluation-filter-heading {
+        min-height: 48px !important;
+        margin: 0 !important;
+        padding: 0 14px !important;
+        border: 0 !important;
+        border-radius: 9px !important;
+        background: #f3f6f8 !important;
+        color: #2f3b4d !important;
+        cursor: pointer;
+    }
+
+    #quan-ly #a2-filter-area .evaluation-filter-heading::before {
+        width: 26px;
+        height: 26px;
+        flex-basis: 26px;
+        background: #e2f3e9;
+        color: #237a4b;
+    }
+
+    #quan-ly #a2-filter-area .evaluation-filter-heading::after {
+        content: "\f078" !important;
+        display: inline-flex !important;
+        margin-left: auto;
+        color: #64748b !important;
+        font-family: "Font Awesome 5 Free";
+        font-size: 0.72rem;
+        font-weight: 900;
+    }
+
+    #quan-ly #a2-filter-area.show-filter .evaluation-filter-heading {
+        margin-bottom: 0 !important;
+        padding-bottom: 0 !important;
+        border-bottom: 1px solid #e0e7ed !important;
+        border-radius: 9px 9px 0 0 !important;
+    }
+
+    #quan-ly #a2-filter-area.show-filter .evaluation-filter-heading::after {
+        content: "\f077" !important;
+    }
+
+    #quan-ly #a2-filter-area:not(.show-filter) .evaluation-filter-grid {
+        display: none !important;
+    }
+
+    #quan-ly #a2-filter-area.show-filter .evaluation-filter-grid {
+        display: grid !important;
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+        gap: 8px !important;
+        padding: 12px 14px 14px !important;
+        border-radius: 0 0 9px 9px;
+        background: #ffffff;
+    }
+
+    #quan-ly .evaluation-filter-action {
+        grid-column: span 2;
+    }
+
+    #quan-ly .evaluation-filter-field .form-select,
+    #quan-ly .evaluation-filter-button {
+        height: 44px !important;
+        border-radius: 10px !important;
+        font-size: 0.78rem !important;
+    }
+
+    #quan-ly .evaluation-filter-field .form-select {
+        border-color: #cbd5e1 !important;
+        background-color: #ffffff !important;
+    }
+
+    #quan-ly .evaluation-filter-button {
+        border-color: #237a4b !important;
+        background: #237a4b !important;
+        box-shadow: none !important;
+    }
+
+    #quan-ly .evaluation-student-results {
+        max-height: none !important;
+        margin-top: 0 !important;
+        padding: 0 16px 16px !important;
+        overflow-y: visible !important;
+    }
+
+    #quan-ly .evaluation-student-results .filter-student-list-mobile {
+        display: grid !important;
+        grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+        gap: 7px !important;
+        padding: 0 !important;
+    }
+
+    #quan-ly .evaluation-student-results .filter-student-item {
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center !important;
+        justify-content: flex-start !important;
+        gap: 5px !important;
+        min-height: 102px !important;
+        padding: 9px 6px !important;
+        border-radius: 8px !important;
+        text-align: center !important;
+    }
+
+    #quan-ly .evaluation-student-results .fsi-icon {
+        width: 28px !important;
+        height: 28px !important;
+        min-width: 28px !important;
+        border-radius: 7px !important;
+    }
+
+    #quan-ly .evaluation-student-results .fsi-name {
+        display: -webkit-box !important;
+        width: 100% !important;
+        font-size: 0.67rem !important;
+        line-height: 1.2 !important;
+        text-align: center !important;
+        white-space: normal !important;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+    }
+
+    #quan-ly .evaluation-student-results .fsi-badge {
+        max-width: 100% !important;
+        padding: 3px 5px !important;
+        font-size: 0.52rem !important;
+    }
+
+    #quan-ly .evaluation-student-results .fsi-arrow {
+        display: none !important;
+    }
+
+    #quan-ly #a2-result-area {
+        width: 100% !important;
+        max-width: 100% !important;
+        min-width: 0 !important;
+        overflow-x: hidden;
+    }
+
+    #quan-ly #area-so-a2 {
+        width: 100% !important;
+        max-width: 100% !important;
+        min-width: 0 !important;
+        overflow-x: hidden !important;
+    }
+
+    #quan-ly .evaluation-student-summary {
+        align-items: flex-start;
+        min-height: 62px;
+        padding: 11px 12px;
+    }
+
+    #quan-ly .eval-student-line {
+        align-items: center;
+        gap: 7px;
+    }
+
+    #quan-ly .eval-student-name {
+        max-width: 100%;
+        font-size: 0.94rem;
+    }
+
+    #quan-ly .eval-action-btn {
+        width: 30px;
+        height: 30px;
+        min-width: 30px;
+        min-height: 30px;
+        border-radius: 7px;
+        font-size: 0.75rem;
+    }
+
+    #quan-ly .evaluation-zoom-toolbar {
+        display: flex !important;
+        align-items: center;
+        justify-content: space-between;
+        gap: 10px;
+        margin: 0 0 12px;
+        padding: 10px 12px;
+        border: 1px solid #dbe3ee;
+        border-radius: 8px;
+        background: #ffffff;
+        box-shadow: 0 5px 16px rgba(15, 23, 42, 0.05);
+    }
+
+    #quan-ly .evaluation-zoom-toolbar .eval-zoom-title {
+        color: #475569;
+        font-size: 0.76rem;
+    }
+
+    #quan-ly .evaluation-zoom-select {
+        width: 82px;
+        height: 34px;
+        padding: 0 30px 0 10px;
+        border: 1px solid #cbd7e6;
+        border-radius: 7px;
+        color: #172033;
+        background-color: #f8fafc;
+        font-size: 0.8rem;
+        font-weight: 850;
+        box-shadow: none;
+    }
+
+    #quan-ly .evaluation-zoom-stage {
+        width: 100%;
+        min-width: 0 !important;
+        transform-origin: top left;
+        will-change: transform;
+        overflow: visible;
+    }
+
+    #quan-ly .evaluation-table-card {
+        width: 100% !important;
+        max-width: 100% !important;
+        margin-bottom: 12px;
+        border-radius: 8px;
+        box-shadow: none;
+        overflow-x: auto !important;
+        overscroll-behavior-x: contain;
+        touch-action: pan-x pan-y;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    #quan-ly .evaluation-table {
+        width: 100% !important;
+        max-width: none !important;
+        min-width: 800px !important;
+        font-size: 0.78rem !important;
+    }
+
+    #quan-ly .evaluation-table th,
+    #quan-ly .evaluation-table td {
+        min-width: 112px !important;
+        padding: 9px 7px !important;
+        font-size: 0.78rem !important;
+        word-break: normal !important;
+        overflow-wrap: break-word;
+    }
+
+    #quan-ly .evaluation-pagination {
+        justify-content: flex-start;
+        overflow-x: auto;
+        padding-bottom: 4px;
+        flex-wrap: nowrap;
+    }
+
+    .evaluation-export-modal .evaluation-export-body {
+        padding: 16px;
+    }
+}
+
+@media (max-width: 430px) {
+    #quan-ly .evaluation-search-controls {
+        grid-template-columns: minmax(0, 1fr) 100px !important;
+    }
+
+    #quan-ly .evaluation-search-button {
+        min-width: 100px !important;
+    }
+
+    .evaluation-export-modal .evaluation-export-actions {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 360px) {
+    #quan-ly #a2-filter-area.show-filter .evaluation-filter-grid {
+        grid-template-columns: 1fr !important;
+    }
+
+    #quan-ly .evaluation-filter-action {
+        grid-column: auto;
+    }
+}
+
+@media print {
+    #quan-ly .evaluation-student-summary,
+    #quan-ly .evaluation-zoom-toolbar,
+    #quan-ly .evaluation-pagination {
+        display: none !important;
+    }
+
+    #quan-ly .evaluation-table-card {
+        border-radius: 0;
+        box-shadow: none;
+        overflow: visible;
+    }
+}

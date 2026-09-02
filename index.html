@@ -1,0 +1,1060 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>VIDA - HỆ THỐNG THEO DÕI HỌC SINH</title>
+    <link rel="icon" href="assets/images/vida-placeholder.svg" type="image/svg+xml">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB"
+        crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="src/css/style.css?v=20260903-mobile-zoom-reset-1">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.15.2/Sortable.min.js"></script>
+</head>
+
+<body>
+
+    <div id="global-loader">
+        <img src="assets/images/vida-placeholder.svg" alt="Logo VIDA" class="loader-pulse-logo">
+    </div>
+
+    <div id="roleSelectionScreen" class="login-overlay">
+        <div class="login-box">
+            <h2 class="login-title">ĐĂNG NHẬP</h2>
+            <p class="login-subtitle">Hệ thống theo dõi học sinh VIDA</p>
+            <div id="role-options-block" class="login-role-options">
+                <div class="login-btn-wrapper">
+                    <button class="login-btn login-btn-teacher" onclick="window.selectRole('teacher')">
+                        <i class="fas fa-chalkboard-teacher"></i><span>GIÁO VIÊN</span>
+                    </button>
+                </div>
+                <div class="login-btn-wrapper">
+                    <button class="login-btn login-btn-admin" onclick="window.showAdminLoginScreen()">
+                        <i class="fas fa-user-shield"></i><span>QUẢN LÝ</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="admin-login-screen" class="admin-login-screen">
+        <div class="login-card-light">
+            <h3 class="admin-login-title">
+                <i class="fas fa-user-shield me-2"></i>QUẢN LÝ
+            </h3>
+
+            <div id="admin-login-error" class="admin-login-error">
+                Sai tài khoản hoặc mật khẩu!</div>
+
+            <label class="form-label admin-login-label">Tên
+                đăng nhập / Email</label>
+            <input type="email" id="admin-login-email" class="form-control admin-login-input" placeholder="quanly@vida.vn">
+
+            <label class="form-label admin-login-label">Mật
+                khẩu</label>
+            <input type="password" id="admin-login-password" class="form-control admin-login-input admin-login-password" placeholder="••••••••">
+
+            <button id="admin-login-submit-btn" class="btn btn-success w-100 admin-login-submit" onclick="window.customLoginAdmin()">Đăng
+                Nhập</button>
+            <button class="btn btn-link w-100 admin-login-back" onclick="window.hideAdminLoginScreen()">Quay
+                lại chọn vai trò</button>
+        </div>
+    </div>
+
+    <div id="custom-modal-overlay" class="custom-modal-overlay app-dialog-overlay"
+        onclick="window.closeModalByClickOutside(event)" role="dialog" aria-modal="true">
+        <div id="custom-modal" class="custom-modal shadow-lg app-dialog app-confirm-dialog">
+            <div id="modal-msg" class="modal-msg mt-3">Nội dung thông báo</div>
+            <input type="text" id="modal-input-note" class="form-control mb-4 modal-prompt-input"
+                style="display:none;" placeholder="Nhập nội dung..."
+                autocomplete="off">
+            <div id="modal-actions" class="modal-actions"></div>
+        </div>
+    </div>
+
+    <div id="mobile-logout-overlay" class="logout-overlay" onclick="window.hideMobileLogoutMenu()">
+    </div>
+    <div id="mobile-logout-menu" class="mobile-logout-menu">
+        <h4>TÙY CHỌN
+        </h4>
+        <button class="admin-only btn-update" onclick="window.switchTab('tai-khoan'); window.hideMobileLogoutMenu();">
+            <i class="fas fa-user-cog me-2"></i>Cập nhật tài khoản
+        </button>
+        <button class="btn-logout-final" onclick="window.handleLogout()">
+            <i class="fas fa-sign-out-alt me-2"></i>Đăng xuất
+        </button>
+    </div>
+
+    <div id="mainApp" style="display: none;">
+
+        <div class="sidebar" id="sidebar">
+            <div class="sidebar-top">
+                <div class="sidebar-header-block">
+                    <img src="assets/images/vida-placeholder.svg" alt="Logo VIDA" class="sidebar-logo">
+                    <span class="brand-text">VIDA STUDENT TRACKER</span>
+                    <div class="user-role-badge badge-admin admin-only-flex" onclick="window.switchTab('tai-khoan')">
+                        <i class="fas fa-user-shield"></i> <span class="role-text">Quản lý</span>
+                    </div>
+                </div>
+                <hr class="sidebar-divider">
+                <div class="sidebar-menu" id="nav-tabs">
+                    <button class="btn-tab admin-only-flex active" onclick="window.switchTab('dashboard')"
+                        id="tab-dashboard">
+                        <i class="fas fa-home"></i> <span class="tab-text">Trang Chủ</span>
+                    </button>
+                    <button class="btn-tab" onclick="window.switchTab('nhap-lieu')" id="tab-nhap-lieu">
+                        <i class="fas fa-edit"></i> <span class="tab-text">Nhận Xét</span>
+                    </button>
+                    <button class="btn-tab" onclick="window.switchTab('quan-ly')" id="tab-quan-ly">
+                        <i class="fas fa-folder-open"></i> <span class="tab-text">Xem Đánh Giá</span>
+                    </button>
+                    <button class="btn-tab admin-only-flex" onclick="window.switchTab('du-lieu')" id="tab-du-lieu">
+                        <i class="fas fa-database"></i> <span class="tab-text">Dữ Liệu</span>
+                    </button>
+                </div>
+            </div>
+            <div class="sidebar-bottom">
+                <button class="btn-logout" onclick="window.handleLogout()"><i class="fas fa-sign-out-alt"></i> Đăng
+                    xuất</button>
+            </div>
+        </div>
+
+        <div class="content-wrapper" id="content-wrapper">
+
+            <div
+                class="mobile-header d-md-none shadow-sm d-flex justify-content-between align-items-center sticky-top px-3">
+                <button type="button" class="btn btn-sm shadow-sm btn-glass-back" onclick="window.handleMobileBack()" aria-label="Quay lại">
+                    <i class="fas fa-chevron-left" aria-hidden="true"></i>
+                </button>
+
+                <h5 class="m-0 fw-bold text-white text-center">
+                    VIDA STUDENT TRACKER
+                </h5>
+
+                <button class="btn btn-sm shadow-sm btn-glass-logout" onclick="window.showMobileLogoutMenu()">
+                    <i class="fas fa-power-off"></i>
+                </button>
+            </div>
+
+            <div class="main-container">
+                <div id="main-content-area">
+
+                    <div id="dashboard" class="page-section active">
+
+                        <div id="dashboard-main-content">
+                            <div class="top-toolbar mb-4 admin-only-block">
+                                <div class="toolbar-container">
+                                    <div class="toolbar-title"><span>TRANG CHỦ</span></div>
+                                    <div class="toolbar-buttons" id="admin-toolbar-grid">
+                                        <button type="button"
+                                            class="btn-toolbar admin-only dashboard-shortcut dashboard-shortcut-facility"
+                                            onclick="window.openAdminSection('sec-facility')" aria-label="Cơ Sở">
+                                            <span class="dashboard-shortcut-icon"><i class="fas fa-building"></i></span>
+                                            <span class="dashboard-shortcut-label">Cơ Sở</span>
+                                        </button>
+                                        <button type="button"
+                                            class="btn-toolbar admin-only dashboard-shortcut dashboard-shortcut-teachers"
+                                            onclick="window.openAdminSection('sec-gv')" aria-label="Quản lý giáo viên">
+                                            <span class="dashboard-shortcut-icon"><i class="fas fa-chalkboard-teacher"></i></span>
+                                            <span class="dashboard-shortcut-label">QL GV</span>
+                                        </button>
+                                        <button type="button"
+                                            class="btn-toolbar admin-only dashboard-shortcut dashboard-shortcut-system-list"
+                                            onclick="window.openSystemListPage()" aria-label="Danh Sách">
+                                            <span class="dashboard-shortcut-icon"><i class="fas fa-list"></i></span>
+                                            <span class="dashboard-shortcut-label">Danh Sách</span>
+                                        </button>
+                                        <button type="button"
+                                            class="btn-toolbar admin-only dashboard-shortcut dashboard-shortcut-export"
+                                            onclick="window.exportFullExcel()" title="Xuất Excel toàn hệ thống"
+                                            aria-label="Xuất File">
+                                            <span class="dashboard-shortcut-icon"><i class="fas fa-file-excel"></i></span>
+                                            <span class="dashboard-shortcut-label">Xuất File</span>
+                                        </button>
+                                        <input type="file" id="importExcelFile" accept=".xlsx" style="display: none;"
+                                            onchange="window.importFullExcel(event)">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div id="facilities-overview-container"
+                                class="smooth-box border-0 shadow-sm p-4 mb-4 mt-4 admin-only-block bg-dashboard-gray">
+                                <h5 class="widget-title-modern text-dark mb-3">HỆ THỐNG CƠ SỞ</h5>
+                                <div class="dashboard-facility-toolbar">
+                                    <div class="dashboard-facility-picker" id="dashboard-facilities">
+                                        <button type="button" class="dashboard-facility-trigger" disabled>
+                                            <span class="dashboard-facility-trigger-copy">
+                                                <small>Cơ sở</small>
+                                                <strong>Đang tải dữ liệu...</strong>
+                                            </span>
+                                        </button>
+                                    </div>
+                                    <button type="button" class="dashboard-history-trigger"
+                                        onclick="window.switchTab('du-lieu')" aria-label="Mở phân hệ dữ liệu">
+                                        <span>Lịch sử</span>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div class="mobile-widget-toggles d-md-none mb-4 admin-only-flex">
+                                <div class="widget-btn-mobile widget-news"
+                                    onclick="window.toggleMobileWidget('newsModal')">
+                                    <span class="fw-bold text-white text-center">BẢNG TIN</span>
+                                </div>
+                            </div>
+
+                            <div class="row mb-4 admin-only-flex" id="dashboard-widgets-row">
+
+                                <div class="col-12 mb-4 widget-col" id="newsModal">
+                                    <div
+                                        class="smooth-box dashboard-news-card position-relative">
+                                        <div class="dashboard-news-header">
+                                            <h3 class="widget-title-modern m-0 dashboard-news-title">
+                                                Bảng tin
+                                            </h3>
+                                            <div class="dashboard-news-tabs" role="tablist"
+                                                aria-label="Phân loại bảng tin">
+                                                <button type="button" class="dashboard-news-tab active"
+                                                    data-news-category="attention" role="tab" aria-selected="true">
+                                                    <span>Học sinh cần chú ý</span>
+                                                    <b data-news-count="attention">0</b>
+                                                </button>
+                                                <button type="button" class="dashboard-news-tab"
+                                                    data-news-category="crowded" role="tab" aria-selected="false">
+                                                    <span>Lớp đông</span>
+                                                    <b data-news-count="crowded">0</b>
+                                                </button>
+                                                <button type="button" class="dashboard-news-tab"
+                                                    data-news-category="late" role="tab" aria-selected="false">
+                                                    <span>GV nhận xét trễ</span>
+                                                    <b data-news-count="late">0</b>
+                                                </button>
+                                                <button type="button" class="dashboard-news-tab"
+                                                    data-news-category="recent" role="tab" aria-selected="false">
+                                                    <span>Vừa nhận xét</span>
+                                                    <b data-news-count="recent">0</b>
+                                                </button>
+                                            </div>
+                                            <div class="dashboard-news-actions">
+                                                <button type="button" id="btn-clear-news"
+                                                    class="btn-pastel-export dashboard-news-clear">Đã xem</button>
+                                            </div>
+                                        </div>
+                                        <div class="news-feed-scroll" id="news-feed-container">
+                                            <div class="text-center text-muted p-4">Đang tải dữ liệu...</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div id="dashboard-history-modal" class="dashboard-history-modal" hidden
+                                aria-hidden="true">
+                                <section class="dashboard-history-dialog" role="dialog" aria-modal="true"
+                                    aria-labelledby="dashboard-history-title">
+                                    <div class="dashboard-history-header">
+                                        <div>
+                                            <h3 id="dashboard-history-title" class="m-0">LỊCH SỬ NHẬN XÉT</h3>
+                                            <span id="dashboard-history-total"
+                                                class="dashboard-history-total">7 ngày gần nhất</span>
+                                        </div>
+                                        <button type="button" id="dashboard-history-close"
+                                            class="dashboard-history-close" aria-label="Đóng lịch sử">&times;</button>
+                                    </div>
+                                    <div class="dashboard-history-table-wrap">
+                                        <table class="dashboard-history-table">
+                                            <thead>
+                                                <tr>
+                                                    <th>Thời gian</th>
+                                                    <th>Giáo viên</th>
+                                                    <th>Lớp</th>
+                                                    <th>Học sinh</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="dashboard-history-list">
+                                                <tr class="dashboard-history-empty">
+                                                    <td colspan="4">Đang tải lịch sử...</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <div class="dashboard-history-load-more-wrap">
+                                        <button type="button" id="dashboard-history-load-more"
+                                            class="dashboard-history-load-more" hidden>
+                                            <span>Xem thêm</span><i class="fas fa-chevron-down" aria-hidden="true"></i>
+                                        </button>
+                                        <span id="dashboard-history-end" class="dashboard-history-end" hidden>
+                                            Đã hiển thị toàn bộ lịch sử trong 7 ngày gần nhất
+                                        </span>
+                                    </div>
+                                </section>
+                            </div>
+                        </div>
+
+                        <div id="admin-management-panels" style="display: none;"
+                            class="admin-only-block mt-3 admin-management-panels" data-view-managed="true">
+                            <div class="admin-management-topbar">
+                                <button class="btn fw-bold d-none d-md-inline-flex admin-management-back"
+                                    id="admin-management-back"
+                                    type="button" aria-label="Quay lại trang chủ">
+                                    <i class="fas fa-arrow-left" aria-hidden="true"></i><span>Quay lại</span>
+                                </button>
+                                <div id="admin-teacher-toolbar-context" class="admin-teacher-toolbar-context" hidden>
+                                    <span id="admin-teacher-stats-avatar" class="admin-teacher-toolbar-avatar" aria-hidden="true">G</span>
+                                    <div class="admin-teacher-toolbar-copy">
+                                        <h2 id="admin-teacher-stats-title">Thống kê giáo viên</h2>
+                                        <p id="admin-teacher-toolbar-subtitle">Hoạt động giảng dạy và nhận xét học sinh</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div id="sec-facility" class="admin-management-section" style="display: none;">
+                                <div class="admin-facility-layout">
+                                    <div class="smooth-box p-4 admin-management-card admin-facility-create-card">
+                                        <h6 class="fw-bold text-dark mb-3 admin-section-title"><span>THÊM CƠ SỞ MỚI</span></h6>
+                                        <div class="row g-2 admin-form-row">
+                                            <div class="col-md-8 mb-2"><input type="text" id="new-facility-input"
+                                                    class="form-control bg-light admin-form-control"
+                                                    placeholder="Nhập tên cơ sở"></div>
+                                            <div class="col-md-4"><button
+                                                    class="btn btn-success fw-bold w-100 admin-primary-action"
+                                                    type="button"
+                                                    onclick="window.createFacility(event)">TẠO CƠ SỞ</button></div>
+                                        </div>
+                                    </div>
+                                    <div class="smooth-box p-4 admin-management-card admin-facility-list-card">
+                                        <div class="admin-list-heading-row">
+                                            <h6 class="fw-bold text-dark m-0 admin-section-title"><span>CƠ SỞ TRONG HỆ THỐNG</span></h6>
+                                            <span id="admin-facility-count" class="admin-list-count">0 cơ sở</span>
+                                        </div>
+                                        <div id="admin-facility-list" class="admin-facility-list"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="sec-khoi" class="admin-management-section" style="display: none;">
+                                <div class="smooth-box p-4 admin-management-card">
+                                    <h6 class="fw-bold text-dark mb-3 admin-section-title"><i
+                                            class="fas fa-layer-group"></i><span>THÊM KHỐI MỚI VÀO CƠ SỞ</span></h6>
+                                    <label class="form-label small fw-bold text-dark mb-2">1. Chọn Cơ Sở:</label>
+                                    <div id="ui-facility-tao-khoi" class="khoi-box-container mb-3"></div>
+                                    <input type="hidden" id="select-facility-tao-khoi">
+                                    <div id="tao-khoi-input-area" class="admin-subform" style="display:none;">
+                                        <label class="form-label small fw-bold text-dark mb-2">2. Tên Khối:</label>
+                                        <div class="row g-2 admin-form-row">
+                                            <div class="col-md-9 mb-2"><input type="text" id="new-khoi-input"
+                                                    class="form-control bg-light admin-form-control" placeholder="Nhập tên khối..."></div>
+                                            <div class="col-md-3"><button
+                                                    class="btn btn-success fw-bold w-100 admin-primary-action"
+                                                    type="button"
+                                                    onclick="window.createKhoi(event)">TẠO KHỐI</button></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="sec-lop" class="admin-management-section" style="display: none;">
+                                <div class="smooth-box p-4 admin-management-card">
+                                    <h6 class="fw-bold text-dark mb-3 admin-section-title"><i
+                                            class="fas fa-chalkboard"></i><span>THÊM LỚP VÀO KHỐI</span></h6>
+                                    <label class="form-label small fw-bold text-dark mb-2">1. Chọn Cơ Sở:</label>
+                                    <div id="ui-facility-tao" class="khoi-box-container mb-3"></div>
+                                    <input type="hidden" id="select-facility-tao-lop">
+                                    <div id="tao-lop-khoi-area" class="admin-subform" style="display:none;">
+                                        <label class="form-label small fw-bold text-dark mb-2">2. Chọn Khối:</label>
+                                        <div id="ui-khoi-tao" class="khoi-box-container mb-3"></div>
+                                        <input type="hidden" id="select-khoi-tao-lop">
+                                    </div>
+                                    <div id="tao-lop-input-area" class="admin-subform" style="display:none;">
+                                        <label class="form-label small fw-bold text-dark mb-2">3. Tên Lớp:</label>
+                                        <div class="row g-2 admin-form-row">
+                                            <div class="col-md-9 mb-2"><input type="text" id="new-class-input"
+                                                    class="form-control fw-bold bg-light admin-form-control"
+                                                    placeholder="Nhập tên lớp..."></div>
+                                            <div class="col-md-3"><button
+                                                    class="btn btn-success fw-bold w-100 admin-primary-action"
+                                                    type="button"
+                                                    onclick="window.createClass(event)">TẠO LỚP</button></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="sec-gv" class="admin-management-section" style="display: none;">
+                                <div id="admin-teacher-directory">
+                                    <div class="smooth-box p-4 admin-management-card">
+                                        <h6 class="fw-bold text-dark mb-3 admin-section-title"><i
+                                                class="fas fa-chalkboard-teacher"></i><span>QUẢN LÝ GIÁO VIÊN</span></h6>
+                                        <div class="row g-2 mb-4 admin-form-row">
+                                            <div class="col-md-9 mb-2"><input type="text" id="new-teacher-input"
+                                                    class="form-control bg-light admin-form-control"
+                                                    placeholder="Nhập tên giáo viên mới"></div>
+                                            <div class="col-md-3"><button
+                                                    class="btn btn-success fw-bold w-100 text-white admin-primary-action"
+                                                    type="button"
+                                                    onclick="window.addSingleTeacher(event)">THÊM GV</button></div>
+                                        </div>
+                                        <h6 class="fw-bold text-dark mb-3 mt-4 border-top pt-4 admin-list-title">DANH SÁCH GIÁO VIÊN
+                                            TRONG HỆ THỐNG</h6>
+                                        <div id="admin-teacher-list" class="list-group admin-teacher-list">
+                                            <div class="text-center text-muted p-3"><i
+                                                class="fas fa-spinner fa-spin me-2"></i>Đang tải dữ liệu...</div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <section id="admin-teacher-stats-view" class="admin-teacher-workspace" hidden
+                                    aria-labelledby="admin-teacher-stats-title">
+                                    <div class="admin-teacher-period-row">
+                                        <div class="admin-teacher-period-controls">
+                                            <div class="admin-teacher-period-field">
+                                                <label for="admin-teacher-period">Thời gian thống kê</label>
+                                                <select id="admin-teacher-period" class="form-select">
+                                                    <option value="all">Toàn bộ thời gian</option>
+                                                    <option value="one-month" selected>1 tháng gần nhất</option>
+                                                    <option value="three-months">3 tháng gần nhất</option>
+                                                    <option value="six-months">6 tháng gần nhất</option>
+                                                    <option value="twelve-months">12 tháng gần nhất</option>
+                                                    <option value="custom">Khoảng ngày tùy chọn</option>
+                                                </select>
+                                            </div>
+                                            <div id="admin-teacher-custom-period" class="admin-teacher-custom-period" hidden>
+                                                <div class="admin-teacher-date-field">
+                                                    <label for="admin-teacher-period-start">Từ ngày</label>
+                                                    <input id="admin-teacher-period-start" class="form-control" type="date">
+                                                </div>
+                                                <div class="admin-teacher-date-field">
+                                                    <label for="admin-teacher-period-end">Đến ngày</label>
+                                                    <input id="admin-teacher-period-end" class="form-control" type="date">
+                                                </div>
+                                                <button id="admin-teacher-period-apply" class="admin-teacher-period-apply"
+                                                    type="button">Áp dụng</button>
+                                                <p id="admin-teacher-period-error" class="admin-teacher-period-error"
+                                                    role="alert" hidden></p>
+                                            </div>
+                                        </div>
+                                        <p id="admin-teacher-ranking-note">Xếp hạng theo số buổi dạy trong 1 tháng gần nhất.</p>
+                                    </div>
+                                    <div id="admin-teacher-summary" class="admin-teacher-summary" aria-live="polite"></div>
+                                    <div class="admin-teacher-table-heading">
+                                        <div>
+                                            <h3>Các lớp đã dạy</h3>
+                                            <p>Lớp thường xuyên nhất được xếp trước.</p>
+                                        </div>
+                                    </div>
+                                    <div id="admin-teacher-stats-content" class="admin-teacher-stats-content"></div>
+                                </section>
+
+                                <section id="admin-teacher-class-view" class="admin-teacher-workspace" hidden
+                                    aria-labelledby="admin-teacher-stats-title">
+                                    <div id="admin-teacher-class-summary" class="admin-teacher-summary" aria-live="polite"></div>
+                                    <div class="admin-teacher-table-heading">
+                                        <div>
+                                            <h3>Danh sách học sinh</h3>
+                                            <p>Mỗi học sinh hiển thị nhận xét gần nhất của giáo viên.</p>
+                                        </div>
+                                    </div>
+                                    <div id="admin-teacher-class-content" class="admin-teacher-stats-content"></div>
+                                </section>
+                            </div>
+
+                            <div id="sec-system-list" class="admin-management-section admin-system-list-page" style="display: none;">
+                                <div class="admin-system-list-page-header">
+                                    <div>
+                                        <h6 class="fw-bold text-dark m-0 admin-section-title">
+                                            <i class="fas fa-users"></i><span>DANH SÁCH HỌC SINH</span>
+                                        </h6>
+                                        <p class="admin-system-list-page-subtitle">Tra cứu, lọc và quản lý học sinh theo cơ sở.</p>
+                                    </div>
+                                </div>
+                                <div class="admin-management-card admin-system-list-card">
+                                    <div class="p-3 border-bottom bg-light admin-system-filter-panel" id="sys-filter-panel">
+                                        <div class="row align-items-center mb-3">
+                                            <div class="col-md-6"><label class="form-label fw-bold text-muted mb-1">Chọn cơ sở để xem:</label><select id="systemListFacSelect" class="form-select fw-bold"
+                                                    onchange="window.loadSystemListFacility({ resetFilters: true })">
+                                                    <option value="">-- Chọn Cơ sở --</option>
+                                                </select></div>
+                                            <div class="col-md-6 text-end"><span class="badge bg-info py-2 px-3 mt-3 admin-system-count" id="systemListCount">Tổng: 0 HS</span></div>
+                                        </div>
+                                        <div class="row align-items-center" id="sys-filters-row">
+                                            <div class="col-md-4 mb-2"><input type="text" id="sys-filter-name" class="form-control form-control-sm fw-bold" placeholder="Tìm tên học sinh..." oninput="window.filterSystemList()"></div>
+                                            <div class="col-md-4 mb-2">
+                                                <div class="system-class-filter-group">
+                                                    <select id="sys-filter-class" class="form-select form-select-sm fw-bold" onchange="window.handleSystemListClassChange()"><option value="">Tất cả Lớp</option></select>
+                                                    <button type="button" id="systemListAddStudentBtn" class="system-list-add-student-btn" onclick="window.promptAddStudentsFromSystemList()" disabled title="Chọn một lớp để thêm học sinh" aria-label="Thêm học sinh vào lớp đã chọn"><i class="fas fa-plus" aria-hidden="true"></i></button>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4 mb-2"><select id="sys-filter-school" class="form-select form-select-sm fw-bold" onchange="window.filterSystemList()"><option value="">Tất cả Trường</option></select></div>
+                                        </div>
+                                    </div>
+                                    <div class="admin-system-list-body">
+                                        <div class="table-responsive">
+                                            <table class="table table-hover align-middle mb-0 admin-system-table">
+                                                <thead class="table-light text-center">
+                                                    <tr><th class="system-col-index">STT</th><th class="system-col-name">Họ và tên</th><th class="system-col-class">Lớp</th><th class="system-col-school">Trường</th><th class="system-col-actions">Thao tác</th></tr>
+                                                </thead>
+                                                <tbody id="systemListTableBody"><tr><td colspan="5" class="text-center text-muted py-4">Vui lòng chọn cơ sở</td></tr></tbody>
+                                            </table>
+                                        </div>
+                                        <div id="systemListCards" class="system-list-cards"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div id="nhap-lieu" class="page-section teacher-review-page" style="display: none;">
+                        <div class="page-header-top review-page-header">
+                            <h2 class="page-title">NHẬN XÉT</h2>
+                            <button class="btn fw-bold admin-only review-config-btn"
+                                onclick="window.openTemplateConfigModal()"
+                                style="display:none;">Chỉnh cấu trúc</button>
+                        </div>
+
+                        <button id="btn-back-to-khoi" class="btn fw-bold mb-3 review-back-button"
+                            onclick="document.body.setAttribute('data-wizard-step', '1')"
+                            style="display: none;">
+                            <i class="fas fa-arrow-left me-2"></i> Quay lại chọn Cơ sở
+                        </button>
+                        <div class="base-pills-container mb-3" id="ui-facility-nhap-lieu"></div>
+
+                        <div id="step-1-khoi-nl" class="slide-down-element" style="display: none;">
+                            <div class="smooth-box p-3 mb-3 mt-2 review-step-card">
+                                <label class="form-label small text-muted fw-bold mb-2 review-step-label">CHỌN KHỐI TẠI CƠ SỞ</label>
+                                <div id="ui-khoi-gv" class="khoi-box-container"><i class="text-muted">Vui lòng chọn cơ
+                                        sở trước...</i></div>
+                                <div id="teacher-class-load-status" class="review-load-status" role="status" hidden></div>
+                                <input type="hidden" id="select-khoi-gv">
+                                <input type="hidden" id="select-facility-gv">
+                            </div>
+                        </div>
+
+                        <div id="step-3-form-nl" class="slide-down-element" style="display: none;">
+
+                            <button id="toggle-4-bars-btn"
+                                class="btn fw-bold w-100 mb-3 review-filter-toggle"
+                                style="display:none;"
+                                onclick="window.toggle4Bars()">
+                                <i class="fas fa-sliders-h me-2"></i> Thay đổi Lớp / Ca học
+                            </button>
+
+                            <div id="filter-4-bars" class="review-toolbar">
+                                <div class="row custom-mobile-row review-fields-row">
+                                    <div class="col-md-3 mb-2 review-field" id="col-lop-pc">
+                                        <label class="form-label review-field-label">1. CHỌN LỚP</label>
+                                        <select class="form-select seamless-input fw-bold" id="select-lop-gv"
+                                            onchange="window.loadSchedulesForClass()"></select>
+                                    </div>
+                                    <div class="col-md-3 mb-2 review-field" id="col-cahoc">
+                                        <label class="form-label review-field-label">2. CA HỌC</label>
+                                        <select class="form-select seamless-input text-info fw-bold"
+                                            id="select-schedule-gv"
+                                            onchange="window.scheduleSaveAppState?.();">
+                                            <option value="">-- Chọn ca học --</option>
+                                            <option value="Sáng ca 1">Sáng ca 1</option>
+                                            <option value="Sáng ca 2">Sáng ca 2</option>
+                                            <option value="Chiều ca 1">Chiều ca 1</option>
+                                            <option value="Chiều ca 2">Chiều ca 2</option>
+                                            <option value="Chiều ca 3">Chiều ca 3</option>
+                                            <option value="Tối ca 1">Tối ca 1</option>
+                                            <option value="Tối ca 2">Tối ca 2</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-3 mb-2 review-field" id="col-ngay">
+                                        <label class="form-label review-field-label">3. NGÀY DẠY</label>
+                                        <input type="date" id="ngayDay"
+                                            class="form-control seamless-input fw-bold text-success">
+                                    </div>
+                                    <div class="col-md-3 mb-2 position-relative review-field" id="col-gv">
+                                        <label class="form-label review-field-label">4. GIÁO VIÊN</label>
+                                        <input type="text" id="tenGV"
+                                            class="form-control seamless-input fw-bold text-dark"
+                                            placeholder="Nhập tên..." onfocus="window.showTeacherPicker()"
+                                            oninput="window.showTeacherPicker()" autocomplete="off">
+                                        <div id="teacherPickerList" class="dropdown-list shadow mt-1"></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div id="search-student-container" class="mb-4 mt-3 slide-down-element search-wrapper-layer review-quick-tools"
+                                style="display: none;">
+                                <div class="search-row-mobile d-flex align-items-center review-quick-tools-row">
+                                    <div class="position-relative search-container m-0 review-search-field">
+                                        <input type="text" id="inlineSearchInput"
+                                            class="form-control border-0 shadow-sm fw-bold text-center search-navy-input"
+                                            placeholder="Tìm nhanh tên học sinh..." onfocus="window.showStudentPicker()"
+                                            oninput="window.showStudentPicker()">
+                                        <div id="studentPickerList" class="dropdown-list shadow mt-1"></div>
+                                    </div>
+                                    <div class="m-0 review-search-field">
+                                        <input type="text" id="global-nd-input"
+                                            class="form-control fw-bold text-center w-100 search-green-input"
+                                            placeholder="Nhập nội dung chung lớp..."
+                                            oninput="window.applyGlobalContent(this.value)">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div id="area-cards" class="cards-area-layer review-student-list"></div>
+
+                            <div id="save-footer" style="display:none;" class="mt-4 cards-area-layer review-report-section">
+                                <div class="smooth-box p-4 review-report-card">
+                                    <div class="d-flex justify-content-between align-items-start review-report-header">
+                                        <div class="review-report-heading">
+                                            <h5 class="fw-bold m-0 review-report-title">BÁO CÁO LỚP</h5>
+                                            <p class="review-report-subtitle m-0">Tổng hợp nội dung nhận xét trước khi lưu.</p>
+                                        </div>
+                                        <button type="button"
+                                            class="btn fw-bold review-report-generate"
+                                            onclick="handleGenerateReport(event)"><i class="fas fa-file-alt me-2"></i>Tạo báo cáo</button>
+                                    </div>
+                                    <label for="global-report-content" class="review-report-label">Nội dung báo cáo</label>
+                                    <textarea id="global-report-content" class="form-control review-report-output" rows="6"
+                                        placeholder="Bấm Tạo báo cáo để tổng hợp nội dung..."></textarea>
+                                    <div class="review-report-footer">
+                                        <div class="d-flex flex-wrap review-report-actions">
+                                            <button type="button" class="btn flex-fill w-100-mobile review-report-secondary review-copy-button"
+                                                onclick="window.copyGlobalReport(this)"><i class="fas fa-copy me-2"></i>Sao chép</button>
+                                            <button type="button" class="btn flex-fill w-100-mobile review-report-secondary review-share-button"
+                                                onclick="window.shareGlobalReport()"><i class="fas fa-share-alt me-2"></i>Chia sẻ</button>
+                                        </div>
+                                        <div class="text-end review-save-row">
+                                            <button type="button"
+                                                class="btn btn-luu-he-thong fw-bold py-3 px-5 w-100-mobile review-system-save"
+                                                onclick="window.saveFinal()"><i class="fas fa-save me-2"></i>Lưu nhận xét</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="quan-ly" class="page-section evaluation-page" style="display: none;">
+                        <div class="page-header-top evaluation-page-header">
+                            <h2 class="page-title">XEM ĐÁNH GIÁ</h2>
+                        </div>
+
+                        <div class="evaluation-wrapper evaluation-shell">
+                            <div class="eval-section evaluation-search-card" id="a2-search-area">
+                                <h5 class="section-title evaluation-section-heading evaluation-search-heading">TÌM PHIẾU ĐÁNH GIÁ</h5>
+                                <div class="search-controls evaluation-search-controls">
+                                    <div class="position-relative search-input-wrapper evaluation-search-field">
+                                        <input type="text" id="global-hs-search-input"
+                                            class="form-control search-input evaluation-search-input"
+                                            placeholder="Nhập tên học sinh..." autocomplete="off"
+                                            onfocus="window.showGlobalDropdownA2()" oninput="window.filterGlobalA2()">
+                                        <div id="dropdownListA2Global" class="dropdown-list evaluation-search-dropdown"></div>
+                                        <input type="hidden" id="selected-hs-class-a2">
+                                        <input type="hidden" id="selected-hs-id-a2">
+                                    </div>
+                                    <button type="button" class="btn btn-teal fw-bold evaluation-search-button"
+                                        onclick="window.renderSoA2Global()">XEM PHIẾU</button>
+                                </div>
+                            </div>
+
+                            <div class="eval-section evaluation-filter-card" id="a2-filter-area">
+                                <h5 class="section-title evaluation-section-heading evaluation-filter-heading" onclick="window.toggleFilterMobile()">LỌC THEO DANH SÁCH</h5>
+
+                                <div class="row align-items-center evaluation-filter-grid">
+                                    <div class="col-md-3 mb-3 evaluation-filter-field"><select id="filter-facility"
+                                            class="form-select seamless-input fw-bold"
+                                            onchange="window.filterFacilityChange()">
+                                            <option value="">-- Chọn Cơ sở --</option>
+                                        </select></div>
+                                    <div class="col-md-3 mb-3 evaluation-filter-field"><select id="filter-khoi"
+                                            class="form-select seamless-input fw-bold"
+                                            onchange="window.filterKhoiChange()">
+                                            <option value="">-- Tất cả Khối --</option>
+                                        </select></div>
+                                    <div class="col-md-4 mb-3 evaluation-filter-field"><select id="filter-lop"
+                                            class="form-select seamless-input fw-bold">
+                                            <option value="">-- Tất cả Lớp --</option>
+                                        </select></div>
+                                    <div class="col-md-2 mb-3 evaluation-filter-action"><button type="button"
+                                            class="btn btn-success fw-bold w-100 evaluation-filter-button"
+                                            onclick="window.executeFilter()">LỌC TÌM</button></div>
+                                </div>
+                                <div id="filter-students-list" class="evaluation-student-results"
+                                    style="display:none;">
+                                </div>
+                            </div>
+
+                            <div class="eval-section evaluation-result-section" id="a2-result-area"
+                                style="display: none;">
+                                <div id="area-so-a2" class="results-container evaluation-results"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="du-lieu" class="page-section data-center-page admin-only-block" style="display: none;"
+                        data-view-managed="true">
+                        <div class="data-center-header">
+                            <h2 class="page-title">DỮ LIỆU</h2>
+                        </div>
+
+                        <div class="data-center-tabs" role="tablist" aria-label="Chức năng dữ liệu">
+                            <button type="button" class="data-center-tab active" data-data-view="history"
+                                onclick="window.switchDataCenterView('history')" role="tab" aria-selected="true">
+                                <span>Lịch sử</span>
+                            </button>
+                            <button type="button" class="data-center-tab" data-data-view="cleanup"
+                                onclick="window.switchDataCenterView('cleanup')" role="tab" aria-selected="false">
+                                <span>Dọn dẹp</span>
+                            </button>
+                        </div>
+
+                        <section id="data-view-history" class="data-center-view active" role="tabpanel">
+                            <div class="data-panel-header">
+                                <div>
+                                    <h3>Lịch sử lượt lưu</h3>
+                                </div>
+                            </div>
+                            <div class="data-history-filters">
+                                <input type="search" id="data-history-search" placeholder="Tìm giáo viên, lớp hoặc cơ sở..."
+                                    oninput="window.renderDataHistory()">
+                                <select id="data-history-facility" onchange="window.renderDataHistory()">
+                                    <option value="">Tất cả cơ sở</option>
+                                </select>
+                                <select id="data-history-range" onchange="window.changeDataHistoryRange()"
+                                    aria-label="Khoảng thời gian lịch sử">
+                                    <option value="24h" selected>24 giờ qua</option>
+                                    <option value="3d">3 ngày qua</option>
+                                    <option value="7d">7 ngày qua</option>
+                                </select>
+                            </div>
+                            <div class="data-table-wrap">
+                                <table class="data-table data-history-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Thời gian lưu</th>
+                                            <th>Giáo viên</th>
+                                            <th>Cơ sở / Lớp</th>
+                                            <th>Học sinh</th>
+                                            <th>Trạng thái</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="data-history-list">
+                                        <tr class="data-empty-row"><td colspan="5">Đang tải lịch sử...</td></tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="data-panel-footer">
+                                <span id="data-history-status">24 giờ qua</span>
+                                <button type="button" id="data-history-more" class="data-primary-btn"
+                                    onclick="window.loadDataHistory(false)" disabled>Đã hiển thị hết</button>
+                            </div>
+                        </section>
+
+                        <section id="data-view-cleanup" class="data-center-view" role="tabpanel" hidden>
+                            <div class="data-panel-header">
+                                <div>
+                                    <h3>Rà soát dữ liệu học sinh</h3>
+                                </div>
+                                <button type="button" id="data-cleanup-scan" class="data-primary-btn"
+                                    onclick="window.scanDataCleanup()">Bắt đầu rà soát</button>
+                            </div>
+
+                            <div class="data-cleanup-policy data-cleanup-threshold-bar">
+                                <label>
+                                    <span class="data-policy-copy">
+                                        <strong>Mốc rà soát</strong>
+                                        <small>Liệt kê học sinh có số phiếu từ mốc đã chọn</small>
+                                    </span>
+                                    <span class="data-policy-input">
+                                        <select id="data-cleanup-threshold" onchange="window.renderCleanupInventory()"
+                                            aria-label="Mốc số phiếu cần rà soát">
+                                            <option value="30">Từ 30 phiếu</option>
+                                            <option value="50" selected>Từ 50 phiếu</option>
+                                            <option value="100">Từ 100 phiếu</option>
+                                            <option value="150">Từ 150 phiếu</option>
+                                            <option value="200">Từ 200 phiếu</option>
+                                        </select>
+                                    </span>
+                                </label>
+                            </div>
+
+                            <div id="data-cleanup-summary" class="data-cleanup-summary">
+                                Chưa rà soát dữ liệu. Hệ thống sẽ không tự động xóa bất kỳ phiếu nào.
+                            </div>
+
+                            <div class="data-table-wrap">
+                                <table class="data-table data-cleanup-table">
+                                    <thead>
+                                        <tr>
+                                            <th><input type="checkbox" id="data-cleanup-select-all"
+                                                onchange="window.toggleAllCleanupStudents(this.checked)" aria-label="Chọn tất cả"></th>
+                                            <th>Học sinh / Xem phiếu</th>
+                                            <th>Cơ sở / Lớp</th>
+                                            <th>Số phiếu</th>
+                                            <th>Phiếu cũ nhất</th>
+                                            <th>Đánh giá</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="data-cleanup-list">
+                                        <tr class="data-empty-row"><td colspan="6">Bấm “Bắt đầu rà soát” để phân tích dữ liệu.</td></tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <div class="data-cleanup-actionbar">
+                                <div>
+                                    <strong id="data-cleanup-plan-title">Chưa chọn học sinh</strong>
+                                    <span id="data-cleanup-plan-detail">Chọn học sinh cần xử lý, sau đó bấm “Dọn dẹp đã chọn”.</span>
+                                </div>
+                                <button type="button" id="data-cleanup-start" class="data-primary-btn"
+                                    onclick="window.startSelectedDataCleanup()" disabled>Dọn dẹp đã chọn</button>
+                            </div>
+                        </section>
+                    </div>
+
+                    <div id="tai-khoan" class="page-section" style="display: none;">
+                        <div class="page-header-top">
+                            <h2 class="page-title">QUẢN LÝ TÀI KHOẢN</h2>
+                        </div>
+                        <div class="smooth-box p-4 shadow-sm account-settings-card">
+                            <h5 class="widget-title-modern text-dark mb-4">ĐỔI MẬT KHẨU ADMIN</h5>
+                            <div class="mb-3">
+                                <label class="form-label fw-bold text-dark">Mật khẩu hiện tại</label>
+                                <input type="password" id="current-pwd" class="form-control bg-light"
+                                    placeholder="Nhập mật khẩu cũ...">
+                            </div>
+                            <hr>
+                            <div class="mb-3">
+                                <label class="form-label fw-bold text-dark">Tên đăng nhập mới (Tùy chọn)</label>
+                                <input type="text" id="new-username" class="form-control bg-light"
+                                    placeholder="Nhập email/tên đăng nhập mới...">
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label fw-bold text-dark">Mật khẩu mới</label>
+                                <input type="password" id="new-pwd" class="form-control bg-light"
+                                    placeholder="Mật khẩu mới (ít nhất 6 ký tự)...">
+                            </div>
+                            <div class="mb-4">
+                                <label class="form-label fw-bold text-dark">Xác nhận mật khẩu mới</label>
+                                <input type="password" id="confirm-new-pwd" class="form-control bg-light"
+                                    placeholder="Nhập lại mật khẩu mới...">
+                            </div>
+                            <button class="btn btn-success w-100 fw-bold shadow-sm py-3 rounded-pill"
+                                onclick="window.changeAdminPassword()" id="btn-change-pwd">CẬP NHẬT THAY ĐỔI</button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div id="side-panel-overlay" class="side-panel-overlay" onclick="window.closePanel()"></div>
+            <div id="class-side-panel" class="side-panel shadow-lg">
+                <div class="side-panel-header">
+                    <div class="d-flex align-items-center">
+                        <button type="button" id="btn-panel-back"
+                            class="btn-back-panel me-2 d-inline-flex align-items-center justify-content-center flex-shrink-0"
+                            style="display:none;" aria-label="Quay lại">
+                            <svg class="panel-back-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 19l-7-7 7-7" />
+                            </svg>
+                        </button>
+                        <h4 id="panel-main-title" class="m-0 fw-bold flex-grow-1">Tiêu đề</h4>
+                    </div><button class="btn-close-panel" onclick="window.closePanel()">✖</button>
+                </div>
+                <div id="panel-action-bar" class="p-3 border-bottom d-flex justify-content-between align-items-center">
+                    <span id="panel-sub-title" class="fw-bold text-muted">Mô tả...</span>
+                    <div id="panel-buttons"></div>
+                </div>
+                <div id="panel-content-list" class="side-panel-body pt-3"></div>
+            </div>
+        </div>
+
+        <div class="bottom-nav-mobile" id="mobile-bottom-nav">
+            <div class="nav-item admin-only-flex active" onclick="window.switchTab('dashboard')" id="bot-tab-dashboard">
+                <i class="fas fa-home fa-lg mb-1"></i><span class="label">Trang Chủ</span>
+            </div>
+            <div class="nav-item" onclick="window.switchTab('nhap-lieu')" id="bot-tab-nhap-lieu"><i
+                    class="fas fa-edit fa-lg mb-1"></i><span class="label">Nhận Xét</span></div>
+            <div class="nav-item" onclick="window.switchTab('quan-ly')" id="bot-tab-quan-ly"><i
+                    class="fas fa-folder-open fa-lg mb-1"></i><span class="label">Xem Phiếu</span></div>
+            <div class="nav-item admin-only-flex" onclick="window.openSystemListPage()" id="bot-tab-danh-sach">
+                <i class="fas fa-users fa-lg mb-1 text-danger"></i><span class="label text-danger">Danh Sách</span>
+            </div>
+            <div class="nav-item admin-only-flex" onclick="window.switchTab('du-lieu')" id="bot-tab-du-lieu">
+                <i class="fas fa-database fa-lg mb-1"></i><span class="label">Dữ Liệu</span>
+            </div>
+        </div>
+    </div>
+
+    <div id="exportModal" class="modal-overlay evaluation-export-modal" style="display: none;"
+        onclick="window.closeModalOutside(event, 'exportModal')">
+        <div class="modal-content evaluation-export-dialog">
+            <div class="modal-header evaluation-export-header">
+                <h3 class="evaluation-export-title">Tùy chọn xuất
+                    phiếu</h3>
+                <button type="button" class="close-modal-btn evaluation-export-close"
+                    onclick="window.closeExportModal()">✖</button>
+            </div>
+            <div class="modal-body text-start evaluation-export-body">
+                <h6 class="fw-bold evaluation-export-section-title"><i class="fas fa-filter me-2"></i>1. Chọn phạm vi dữ
+                    liệu:</h6>
+                <div class="evaluation-export-option"><label><input type="radio"
+                            name="exportScope" value="all" checked onchange="window.toggleMonthSelect()"> Xuất tất cả
+                        các buổi học</label></div>
+                <div class="evaluation-export-option">
+                    <label><input type="radio" name="exportScope"
+                            value="month" onchange="window.toggleMonthSelect()"> Chọn tháng để xuất</label>
+                    <div id="exportMonthRange" class="evaluation-export-month"
+                        style="display: none;">
+                        <small class="fw-bold text-muted mb-2 d-block">Chọn tháng:</small>
+                        <select id="exportMonthSelect" class="form-select fw-bold text-primary">
+                            <option value="1">Tháng 1</option>
+                            <option value="2">Tháng 2</option>
+                            <option value="3">Tháng 3</option>
+                            <option value="4">Tháng 4</option>
+                            <option value="5">Tháng 5</option>
+                            <option value="6">Tháng 6</option>
+                            <option value="7">Tháng 7</option>
+                            <option value="8">Tháng 8</option>
+                            <option value="9">Tháng 9</option>
+                            <option value="10">Tháng 10</option>
+                            <option value="11">Tháng 11</option>
+                            <option value="12">Tháng 12</option>
+                        </select>
+                    </div>
+                </div>
+                <h6 class="fw-bold evaluation-export-section-title evaluation-export-format-title"><i class="fas fa-file-export me-2"></i>2. Chọn định
+                    dạng xuất:</h6>
+                <div class="evaluation-export-actions">
+                    <button type="button" class="btn btn-info fw-bold text-white evaluation-export-action"
+                        onclick="window.processExport('png')"><i class="fas fa-image me-2"></i>Hình
+                        ảnh</button>
+                    <button type="button" class="btn btn-success fw-bold text-white btn-export-pdf evaluation-export-action"
+                        onclick="window.processExport('pdf')"><i class="fas fa-print me-2"></i>In / Lưu
+                        PDF</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="configTemplateModal" class="modal-overlay app-dialog-overlay" style="display: none;"
+        onclick="window.closeModalOutside(event, 'configTemplateModal')" role="dialog" aria-modal="true">
+        <div class="modal-content app-dialog app-dialog-lg">
+            <div class="modal-header app-dialog-header">
+                <h3 class="text-dark fw-bold">Chỉnh sửa cấu trúc</h3><button class="close-modal-btn"
+                    onclick="document.getElementById('configTemplateModal').style.display='none'">✖</button>
+            </div>
+            <div class="modal-body p-4 app-dialog-body">
+                <div class="row">
+                    <div class="col-md-6 mb-3"><label class="form-label fw-bold text-muted">1. Chọn Cơ
+                            sở</label><select id="configFacSelect" class="form-select bg-light"
+                            onchange="window.configFacChange()"></select></div>
+                    <div class="col-md-6 mb-3" id="configKhoiArea" style="display:none;"><label
+                            class="form-label fw-bold text-muted">2. Chọn Khối</label><select id="configKhoiSelect"
+                            class="form-select bg-light" onchange="window.configKhoiChange()"></select></div>
+                </div>
+                <div id="configInputsArea" class="mt-2" style="display:none;">
+                    <div class="row">
+                        <div class="col-md-12 mb-4"><label class="form-label fst-italic text-muted">Nhập các tiêu chí
+                                đánh giá (Cách nhau bởi dấu phẩy)</label><input type="text" id="configPrefixNX"
+                                class="form-control fw-bold text-danger"
+                                placeholder="Nhập các tiêu chí đánh giá"></div>
+                    </div>
+                    <button class="btn btn-3d-green w-100 fw-bold py-3 rounded-pill"
+                        onclick="window.saveTemplateConfig(event)">ÁP DỤNG CHO KHỐI NÀY</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="editRecordModal" class="modal-overlay app-dialog-overlay" style="display: none;"
+        onclick="window.closeModalOutside(event, 'editRecordModal')" role="dialog" aria-modal="true">
+        <div class="modal-content app-dialog app-dialog-md">
+            <div class="modal-header app-dialog-header">
+                <h3 class="text-dark fw-bold"><i class="fas fa-edit me-2 text-dark"></i>Chỉnh sửa buổi học</h3>
+                <button class="close-modal-btn"
+                    onclick="document.getElementById('editRecordModal').style.display='none'">✖</button>
+            </div>
+            <div class="modal-body p-3 app-dialog-body">
+                <div class="mb-3"><label class="form-label fw-bold text-muted">Chọn buổi học:</label><select
+                        id="edit-record-select" class="form-select bg-light"
+                        onchange="window.loadEditRecordData()"></select></div>
+                <div id="edit-record-fields" style="display: none;">
+                    <div class="row">
+                        <div class="col-md-6 mb-3"><label class="form-label fw-bold text-muted">Ngày dạy
+                                (DD/MM/YYYY)</label><input type="text" id="edit-record-date" class="form-control"></div>
+                        <div class="col-md-6 mb-3"><label class="form-label fw-bold text-muted">Giáo
+                                viên</label><input type="text" id="edit-record-teacher" class="form-control"></div>
+                    </div>
+                    <div class="mb-3"><label class="form-label fw-bold text-muted">Nội dung</label><input
+                            type="text" id="edit-record-content" class="form-control"></div>
+                    <div class="mb-4"><label class="form-label fw-bold text-muted">Nhận xét</label><textarea
+                            id="edit-record-comment" class="form-control" rows="4"></textarea></div>
+                    <button class="btn btn-black w-100 fw-bold shadow-sm py-2 rounded-pill"
+                        onclick="window.saveEditedRecord()">LƯU THAY ĐỔI</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="deleteRecordModal" class="modal-overlay app-dialog-overlay" style="display: none;"
+        onclick="window.closeModalOutside(event, 'deleteRecordModal')" role="dialog" aria-modal="true">
+        <div class="modal-content app-dialog app-dialog-sm">
+            <div class="modal-header app-dialog-header">
+                <h3 class="text-dark fw-bold"><i class="fas fa-trash-alt me-2 text-danger"></i>Xóa buổi học
+                </h3><button class="close-modal-btn"
+                    onclick="document.getElementById('deleteRecordModal').style.display='none'">✖</button>
+            </div>
+            <div class="modal-body p-3 app-dialog-body">
+                <div class="mb-4"><label class="form-label fw-bold text-muted">Chọn buổi học cần
+                        xóa:</label><select id="delete-record-select" class="form-select bg-light"></select></div>
+                <button class="btn btn-danger w-100 fw-bold shadow-sm py-2 rounded-pill"
+                    onclick="window.confirmDeleteRecord()">XÓA VĨNH VIỄN</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="editSystemStudentModal" class="modal-overlay app-dialog-overlay admin-student-edit-modal"
+        style="display: none;" onclick="window.closeModalOutside(event, 'editSystemStudentModal')"
+        role="dialog" aria-modal="true">
+        <div class="modal-content app-dialog app-dialog-md" onclick="event.stopPropagation()">
+            <div class="modal-header app-dialog-header">
+                <h4 class="fw-bold m-0"><i class="fas fa-user-edit me-2 text-primary"></i>Sửa thông tin Học
+                    sinh</h4>
+                <button class="close-modal-btn"
+                    onclick="document.getElementById('editSystemStudentModal').style.display='none'">✖</button>
+            </div>
+            <div class="modal-body p-3 app-dialog-body">
+                <input type="hidden" id="editSystemStudentId">
+                <div class="mb-3">
+                    <label class="form-label fw-bold text-muted">Tên học sinh</label>
+                    <input type="text" id="editSystemStudentName" class="form-control fw-bold">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label fw-bold text-muted">Trường học</label>
+                    <input type="text" id="editSystemStudentSchool" class="form-control"
+                        placeholder="Nhập tên trường...">
+                </div>
+                <button class="btn btn-primary w-100 py-3 rounded-pill fw-bold mt-4 shadow-sm"
+                    onclick="window.saveSystemStudentEdit()">LƯU THAY ĐỔI</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="printContainer" class="print-capture-container"></div>
+    <div id="imagePreviewModal" class="modal-overlay image-preview-modal" style="display: none;"
+        onclick="window.closeModalOutside(event, 'imagePreviewModal')">
+        <div class="modal-content preview-modal image-preview-dialog">
+            <div class="modal-header">
+                <h3>Ảnh Phiếu Đánh Giá</h3><button class="close-modal-btn"
+                    onclick="window.closePreviewModal()">✖</button>
+            </div>
+            <div class="modal-body image-preview-container" id="previewImageContainer">
+            </div>
+            <div class="modal-footer"><button class="btn btn-primary fw-bold px-4"
+                    onclick="window.copyPreviewImage()"><i class="fas fa-copy me-2"></i>Copy ảnh</button><button class="btn btn-secondary fw-bold px-4"
+                    onclick="window.downloadPreviewImage()"><i class="fas fa-download me-2"></i>Tải về máy</button>
+            </div>
+        </div>
+    </div>
+
+    <script type="module" src="src/js/app.js?v=20260902-loading-performance-1"></script>
+
+    <script src="src/js/ui/mobile-controls.js?v=20260902-ios-focus-zoom-5"></script>
+</body>
+</html>

@@ -1,0 +1,1835 @@
+/* =========================================================================
+   PC DESKTOP CHỈ - LƯỚI 3 CỘT DANH SÁCH HỌC SINH (XEM ĐÁNH GIÁ)
+   ========================================================================= */
+@media (min-width: 769px) {
+
+    /* 1. Container chứa danh sách: bỏ max-height để hiện đủ */
+    #filter-students-list {
+        max-height: none !important;
+        overflow-y: visible !important;
+    }
+
+    /* 2. Dàn wrapper thành lưới 3 cột */
+    #filter-students-list .filter-student-list-mobile {
+        display: grid !important;
+        grid-template-columns: repeat(3, 1fr) !important;
+        gap: 15px !important;
+    }
+
+    /* 3. Style mỗi item thành card */
+    #filter-students-list .filter-student-item {
+        flex-direction: column !important;
+        align-items: center !important;
+        justify-content: center !important;
+        text-align: center !important;
+        background: #ffffff !important;
+        border-radius: 12px !important;
+        border: 1px solid #e2e8f0 !important;
+        border-top: 4px solid #16a34a !important;
+        padding: 20px 16px !important;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.07) !important;
+        cursor: pointer !important;
+        transition: all 0.25s ease !important;
+        gap: 8px !important;
+    }
+
+    #filter-students-list .filter-student-item:hover {
+        transform: translateY(-4px) !important;
+        box-shadow: 0 10px 24px rgba(0, 0, 0, 0.12) !important;
+        border-top-color: #15803d !important;
+        background: #f0fdf4 !important;
+    }
+
+    /* 4. Tên học sinh căn giữa, in đậm */
+    #filter-students-list .fsi-name {
+        font-size: 1rem !important;
+        font-weight: 800 !important;
+        text-align: center !important;
+        color: #1e293b !important;
+    }
+
+    /* 5. Icon avatar */
+    #filter-students-list .fsi-icon {
+        font-size: 1.8rem !important;
+        color: #16a34a !important;
+        margin-bottom: 4px !important;
+    }
+
+    /* 6. Badge lớp căn giữa */
+    #filter-students-list .fsi-badge {
+        display: inline-block !important;
+        border-radius: 20px !important;
+        padding: 4px 12px !important;
+        font-size: 0.8rem !important;
+        font-weight: 700 !important;
+    }
+
+    /* 7. Ẩn mũi tên mobile trên PC */
+    #filter-students-list .fsi-arrow {
+        display: none !important;
+    }
+
+    /* 8. Ẩn filter-student-card kiểu cũ (nếu còn) trên PC */
+    body #filter-students-list .filter-student-card {
+        display: none !important;
+    }
+}
+
+/* =========================================================================
+   NÚT "ĐÃ XEM" BẢNG TIN
+   ========================================================================= */
+#btn-clear-news {
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.3s, color 0.3s;
+    font-weight: 600;
+}
+
+#btn-clear-news:active {
+    transform: translateY(1px);
+}
+
+/* Transition mượt khi vuốt .news-item */
+.news-item {
+    transition: transform 0.2s ease, opacity 0.2s ease;
+    touch-action: pan-y;
+    /* chỉ block scroll ngang, cho scroll dọc */
+    will-change: transform;
+    cursor: grab;
+}
+
+/* =========================================================================
+   SORTABLEJS - HIỆU ỨNG KÉO THẢ THẺ HỌC SINH
+   ========================================================================= */
+
+/* Thẻ đang được nhấn giữ / chọn */
+.sortable-chosen {
+    transform: scale(1.05) !important;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2), 0 8px 16px rgba(0, 0, 0, 0.12) !important;
+    background: #ffffff !important;
+    z-index: 9999 !important;
+    transition: transform 0.18s cubic-bezier(0.34, 1.56, 0.64, 1),
+        box-shadow 0.18s ease !important;
+    cursor: grabbing !important;
+}
+
+/* Clone đang bay theo ngón tay */
+.sortable-drag {
+    transform: scale(1.05) !important;
+    box-shadow: 0 24px 48px rgba(0, 0, 0, 0.25), 0 10px 20px rgba(0, 0, 0, 0.15) !important;
+    background: #ffffff !important;
+    opacity: 1 !important;
+    z-index: 99999 !important;
+    border-radius: 14px !important;
+}
+
+/* Ghost – vị trí cũ của thẻ (placeholder) */
+.sortable-ghost {
+    opacity: 0.3 !important;
+    background: transparent !important;
+    border: 2px dashed #94a3b8 !important;
+    box-shadow: none !important;
+    transform: scale(1) !important;
+    border-radius: 14px !important;
+}
+
+/* =========================================================================
+   BTN-PILL MÀU SẮC CS5-CS10 (giao diện chọn cơ sở)
+   ========================================================================= */
+.btn-pill.cs-5 {
+    background-color: #ede9fe !important;
+    color: #5b21b6 !important;
+}
+
+.btn-pill.cs-6 {
+    background-color: #cffafe !important;
+    color: #0e7490 !important;
+}
+
+.btn-pill.cs-7 {
+    background-color: #fce7f3 !important;
+    color: #9d174d !important;
+}
+
+.btn-pill.cs-8 {
+    background-color: #ecfccb !important;
+    color: #3f6212 !important;
+}
+
+.btn-pill.cs-9 {
+    background-color: #ccfbf1 !important;
+    color: #115e59 !important;
+}
+
+.btn-pill.cs-10 {
+    background-color: #e0e7ff !important;
+    color: #3730a3 !important;
+}
+
+/* =========================================================================
+   ẨN HÌNH ẢNH (img/svg) BÊN TRONG NÚT CHỌN CƠ SỞ
+   ========================================================================= */
+#ui-facility-nhap-lieu .btn-pill img,
+#ui-facility-nhap-lieu .btn-pill svg,
+#ui-facility-tao .btn-pill img,
+#ui-facility-tao .btn-pill svg,
+#ui-facility-tao-khoi .btn-pill img,
+#ui-facility-tao-khoi .btn-pill svg {
+    display: none !important;
+}
+
+/* Căn giữa text trong btn-pill sau khi ẩn ảnh */
+#ui-facility-nhap-lieu .btn-pill,
+#ui-facility-tao .btn-pill,
+#ui-facility-tao-khoi .btn-pill {
+    justify-content: center !important;
+    text-align: center !important;
+}
+
+/* =========================================================================
+   MOBILE - ẨN NÚT XUẤT PDF
+   ========================================================================= */
+@media (max-width: 768px) {
+    .btn-export-pdf {
+        display: none !important;
+    }
+}
+
+/* =========================================================================
+   IN PDF / @media print - CHỐNG CẮT BẢNG ĐÁNH GIÁ NGANG TRANG
+   ========================================================================= */
+@media print {
+
+    /* Mỗi khối bảng tháng không bị cắt đôi */
+    .excel-table-wrapper,
+    .eval-custom-table,
+    .month-block,
+    .table-block {
+        page-break-inside: avoid !important;
+        break-inside: avoid !important;
+    }
+
+    /* Mỗi hàng trong bảng không bị cắt ngang */
+    .eval-custom-table tr,
+    .eval-custom-table tbody {
+        page-break-inside: avoid !important;
+        break-inside: avoid !important;
+    }
+
+    /* Tiêu đề tháng luôn đi kèm với bảng bên dưới */
+    .eval-custom-table thead,
+    .month-heading {
+        page-break-after: avoid !important;
+        break-after: avoid !important;
+    }
+
+    /* Khoảng trắng giữa các khối - tránh ngắt trang thừa */
+    .eval-custom-table+.eval-custom-table {
+        margin-top: 16px;
+    }
+}
+
+/* Áp dụng thêm cho html2canvas sandbox (không phải @media print
+   nhưng cần để tránh overflow khi chụp ảnh) */
+.excel-table-wrapper,
+.eval-custom-table {
+    page-break-inside: avoid;
+    break-inside: avoid;
+}
+
+/* =========================================================================
+   SORTABLEJS MOBILE - CHỐNG BÔI ĐEN CHỮ KHI KÉO THẢ
+   ========================================================================= */
+.filter-student-card,
+.student-card,
+.drag-handle {
+    -webkit-touch-callout: none !important;
+    /* Tắt menu long-press iOS */
+    -webkit-user-select: none !important;
+    -khtml-user-select: none !important;
+    -moz-user-select: none !important;
+    -ms-user-select: none !important;
+    user-select: none !important;
+    touch-action: pan-y !important;
+    /* Cho scroll dọc, chặn kéo ngang native */
+}
+
+/* Khi đang kéo (fallback polyfill SortableJS): bảo toàn visual */
+.sortable-fallback {
+    opacity: 1 !important;
+    transform: scale(1.05) !important;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2) !important;
+    background: #ffffff !important;
+    z-index: 99999 !important;
+    pointer-events: none !important;
+}
+
+/* =========================================================================
+   @media print - TĂNG CƯỜNG CHỐNG CẮT BẢNG (override triệt để)
+   ========================================================================= */
+@media print {
+
+    @page {
+        margin: 0 !important;
+        /* Xóa lề mặc định để tắt Header/Footer của trình duyệt */
+    }
+
+    body {
+        padding: 15mm 10mm !important;
+        /* Bù lại khoảng cách an toàn cho nội dung để không dính sát mép giấy */
+        background: #ffffff !important;
+        color: #000000 !important;
+    }
+
+    /* Đổi toàn bộ chữ Đỏ thành Đen */
+    table td,
+    table th,
+    .nhan-xet-text,
+    .text-danger {
+        color: #000000 !important;
+    }
+
+    /* 1. Ép các container dùng flex/grid về block để không phá cấu trúc ngắt trang */
+    #area-so-a2,
+    #printContainer,
+    #capture-area,
+    .results-container,
+    .excel-table-wrapper,
+    .smooth-box,
+    .eval-section {
+        margin: 0 auto !important;
+        width: 100% !important;
+        max-width: 210mm !important;
+        /* Vừa khổ A4 */
+        display: block !important;
+        float: none !important;
+    }
+
+    /* 2. Cấm ngắt trang sâu đến tận cùng bảng */
+    table,
+    .eval-custom-table,
+    .excel-table-wrapper,
+    .month-block,
+    .table-block,
+    thead,
+    tbody,
+    tfoot,
+    tr,
+    td,
+    th,
+    .khu-vuc-nhan-xet {
+        page-break-inside: avoid !important;
+        break-inside: avoid !important;
+        -webkit-column-break-inside: avoid !important;
+    }
+
+    /* Đảm bảo thẻ table không bị vỡ bố cục khi in */
+    table {
+        border-collapse: collapse !important;
+        width: 100% !important;
+    }
+
+    /* Tiêu đề luôn đi kèm với nội dung bên dưới */
+    thead,
+    .month-heading,
+    h3,
+    h4,
+    h5,
+    h6 {
+        page-break-after: avoid !important;
+        break-after: avoid !important;
+    }
+
+    /* 3. Tắt hiệu ứng không cần thiết khi in */
+    * {
+        box-shadow: none !important;
+        text-shadow: none !important;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+    }
+
+    /* 4. Đảm bảo nền trắng, chữ đen khi in */
+
+    /* 5. Ẩn toàn bộ giao diện app, chỉ giữ vùng in */
+    .sidebar,
+    .content-wrapper>*:not(#main-content-area),
+    .bottom-nav-mobile,
+    .mobile-header,
+    #exportModal,
+    #imagePreviewModal {
+        display: none !important;
+    }
+}
+
+/* =========================================================================
+   WIZARD FLOW & CHUYỂN CẢNH UX (CHỈ ÁP DỤNG MOBILE)
+   ========================================================================= */
+
+@media (max-width: 768px) {
+
+    /* Trạng thái khi kích hoạt wizard: Ẩn tất cả các khu vực thuộc Step */
+    body[data-wizard-step] #btn-back-to-khoi,
+    body[data-wizard-step] #step-1-khoi-nl,
+    body[data-wizard-step] #step-3-form-nl,
+    body[data-wizard-step] #search-student-container,
+    body[data-wizard-step] #area-cards,
+    body[data-wizard-step] #save-footer,
+    body[data-wizard-step] #toggle-4-bars-btn {
+        display: none !important;
+    }
+
+    body[data-wizard-step]:not([data-wizard-step="1"]) #nhap-lieu #ui-facility-nhap-lieu {
+        display: none;
+    }
+
+    /* WIZARD BƯỚC 1: Chọn Cơ sở */
+    body[data-wizard-step="1"] #nhap-lieu #ui-facility-nhap-lieu {
+        display: grid;
+        animation: wizardFadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+
+    /* WIZARD BƯỚC 2: Chọn Khối */
+    body[data-wizard-step="2"] #step-1-khoi-nl {
+        display: block !important;
+        animation: wizardFadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+
+    /* WIZARD BƯỚC 3: Điền form */
+    body[data-wizard-step="3"] #step-3-form-nl {
+        display: block !important;
+        animation: wizardFadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+
+    body[data-wizard-step="3"].teacher-class-selected #search-student-container,
+    body[data-wizard-step="3"].teacher-class-selected #area-cards,
+    body[data-wizard-step="3"].teacher-class-selected #save-footer {
+        display: block !important;
+        animation: wizardFadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+
+    /* Keep the student picker above the animated card/report stacking contexts. */
+    body[data-wizard-step="3"] #search-student-container {
+        position: relative !important;
+        z-index: 1200 !important;
+        overflow: visible !important;
+    }
+
+    body[data-wizard-step="3"] #area-cards,
+    body[data-wizard-step="3"] #save-footer {
+        position: relative !important;
+        z-index: 1 !important;
+    }
+
+    #studentPickerList {
+        z-index: 1300 !important;
+        max-height: min(42vh, 320px) !important;
+        overscroll-behavior: contain;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    body.student-picker-open #empty-card-msg {
+        display: none !important;
+    }
+
+    /* Hiệu ứng chuyển cảnh (lướt mượt mà từ dưới lên) */
+    @keyframes wizardFadeIn {
+        0% {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        100% {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+}
+
+/* =========================================================================
+   TỐI ƯU SCROLL CHUẨN NATIVE CHO LỊCH SỬ / SIDE PANEL
+   ========================================================================= */
+
+body #panel-content-list,
+body .side-panel-body {
+    flex: 1 1 auto;
+    min-height: 0;
+    overflow-y: auto !important;
+    overscroll-behavior: contain !important;
+    /* Ngăn lỗi cuộn lan ra nền phía sau */
+    -webkit-overflow-scrolling: touch !important;
+    /* Momentum scrolling nảy trên iOS/Android */
+    padding-right: 5px !important;
+    /* Dành chỗ cho thanh cuộn */
+}
+
+/* Làm thanh cuộn mỏng và tinh tế tàng hình giống app Native */
+body #panel-content-list::-webkit-scrollbar,
+body .side-panel-body::-webkit-scrollbar {
+    width: 4px !important;
+}
+
+body #panel-content-list::-webkit-scrollbar-track,
+body .side-panel-body::-webkit-scrollbar-track {
+    background: transparent !important;
+}
+
+body #panel-content-list::-webkit-scrollbar-thumb,
+body .side-panel-body::-webkit-scrollbar-thumb {
+    background: rgba(156, 163, 175, 0.4) !important;
+    /* Xám mờ */
+    border-radius: 10px !important;
+}
+
+body #panel-content-list::-webkit-scrollbar-thumb:hover,
+body .side-panel-body::-webkit-scrollbar-thumb:hover {
+    background: rgba(156, 163, 175, 0.8) !important;
+}
+
+
+/* === MOBILE: Z-INDEX FIX CHO MODAL DANH SÁCH HỆ THỐNG === */
+#systemListModal {
+    z-index: 100000 !important;
+}
+
+/* === MOBILE: ẨN NÚT DANH SÁCH TRÊN BOTTOM NAV (tránh nhầm lẫn UX) === */
+@media (max-width: 768px) {
+    #bot-tab-danh-sach {
+        display: none !important;
+    }
+
+    /* Transition mượt cho hàng bộ lọc khi ẩn/hiện */
+    #sys-filters-row {
+        max-height: 200px;
+        overflow: visible;
+        opacity: 1;
+        transition: max-height 0.3s ease, opacity 0.3s ease;
+    }
+}
+
+/* =========================================================================
+   DRAG & DROP MOBILE FIX - Khóa bôi đen chữ & Context Menu
+   ========================================================================= */
+
+/* Khóa bôi đen chữ và popup Copy/Paste trên toàn bộ thẻ học sinh */
+.student-card {
+    touch-action: pan-y;
+    /* Cho phép scroll dọc, không chặn tương tác nội dung */
+}
+
+/* Tay cầm kéo (drag handle) - icon grip riêng biệt ở góc trái */
+.drag-handle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    min-width: 32px;
+    height: 100%;
+    padding: 4px 6px;
+    margin-right: 8px;
+    color: #cbd5e1;
+    font-size: 1.1rem;
+    cursor: grab !important;
+    border-radius: 6px;
+    transition: color 0.2s ease, background 0.15s ease;
+    -webkit-user-select: none !important;
+    -moz-user-select: none !important;
+    user-select: none !important;
+    -webkit-touch-callout: none !important;
+    touch-action: none !important;
+}
+
+.drag-handle:hover {
+    color: #64748b;
+    background: rgba(100, 116, 139, 0.1);
+}
+
+.drag-handle:active {
+    cursor: grabbing !important;
+    color: #2563eb;
+    background: rgba(37, 99, 235, 0.1);
+}
+
+/* Thẻ đang bám theo ngón tay/chuột (Nổi lên trên cùng, có bóng đổ) */
+.sortable-fallback,
+.sortable-drag {
+    opacity: 1 !important;
+    /* Không được làm mờ thẻ đang kéo */
+    background-color: #ffffff !important;
+    /* Bắt buộc phải có nền trắng hoặc màu tệp với thẻ */
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15) !important;
+    /* Đổ bóng sâu để tạo cảm giác nhấc bổng */
+    z-index: 99999 !important;
+    /* Ép nổi lên trên tất cả */
+    transform: scale(1.02) !important;
+    /* Phóng to nhẹ 2% cho giống Native App */
+    pointer-events: none !important;
+    /* Xuyên thấu click để nhận diện vị trí thả */
+    border-radius: 8px !important;
+    border: 1px solid #e2e8f0 !important;
+}
+
+/* Thẻ 'bóng ma' để lại vị trí trống trong danh sách */
+.sortable-ghost {
+    opacity: 0.4 !important;
+    background-color: #f1f5f9 !important;
+    border: 2px dashed #94a3b8 !important;
+    /* Viền đứt nét mờ */
+}
+
+/* Trạng thái đã chọn để kéo (lifted) */
+.sortable-chosen {
+    z-index: 9999 !important;
+}
+
+/* Các input bên trong thẻ vẫn được chọn văn bản bình thường */
+.student-card input,
+.student-card textarea {
+    user-select: text !important;
+    -webkit-user-select: text !important;
+    touch-action: auto !important;
+}
+
+/* =========================================================================
+   MOBILE: TỐI GIẢN THANH CÔNG CỤ XEM ĐÁNH GIÁ
+   Chỉ giữ nút Chỉnh sửa (.btn-pastel-edit), ẩn 3 nút còn lại
+   ========================================================================= */
+@media (max-width: 768px) {
+
+    /* Ẩn nút "Quay lại" (teal, nằm ngoài div flex-wrap) */
+    #area-so-a2 .btn[style*="background-color: #14b8a6"],
+    #area-so-a2 .btn-3d-back {
+        display: none !important;
+    }
+
+    /* Ẩn nút "Xuất Phiếu" và nút "Xóa" chỉ khi vai trò là Giáo viên */
+    .role-giaovien #area-so-a2 .btn-pastel-export,
+    .role-giaovien #area-so-a2 .btn-pastel-delete {
+        display: none !important;
+    }
+
+    /* Đẩy nút Chỉnh sửa về góc trái */
+    #area-so-a2 .d-flex.gap-2.flex-wrap {
+        justify-content: flex-start !important;
+        width: 100% !important;
+    }
+
+    /* Thu gọn thanh toolbar, căn trái */
+    #area-so-a2 .d-flex.justify-content-between.align-items-center.mb-4.p-3 {
+        justify-content: flex-start !important;
+        padding: 10px !important;
+    }
+}
+
+/* =========================================================================
+   CHỐNG TRÀN VĂN BẢN & Ô NHẬP LIỆU GHI CHÚ (MOBILE)
+   ========================================================================= */
+.student-card .input-nd {
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    word-wrap: break-word !important;
+    overflow-wrap: break-word !important;
+}
+
+.student-card .input-nx-dynamic {
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    word-wrap: break-word !important;
+    overflow-wrap: break-word !important;
+}
+
+@media (max-width: 768px) {
+
+    /* Đảm bảo khung cha chứa ô nhập cũng không bị giãn rộng trên mobile */
+    .student-card .dynamic-inputs-container,
+    .student-card .row,
+    .student-card .col-md-3,
+    .student-card .col-md-9 {
+        max-width: 100% !important;
+        box-sizing: border-box !important;
+        /* Xóa khoảng trống thừa trên mobile */
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+    }
+}
+
+/* =========================================================================
+   GHI CHÚ (NOTE BOX) TRONG LỊCH SỬ ĐÁNH GIÁ (STICKY NOTE)
+   ========================================================================= */
+.history-note-box {
+    background-color: #fefce8;
+    border-left: 4px solid #facc15;
+    padding: 12px 15px;
+    margin-top: 10px;
+    border-radius: 4px;
+    font-size: 0.95rem;
+    color: #334155;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    /* Bóng mờ nhẹ tạo cảm giác giấy nổi */
+}
+
+.note-toggle-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 4px 8px;
+    border-radius: 6px;
+    transition: background-color 0.2s ease;
+}
+
+.note-toggle-btn:hover {
+    background-color: #f8fafc;
+}
+
+/* =========================================================================
+   TỐI ƯU GIAO DIỆN THẺ HỌC SINH MOBILE (Yêu cầu 2)
+   ========================================================================= */
+@media (max-width: 768px) {
+
+    /* A. Thu nhỏ 4 nút tròn công cụ */
+    .student-card .d-flex>button.btn-sm {
+        width: 32px !important;
+        height: 32px !important;
+        font-size: 14px !important;
+        padding: 0 !important;
+        display: flex !important;
+        justify-content: center !important;
+        align-items: center !important;
+        flex: 0 0 32px !important;
+    }
+
+    /* B. Khi không ở bước wizard 3: vẫn bố cục 2 dòng (bước 3 đã xử lý ở khối body[data-wizard-step="3"] #area-cards …) */
+    #area-cards .student-card.card-custom {
+        justify-content: flex-start !important;
+        gap: 6px !important;
+    }
+
+    #area-cards .student-card>.d-flex.justify-content-between.align-items-center {
+        margin-bottom: 4px !important;
+    }
+
+    #area-cards .student-card .dynamic-inputs-container {
+        display: flex !important;
+        flex-wrap: wrap !important;
+        gap: 8px !important;
+        overflow-x: visible !important;
+    }
+
+    #area-cards .student-card .input-nd {
+        flex: 1 1 100% !important;
+        width: 100% !important;
+        min-width: 100% !important;
+        margin-bottom: 0 !important;
+    }
+
+    #area-cards .student-card .input-nx-dynamic {
+        flex: 1 1 calc(33.333% - 6px) !important;
+        min-width: min(100%, 104px) !important;
+        width: auto !important;
+    }
+}
+
+/* =========================================================================
+   GLOBAL LOADING SCREEN
+   ========================================================================= */
+#global-loader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    height: 100dvh;
+    /* Tối ưu cho Mobile */
+    background-color: #000000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 999999;
+    /* Đảm bảo đè lên mọi thứ */
+}
+
+/* Hiệu ứng logo đập như nhịp tim */
+.loader-pulse-logo {
+    width: 150px;
+    /* Điều chỉnh kích thước logo cho phù hợp */
+    height: auto;
+    animation: pulse 1.5s infinite ease-in-out;
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+        opacity: 0.8;
+    }
+
+    50% {
+        transform: scale(1.05);
+        opacity: 1;
+    }
+
+    100% {
+        transform: scale(1);
+        opacity: 0.8;
+    }
+}
+
+/* =========================================================================
+   MOBILE DASHBOARD POLISH - layout only
+   ========================================================================= */
+
+@media (max-width: 768px) {
+    .mobile-header {
+        height: 52px !important;
+        min-height: 52px !important;
+        padding: 0 12px !important;
+        background: #111827 !important;
+        box-shadow: 0 6px 16px rgba(15, 23, 42, 0.14) !important;
+    }
+
+    .mobile-header h5 {
+        font-size: 0.82rem !important;
+        line-height: 1.15 !important;
+        letter-spacing: 0 !important;
+        white-space: nowrap !important;
+    }
+
+    .btn-glass-logout,
+    .btn-glass-back {
+        width: 34px !important;
+        height: 34px !important;
+        border-radius: 10px !important;
+        box-shadow: none !important;
+    }
+
+    .btn-glass-logout i,
+    .btn-glass-back i {
+        font-size: 1rem !important;
+    }
+
+    .main-container {
+        padding-top: 14px !important;
+    }
+
+    #admin-toolbar-grid {
+        grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+        gap: 10px !important;
+        padding: 6px 0 16px !important;
+        margin-top: 8px !important;
+    }
+
+    #admin-toolbar-grid::before {
+        font-size: 1rem !important;
+        margin: 0 0 4px !important;
+        letter-spacing: 0 !important;
+    }
+
+    #admin-toolbar-grid .btn-toolbar {
+        min-height: 76px !important;
+        border-radius: 16px !important;
+        background: var(--dashboard-shortcut-bg, #ffffff) !important;
+        border: 1px solid var(--dashboard-shortcut-border, #e2e8f0) !important;
+        box-shadow: 0 6px 14px rgba(15, 23, 42, 0.06) !important;
+        padding: 9px 4px 8px !important;
+        justify-content: center !important;
+        transition: transform 0.15s ease, box-shadow 0.15s ease !important;
+    }
+
+    #admin-toolbar-grid .btn-toolbar:active {
+        transform: scale(0.96) !important;
+        box-shadow: 0 3px 8px rgba(15, 23, 42, 0.08) !important;
+    }
+
+    #admin-toolbar-grid .dashboard-shortcut-icon {
+        width: 38px !important;
+        height: 38px !important;
+        border-radius: 13px !important;
+        font-size: 1.25rem !important;
+        margin: 0 auto 7px !important;
+        background: var(--dashboard-shortcut-icon-bg, #f8fafc) !important;
+        color: var(--dashboard-shortcut-accent, #334155) !important;
+        box-shadow: inset 0 0 0 1px var(--dashboard-shortcut-icon-border, rgba(148, 163, 184, 0.18)) !important;
+    }
+
+    #admin-toolbar-grid .dashboard-shortcut-label {
+        font-size: 0.68rem !important;
+        font-weight: 800 !important;
+        line-height: 1.15 !important;
+        color: var(--dashboard-shortcut-foreground, #334155) !important;
+        max-width: 100% !important;
+        min-height: 1.5em !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+    }
+
+    #admin-toolbar-grid .dashboard-shortcut-facility {
+        --dashboard-shortcut-bg: #f8fbfa;
+        --dashboard-shortcut-border: #c8ddd7;
+        --dashboard-shortcut-foreground: #23423c;
+        --dashboard-shortcut-accent: #0f766e;
+        --dashboard-shortcut-icon-bg: #e4f3ef;
+        --dashboard-shortcut-icon-border: #b8dcd3;
+    }
+
+    #admin-toolbar-grid .dashboard-shortcut-teachers {
+        --dashboard-shortcut-bg: #f8faff;
+        --dashboard-shortcut-border: #cbd7eb;
+        --dashboard-shortcut-foreground: #263c5d;
+        --dashboard-shortcut-accent: #315ea8;
+        --dashboard-shortcut-icon-bg: #e7eef9;
+        --dashboard-shortcut-icon-border: #c1d0e8;
+    }
+
+    #admin-toolbar-grid .dashboard-shortcut-system-list {
+        --dashboard-shortcut-bg: #fbf9fd;
+        --dashboard-shortcut-border: #ddd2e8;
+        --dashboard-shortcut-foreground: #463557;
+        --dashboard-shortcut-accent: #70489b;
+        --dashboard-shortcut-icon-bg: #f0eaf6;
+        --dashboard-shortcut-icon-border: #d7c8e5;
+    }
+
+    #admin-toolbar-grid .dashboard-shortcut-export {
+        --dashboard-shortcut-bg: #f8fbf9;
+        --dashboard-shortcut-border: #c8dfd0;
+        --dashboard-shortcut-foreground: #274333;
+        --dashboard-shortcut-accent: #167447;
+        --dashboard-shortcut-icon-bg: #e5f3ea;
+        --dashboard-shortcut-icon-border: #bdddc9;
+    }
+
+    body .bg-dashboard-gray {
+        margin-top: 8px !important;
+    }
+
+    body .bg-dashboard-gray .widget-title-modern {
+        font-size: 1rem !important;
+        margin-bottom: 10px !important;
+        letter-spacing: 0 !important;
+    }
+
+}
+
+@media (max-width: 390px) {
+    #admin-toolbar-grid {
+        gap: 8px !important;
+    }
+
+    #admin-toolbar-grid .btn-toolbar {
+        min-height: 70px !important;
+        border-radius: 14px !important;
+    }
+
+    #admin-toolbar-grid .dashboard-shortcut-icon {
+        width: 34px !important;
+        height: 34px !important;
+        font-size: 1.1rem !important;
+    }
+
+    #admin-toolbar-grid .dashboard-shortcut-label {
+        font-size: 0.62rem !important;
+    }
+
+}
+
+/* =========================================================================
+   MOBILE FILTER STUDENT GRID - visual only
+   ========================================================================= */
+
+@media (max-width: 768px) {
+    #filter-students-list {
+        max-height: none !important;
+        overflow-y: visible !important;
+        padding: 2px 0 0 !important;
+        margin-top: 12px !important;
+    }
+
+    #filter-students-list .filter-student-list-mobile {
+        display: grid !important;
+        grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+        gap: 8px !important;
+        padding: 0 !important;
+    }
+
+    #filter-students-list .filter-student-item {
+        min-width: 0 !important;
+        min-height: 104px !important;
+        padding: 10px 6px 8px !important;
+        border-radius: 14px !important;
+        border: 1px solid #e2e8f0 !important;
+        background: #ffffff !important;
+        box-shadow: 0 6px 14px rgba(15, 23, 42, 0.06) !important;
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center !important;
+        justify-content: flex-start !important;
+        gap: 6px !important;
+        text-align: center !important;
+        overflow: hidden !important;
+    }
+
+    #filter-students-list .filter-student-item:active {
+        transform: scale(0.97) !important;
+        background: #f8fafc !important;
+    }
+
+    #filter-students-list .fsi-icon {
+        width: 30px !important;
+        height: 30px !important;
+        min-width: 30px !important;
+        border-radius: 999px !important;
+        background: #dcfce7 !important;
+        color: #16a34a !important;
+        display: inline-flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        font-size: 0.86rem !important;
+        margin: 0 !important;
+    }
+
+    #filter-students-list .fsi-name {
+        width: 100% !important;
+        color: #0f172a !important;
+        font-size: 0.72rem !important;
+        font-weight: 850 !important;
+        line-height: 1.22 !important;
+        text-align: center !important;
+        white-space: normal !important;
+        overflow: hidden !important;
+        display: -webkit-box !important;
+        -webkit-line-clamp: 2 !important;
+        -webkit-box-orient: vertical !important;
+        word-break: break-word !important;
+    }
+
+    #filter-students-list .fsi-badge {
+        max-width: 100% !important;
+        border-radius: 999px !important;
+        padding: 3px 6px !important;
+        font-size: 0.56rem !important;
+        font-weight: 800 !important;
+        line-height: 1.1 !important;
+        white-space: nowrap !important;
+        overflow: hidden !important;
+        text-overflow: ellipsis !important;
+    }
+
+    #filter-students-list .fsi-arrow {
+        display: none !important;
+    }
+}
+
+@media (max-width: 380px) {
+    #filter-students-list .filter-student-list-mobile {
+        gap: 6px !important;
+    }
+
+    #filter-students-list .filter-student-item {
+        min-height: 98px !important;
+        padding: 9px 5px 7px !important;
+    }
+
+    #filter-students-list .fsi-name {
+        font-size: 0.68rem !important;
+    }
+
+    #filter-students-list .fsi-badge {
+        font-size: 0.52rem !important;
+    }
+}
+
+/* =========================================================================
+   MOBILE STUDENT CARD SORTING - smoother long-press drag
+   ========================================================================= */
+
+#area-cards {
+    overscroll-behavior: contain;
+}
+
+#area-cards .student-card {
+    cursor: default !important;
+    transition: transform 0.18s cubic-bezier(0.22, 1, 0.36, 1),
+        box-shadow 0.18s ease,
+        opacity 0.18s ease !important;
+}
+
+#area-cards .student-card:active {
+    cursor: default !important;
+}
+
+body.student-card-sorting,
+body.student-card-sorting #area-cards {
+    user-select: none !important;
+    -webkit-user-select: none !important;
+    -webkit-touch-callout: none !important;
+}
+
+body.student-card-sorting #area-cards .student-card:not(.sortable-chosen):not(.sortable-ghost):not(.sortable-drag) {
+    transition: transform 0.17s cubic-bezier(0.22, 1, 0.36, 1) !important;
+}
+
+#area-cards .sortable-chosen {
+    position: relative !important;
+    z-index: 9998 !important;
+    transform: scale(1.015) !important;
+    box-shadow: 0 16px 34px rgba(15, 23, 42, 0.16) !important;
+}
+
+#area-cards .sortable-fallback,
+#area-cards .sortable-drag,
+.sortable-fallback,
+.sortable-drag {
+    opacity: 1 !important;
+    z-index: 100000 !important;
+    pointer-events: none !important;
+    background: #ffffff !important;
+    border-radius: 16px !important;
+    border: 1px solid rgba(20, 184, 166, 0.35) !important;
+    box-shadow:
+        0 28px 55px rgba(15, 23, 42, 0.26),
+        0 10px 22px rgba(20, 184, 166, 0.16) !important;
+    transform: scale(1.035) rotate(-0.35deg) !important;
+}
+
+#area-cards .sortable-ghost,
+.sortable-ghost {
+    opacity: 1 !important;
+    background: rgba(20, 184, 166, 0.08) !important;
+    border: 2px dashed rgba(20, 184, 166, 0.55) !important;
+    border-radius: 16px !important;
+    box-shadow: none !important;
+}
+
+#area-cards .sortable-ghost > * {
+    opacity: 0.22 !important;
+}
+
+@media (max-width: 768px) {
+    #area-cards .student-card {
+        touch-action: pan-y !important;
+        will-change: auto;
+    }
+
+    #area-cards .student-card input,
+    #area-cards .student-card textarea,
+    #area-cards .student-card select,
+    #area-cards .student-card button,
+    #area-cards .student-card .btn {
+        touch-action: manipulation !important;
+        user-select: text !important;
+        -webkit-user-select: text !important;
+    }
+
+    #area-cards .drag-handle {
+        color: #94a3b8 !important;
+        background: rgba(148, 163, 184, 0.12) !important;
+        cursor: grab !important;
+        touch-action: none !important;
+    }
+}
+
+/* =========================================================================
+   MOBILE TOP NAV BACK BUTTON
+   ========================================================================= */
+
+@media (max-width: 768px) {
+    .mobile-header .btn-glass-back {
+        opacity: 0 !important;
+        visibility: hidden !important;
+        pointer-events: none !important;
+        display: flex !important;
+    }
+
+    .mobile-header .btn-glass-back.is-visible {
+        opacity: 1 !important;
+        visibility: visible !important;
+        pointer-events: auto !important;
+    }
+}
+
+/* =========================================================================
+   REVIEW DETAIL HEADER - polished student summary and actions
+   ========================================================================= */
+.eval-detail-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px;
+    margin-bottom: 18px;
+    padding: 14px 16px 16px;
+    border: 1px solid #d9e3ee;
+    border-radius: 16px;
+    background: #ffffff;
+    box-shadow: 0 10px 24px rgba(15, 23, 42, 0.06);
+}
+
+.eval-detail-topbar {
+    order: 2;
+    flex: 0 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 8px;
+    min-height: auto;
+    margin-bottom: 0;
+}
+
+.eval-action-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 34px;
+    height: 34px;
+    min-width: 34px;
+    min-height: 34px;
+    border-radius: 11px;
+    font-weight: 800;
+    line-height: 1;
+    border: 0;
+    transition: transform 0.16s ease, box-shadow 0.16s ease, background 0.16s ease;
+    white-space: nowrap;
+}
+
+.eval-detail-actions {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 7px;
+    flex-wrap: nowrap;
+    padding-top: 2px;
+}
+
+.eval-action-btn {
+    padding: 0;
+    font-size: 0.9rem;
+}
+
+.eval-action-btn:hover {
+    transform: translateY(-1px);
+}
+
+.eval-action-edit {
+    background: #fffaf0;
+}
+
+.eval-action-export {
+    background: #f5f9ff;
+}
+
+.eval-action-delete {
+    background: #fff7f7;
+}
+
+.eval-action-edit i {
+    color: #b45309;
+}
+
+.eval-action-export i {
+    color: #0369a1;
+}
+
+.eval-action-delete i {
+    color: #b91c1c;
+}
+
+.eval-student-info {
+    order: 1;
+    min-width: 0;
+    flex: 1;
+}
+
+.eval-student-line {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.eval-student-name {
+    margin: 0;
+    color: #172033;
+    font-size: 1.34rem;
+    font-weight: 900;
+    line-height: 1.18;
+    text-transform: uppercase;
+    overflow-wrap: anywhere;
+}
+
+.eval-student-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 7px;
+    margin-top: 0;
+}
+
+.eval-student-tags span {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    min-height: 26px;
+    padding: 5px 9px;
+    border-radius: 999px;
+    color: #0f766e;
+    background: #ecfdf5;
+    border: 1px solid #a7f3d0;
+    font-size: 0.72rem;
+    font-weight: 850;
+}
+
+.eval-student-tags span:nth-child(2) {
+    color: #0369a1;
+    background: #eff6ff;
+    border-color: #bfdbfe;
+}
+
+@media (max-width: 768px) {
+    .eval-detail-header {
+        margin-bottom: 14px;
+        padding: 12px 14px;
+        border-radius: 14px;
+        gap: 10px;
+    }
+
+    .eval-detail-topbar {
+        gap: 7px;
+        min-height: auto;
+        margin-bottom: 0;
+    }
+
+    .eval-detail-actions {
+        display: flex;
+        justify-content: flex-end;
+        gap: 7px;
+        padding-top: 0;
+    }
+
+    .eval-action-btn {
+        width: 31px;
+        height: 31px;
+        min-width: 31px;
+        min-height: 31px;
+        border-radius: 10px;
+        font-size: 0.82rem;
+    }
+
+    .eval-action-btn i {
+        font-size: 0.82rem;
+    }
+
+    .eval-student-name {
+        font-size: 1rem;
+        line-height: 1.22;
+    }
+
+    .eval-student-line {
+        gap: 8px;
+    }
+
+    .eval-student-tags {
+        gap: 6px;
+    }
+
+    .eval-student-tags span {
+        min-height: 25px;
+        padding: 4px 8px;
+        font-size: 0.64rem;
+    }
+
+    .role-giaovien #area-so-a2 .eval-detail-actions {
+        justify-content: flex-end;
+    }
+}
+
+@media (max-width: 390px) {
+    .eval-student-name {
+        font-size: 0.95rem;
+    }
+}
+
+/* Facility selector styles live in review.css. */
+
+/* Export preview modal: compact, softer action buttons. */
+#imagePreviewModal .preview-modal {
+    border-radius: 18px;
+    padding: 22px 24px 18px;
+}
+
+#imagePreviewModal .modal-header {
+    padding-bottom: 13px;
+    margin-bottom: 12px;
+}
+
+#imagePreviewModal .modal-header h3 {
+    font-size: 1.08rem;
+    color: #16a34a;
+}
+
+#imagePreviewModal .modal-body {
+    border-radius: 12px;
+    background: #f8fafc !important;
+}
+
+#imagePreviewModal .modal-footer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 9px;
+    flex-wrap: wrap;
+    padding: 14px 0 0;
+    margin: 0;
+    border-top: 0;
+}
+
+#imagePreviewModal .modal-footer .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    min-width: 112px;
+    height: 40px;
+    padding: 0 14px !important;
+    margin: 0 !important;
+    border-radius: 12px;
+    border: 1px solid transparent;
+    box-shadow: none !important;
+    font-size: 0.88rem;
+    font-weight: 800;
+    line-height: 1;
+}
+
+#imagePreviewModal .modal-footer .btn i {
+    margin-right: 0 !important;
+    font-size: 0.9rem;
+}
+
+#imagePreviewModal .modal-footer .btn-primary {
+    color: #15803d;
+    background: #ecfdf5;
+    border-color: #bbf7d0;
+}
+
+#imagePreviewModal .modal-footer .btn-info {
+    color: #0e7490 !important;
+    background: #ecfeff;
+    border-color: #a5f3fc;
+}
+
+#imagePreviewModal .modal-footer .btn-secondary {
+    color: #475569;
+    background: #f8fafc;
+    border-color: #cbd5e1;
+}
+
+#imagePreviewModal .modal-footer .btn:active {
+    transform: translateY(1px);
+}
+
+@media (max-width: 480px) {
+    #imagePreviewModal .preview-modal {
+        width: 94%;
+        padding: 18px 16px 16px;
+    }
+
+    #imagePreviewModal .modal-footer {
+        gap: 8px;
+    }
+
+    #imagePreviewModal .modal-footer .btn {
+        min-width: 0;
+        height: 38px;
+        padding: 0 11px !important;
+        font-size: 0.82rem;
+    }
+}
+
+/* Keep success/error prompts above export preview modals. */
+.custom-modal-overlay {
+    z-index: 200000 !important;
+}
+
+.custom-modal-overlay .custom-modal {
+    z-index: 200001 !important;
+}
+
+/* Mobile evaluation zoom control, similar to spreadsheet zoom presets. */
+.eval-zoom-toolbar {
+    display: none;
+}
+
+.eval-zoom-stage {
+    transform-origin: top left;
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+}
+
+@media (max-width: 768px) {
+    .eval-zoom-toolbar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 10px;
+        margin: -4px 0 12px;
+        padding: 10px;
+        border-radius: 14px;
+        background: #f8fafc;
+        box-shadow: inset 0 0 0 1px #dbe3ee;
+    }
+
+    .eval-zoom-title {
+        display: inline-flex;
+        align-items: center;
+        gap: 7px;
+        color: #475569;
+        font-size: 0.78rem;
+        font-weight: 850;
+        white-space: nowrap;
+    }
+
+    .eval-zoom-title i {
+        color: #0f766e;
+    }
+
+    .eval-zoom-select {
+        width: 86px;
+        height: 34px;
+        padding: 0 30px 0 12px;
+        border: 0;
+        border-radius: 10px;
+        color: #0f172a;
+        background-color: #ffffff;
+        box-shadow: inset 0 0 0 1px #bfdbfe, 0 6px 14px rgba(15, 23, 42, 0.08);
+        font-size: 0.88rem;
+        font-weight: 900;
+        outline: none;
+    }
+
+    .eval-zoom-select:focus {
+        box-shadow: inset 0 0 0 2px #3b82f6, 0 8px 18px rgba(59, 130, 246, 0.16);
+    }
+
+    .eval-zoom-stage {
+        transform-origin: top left;
+        will-change: transform;
+        overflow: visible;
+    }
+
+    .eval-zoom-stage .excel-table-wrapper,
+    .eval-zoom-stage .eval-custom-table {
+        width: 100% !important;
+        max-width: none !important;
+    }
+}
+
+/* Mobile system list: replace the wide table with readable student cards. */
+.system-class-filter-group {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    min-width: 0;
+}
+
+.system-class-filter-group #sys-filter-class {
+    flex: 1 1 auto;
+    min-width: 0;
+}
+
+#systemListModal .system-list-add-student-btn {
+    display: none !important;
+    flex: 0 0 40px;
+    width: 40px;
+    height: 38px;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #0d9488;
+    border-radius: 10px;
+    background: #0f9f8f;
+    color: #ffffff;
+    box-shadow: 0 7px 16px rgba(13, 148, 136, 0.22);
+    transition: transform 160ms ease, box-shadow 160ms ease, background-color 160ms ease;
+}
+
+#systemListModal .system-list-add-student-btn.is-visible {
+    display: inline-flex !important;
+}
+
+.system-list-add-student-btn:hover,
+.system-list-add-student-btn:focus-visible {
+    background: #0d8c80;
+    box-shadow: 0 9px 20px rgba(13, 148, 136, 0.28);
+    transform: translateY(-1px);
+    outline: none;
+}
+
+.system-list-add-student-btn:active {
+    transform: translateY(0);
+}
+
+.system-list-add-student-btn.is-loading i {
+    animation: spin 0.8s linear infinite;
+}
+
+.system-list-add-student-btn.is-loading i::before {
+    content: "\f110";
+}
+
+.system-add-student-prompt {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    text-align: left;
+}
+
+.system-add-student-prompt-icon {
+    display: inline-flex;
+    flex: 0 0 42px;
+    width: 42px;
+    height: 42px;
+    align-items: center;
+    justify-content: center;
+    border-radius: 12px;
+    background: #ccfbf1;
+    color: #0f766e;
+}
+
+.system-add-student-prompt strong,
+.system-add-student-prompt small {
+    display: block;
+}
+
+.system-add-student-prompt strong {
+    color: #0f172a;
+    font-size: 1rem;
+}
+
+.system-add-student-prompt small {
+    margin-top: 3px;
+    color: #64748b;
+    font-weight: 700;
+}
+
+.system-list-cards {
+    display: none;
+}
+
+.system-empty-card {
+    margin: 16px;
+    padding: 18px;
+    border-radius: 16px;
+    background: #f8fafc;
+    color: #64748b;
+    text-align: center;
+    font-weight: 800;
+}
+
+.sys-filter-actions {
+    display: none;
+}
+
+@media (max-width: 768px) {
+    .system-list-add-student-btn {
+        flex-basis: 42px;
+        width: 42px;
+        height: 42px;
+        border-radius: 12px;
+    }
+
+    #systemListModal {
+        align-items: stretch !important;
+        padding: 10px !important;
+        z-index: 100000 !important;
+    }
+
+    #systemListModal .modal-content {
+        width: 100% !important;
+        max-width: none !important;
+        max-height: calc(100vh - 20px) !important;
+        border-radius: 18px !important;
+        padding: 16px 14px 12px !important;
+    }
+
+    #systemListModal .modal-header {
+        padding: 4px 4px 12px !important;
+        margin-bottom: 10px !important;
+    }
+
+    #systemListModal .modal-header h3 {
+        font-size: 1.05rem !important;
+        line-height: 1.25 !important;
+    }
+
+    #systemListModal #sys-filter-panel {
+        padding: 12px !important;
+        border: 0 !important;
+        border-radius: 16px !important;
+        background: #f8fafc !important;
+        margin-bottom: 10px;
+    }
+
+    #systemListModal #sys-filter-panel .row {
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+    }
+
+    #systemListModal #sys-filter-panel [class*="col-"] {
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+    }
+
+    #systemListModal #systemListFacSelect,
+    #systemListModal #sys-filter-name,
+    #systemListModal #sys-filter-class,
+    #systemListModal #sys-filter-school {
+        min-height: 40px;
+        border-radius: 10px !important;
+        border: 0 !important;
+        background: #ffffff !important;
+        box-shadow: inset 0 0 0 1px #dbe3ee;
+        font-size: 0.9rem;
+    }
+
+    #systemListModal #systemListCount {
+        display: inline-flex;
+        width: 100%;
+        align-items: center;
+        justify-content: center;
+        margin-top: 8px !important;
+        border-radius: 12px;
+        background: #e0f2fe !important;
+        color: #075985 !important;
+        font-size: 0.9rem !important;
+    }
+
+    #systemListModal .modal-body {
+        background: #eef4f8 !important;
+        overflow-x: hidden !important;
+        padding: 10px 10px 14px !important;
+        border-radius: 16px;
+    }
+
+    #systemListModal .table-responsive {
+        display: none !important;
+    }
+
+    #systemListModal .system-list-cards {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        padding: 0;
+    }
+
+    .system-student-card {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        padding: 14px;
+        border-radius: 16px;
+        background: linear-gradient(135deg, #ffffff 0%, #f0fdfa 100%);
+        box-shadow: 0 10px 22px rgba(15, 23, 42, 0.10), inset 0 0 0 1px rgba(20, 184, 166, 0.18);
+    }
+
+    .system-student-card:nth-child(2n) {
+        background: linear-gradient(135deg, #ffffff 0%, #eff6ff 100%);
+        box-shadow: 0 10px 22px rgba(15, 23, 42, 0.10), inset 0 0 0 1px rgba(59, 130, 246, 0.16);
+    }
+
+    .system-student-card-head {
+        display: grid;
+        grid-template-columns: 34px minmax(0, 1fr) auto;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .system-student-index {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 34px;
+        height: 34px;
+        border-radius: 12px;
+        background: #eef2ff;
+        color: #334155;
+        font-weight: 900;
+        font-size: 0.9rem;
+    }
+
+    .system-student-main {
+        min-width: 0;
+    }
+
+    .system-student-main h4 {
+        margin: 0 0 6px;
+        color: #172033;
+        font-size: 0.98rem;
+        font-weight: 900;
+        line-height: 1.25;
+        overflow-wrap: anywhere;
+    }
+
+    .system-class-pill {
+        display: inline-flex;
+        align-items: center;
+        min-height: 25px;
+        padding: 4px 9px;
+        border-radius: 999px;
+        font-size: 0.73rem;
+        font-weight: 850;
+    }
+
+    .system-student-actions {
+        display: inline-flex;
+        gap: 7px;
+    }
+
+    .system-student-action {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 32px;
+        height: 32px;
+        border: 0;
+        border-radius: 11px;
+    }
+
+    .system-student-edit {
+        color: #0f766e;
+        background: #ccfbf1;
+    }
+
+    .system-student-delete {
+        color: #dc2626;
+        background: #fee2e2;
+    }
+
+    .system-student-meta {
+        display: flex;
+        flex-direction: column;
+        gap: 7px;
+        padding-left: 44px;
+        color: #64748b;
+        font-size: 0.82rem;
+        font-weight: 700;
+        line-height: 1.35;
+    }
+
+    .system-student-meta div {
+        display: flex;
+        align-items: flex-start;
+        gap: 8px;
+        min-width: 0;
+    }
+
+    .system-student-meta i {
+        width: 14px;
+        margin-top: 2px;
+        color: #14b8a6;
+    }
+
+    .system-student-meta span {
+        min-width: 0;
+        overflow-wrap: anywhere;
+    }
+}
