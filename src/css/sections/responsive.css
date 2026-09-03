@@ -66,7 +66,7 @@
         background: var(--mobile-nav-bg) !important;
         z-index: 9999 !important;
         border-top: 1px solid var(--nav-border) !important;
-        box-shadow: 0 -2px 8px rgba(0, 82, 184, 0.04);
+        box-shadow: none;
         transition: transform 0.22s ease, opacity 0.22s ease, visibility 0.22s ease;
     }
 
@@ -88,15 +88,15 @@
         justify-content: center;
         color: var(--mobile-nav-text) !important;
         font-family: inherit;
-        font-size: 12px;
-        line-height: 16px;
+        font-size: var(--mobile-nav-label-size);
+        line-height: 1.25;
         font-weight: 500;
         cursor: pointer;
         flex: 1 1 0;
         min-width: 0;
         min-height: 44px;
         height: var(--mobile-nav-height);
-        padding: 4px 0;
+        padding: 2px 0;
         gap: 2px;
         border: 0;
         background: transparent;
@@ -117,19 +117,20 @@
         --nav-item-bg: var(--mobile-nav-active);
         --nav-item-icon: var(--primary);
         color: var(--primary) !important;
-        font-weight: 700;
+        font-weight: 600;
     }
 
     .bottom-nav-mobile .nav-item i {
         display: flex;
         align-items: center;
         justify-content: center;
-        width: 48px;
-        height: 30px;
-        border-radius: 12px;
+        width: clamp(36px, 10vw, 42px);
+        height: clamp(24px, 6.5vw, 26px);
+        flex-shrink: 0;
+        border-radius: 9px;
         background: var(--nav-item-bg, transparent);
         color: var(--nav-item-icon, var(--mobile-nav-text));
-        font-size: 22px;
+        font-size: var(--mobile-nav-icon-size);
         line-height: 1;
         margin: 0;
     }
@@ -147,12 +148,13 @@
 
     /* HEADER MOBILE */
     .mobile-header {
-        background-color: var(--navigation-emphasis) !important;
+        /* User-requested gradient is limited to the mobile header, not primary controls. */
+        background: var(--mobile-header-gradient) !important;
         border-bottom: 1px solid var(--app-dark-border) !important;
         display: flex !important;
         justify-content: space-between !important;
         align-items: center !important;
-        min-height: calc(52px + env(safe-area-inset-top, 0px));
+        min-height: calc(var(--mobile-header-height) + env(safe-area-inset-top, 0px));
         padding: env(safe-area-inset-top, 0px) max(12px, env(safe-area-inset-right, 0px)) 0 max(12px, env(safe-area-inset-left, 0px)) !important;
         box-shadow: var(--shadow-soft) !important;
     }

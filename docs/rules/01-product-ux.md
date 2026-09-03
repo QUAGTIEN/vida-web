@@ -17,7 +17,7 @@ Khi có xung đột, ưu tiên theo thứ tự:
 ## Thiết kế không bị "AI hóa"
 
 - MUST có lý do chức năng cho mỗi màu nhấn, icon, card, badge và animation.
-- MUST không thêm gradient, glassmorphism, glow, hiệu ứng 3D hoặc bóng đổ mạnh chỉ để tạo cảm giác hiện đại.
+- MUST không thêm gradient, glassmorphism, glow, hiệu ứng 3D hoặc bóng đổ mạnh chỉ để tạo cảm giác hiện đại. Ngoại lệ được người dùng yêu cầu: gradient xanh dọc riêng cho header mobile, theo mẫu tham khảo; không lan sang nền trang hay các nút.
 - MUST không bọc mọi nhóm nội dung trong card. Dùng khoảng trắng, divider và heading khi đủ tạo phân cấp.
 - MUST không lạm dụng pill, badge nhiều màu, icon trang trí, tiêu đề in hoa hoặc góc bo quá lớn.
 - MUST không tạo dashboard với số liệu, biểu đồ hoặc shortcut giả chỉ để lấp đầy không gian.
@@ -31,9 +31,9 @@ Khi có xung đột, ưu tiên theo thứ tự:
 - Nền sáng `#F5FAFF`, bề mặt trắng `#FFFFFF`; không dùng nền xám tối hoặc nhiều gradient.
 - Màu chủ đạo `#0066D6`, hover `#0052B8`, nền nhấn nhẹ `#EAF4FF`.
 - Màn chọn vai trò giữ cấu trúc hai khối cạnh nhau: Giáo viên nền xanh lam pastel `#DCEAFF`, chữ/icon `#24558A`; Quản lý nền lavender pastel `#EEE3FA`, chữ/icon `#674389`. Hai nền có độ sáng tương đồng; không dùng chữ trắng trên pastel, không đổi tiêu đề hay luồng đăng nhập.
-- Các mảng điều hướng đậm (header mobile và mục menu desktop đang chọn) dùng `--navigation-emphasis: #326FB5` để dịu mắt. Giữ `--primary: #0066D6` và hover `#0052B8` cho nút thao tác quan trọng; không giảm độ nổi của Lưu, Xem phiếu, xác nhận hoặc đổi màu ba thẻ Trang chủ.
+- Mục menu desktop đang chọn dùng `--navigation-emphasis: #326FB5` để dịu mắt. Header mobile dùng gradient dọc `#213EA6` → `#1967B9` → `#1676B5` theo yêu cầu. Giữ `--primary: #0066D6` và hover `#0052B8` cho nút thao tác quan trọng; không giảm độ nổi của Lưu, Xem phiếu, xác nhận hoặc đổi màu ba thẻ Trang chủ.
 - Menu desktop dùng nền `#E3EFFF`, chữ `#244563`, icon `#557B9F`, viền `#C5DAF3`, hover `#D0E4FF`; mục đang chọn nền `#326FB5`, chữ/icon trắng.
-- Menu mobile dùng nền `#EDF5FF`, chữ/icon thường `#526B82`; mục đang chọn chữ/icon xanh `#0066D6`, chỉ nền quanh icon là `#D6E8FF`. Phần điều hướng cao 62px cộng khoảng an toàn đáy; chia đều các mục đang hiển thị, vùng bấm tối thiểu 44px, không giữ nền hover sau khi chạm. Style do `responsive.css` sở hữu.
+- Menu mobile dùng nền `#EDF5FF`, chữ/icon thường `#526B82`; mục đang chọn chữ/icon xanh `#0066D6`, chỉ nền quanh icon là `#D6E8FF`. Phần điều hướng co giãn 48–56px theo chiều rộng/chiều cao màn hình, cộng riêng safe area đáy (tối thiểu 4px khi không có safe area); icon 18–20px, nhãn 11–12px. Không cắt bớt safe area iPhone để làm menu mỏng. Chia đều các mục đang hiển thị, vùng bấm tối thiểu 44px, không giữ nền hover sau khi chạm. Style do `responsive.css` sở hữu.
 - Đăng xuất desktop giữ nền đỏ `#D92D20`, hover `#B42318`, chữ trắng. Trên header mobile, icon đỏ trên nền đỏ nhạt `#FFF0EE`, phần nhìn 34px trong vùng bấm 44px. Header mobile hiển thị `PHẦN MỀM NHẬN XÉT`, có safe area phía trên.
 - Trong trang Nhận xét, nút Chỉnh cấu trúc dùng xám trung tính; ô tìm nhanh dùng nền `#EAF4FF`, ô nhập nội dung chung dùng nền `#E9F6F3`.
 - Thẻ chọn cơ sở trong trang Nhận xét chỉ hiển thị tên cơ sở, không có nhãn TDT. Tiêu đề phiếu xuất là `TRUNG TÂM NGOẠI NGỮ VIDA` và không hiển thị logo trong góc phiếu; logo ứng dụng ở menu, màn tải và favicon vẫn giữ nguyên.

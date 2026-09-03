@@ -9,7 +9,7 @@
 - MUST hỗ trợ chiều rộng 320px mà không mất chức năng.
 - MUST kiểm tra tối thiểu ở 320x568, 375x812 và 390x844.
 - SHOULD kiểm tra 430px và landscape cho màn hình có form hoặc modal.
-- MUST cho phép người dùng pinch zoom; không dùng `user-scalable=no` hoặc `maximum-scale=1`.
+- MUST cho phép người dùng pinch zoom; không dùng `user-scalable=no` hoặc giới hạn `maximum-scale` cố định trong HTML. Theo yêu cầu giữ nguyên cỡ chữ khi sửa lỗi tự zoom, `mobile-focus-viewport.js` chỉ tạm giới hạn ở tỷ lệ hiện tại lúc focus ô nhập trên iOS; khôi phục viewport trước pinch/gesture, khi blur, hủy chạm hoặc rời trang. Không dùng workaround này để khóa zoom chủ động, thay đổi font-size hoặc scale giao diện bằng CSS. Cần kiểm thử lại trên iPhone/Safari và bản cài màn hình chính khi thay đổi guard.
 - MUST không có cuộn ngang toàn trang.
 - Chỉ bảng, timeline hoặc dữ liệu rộng có chủ đích MAY cuộn ngang và phải có dấu hiệu dễ nhận biết.
 - MUST không dùng `overflow-x: hidden` để che phần tử tràn do lỗi layout.

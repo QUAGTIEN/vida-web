@@ -6,8 +6,10 @@
     --primary: #0066d6;
     --primary-hover: #0052b8;
     --primary-soft: #eaf4ff;
-    /* Broad navigation surfaces are calmer; primary action colors stay vivid. */
+    /* Navigation surfaces are separate from primary action colors. */
     --navigation-emphasis: #326fb5;
+    --mobile-header-gradient: linear-gradient(180deg, #213ea6 0%, #1967b9 55%, #1676b5 100%);
+    --mobile-header-height: clamp(48px, 12vw, 52px);
     --surface: #ffffff;
     --surface-subtle: #f8fafc;
     --neutral-soft: #f2f5f9;
@@ -38,8 +40,10 @@
     --mobile-nav-bg: #edf5ff;
     --mobile-nav-active: #d6e8ff;
     --mobile-nav-text: #526b82;
-    --mobile-nav-height: 62px;
-    --mobile-safe-bottom: max(10px, env(safe-area-inset-bottom, 0px));
+    --mobile-nav-height: clamp(48px, min(13vw, 10svh), 56px);
+    --mobile-nav-icon-size: clamp(18px, 5vw, 20px);
+    --mobile-nav-label-size: clamp(11px, 2.9vw, 12px);
+    --mobile-safe-bottom: max(4px, env(safe-area-inset-bottom, 0px));
     --danger: #d92d20;
     --danger-hover: #b42318;
     --danger-soft: #fff0ee;
@@ -87,6 +91,12 @@
 
 * {
     box-sizing: border-box;
+}
+
+/* Prevent accidental double-tap zoom, while retaining pan and two-finger zoom.
+   This changes gesture handling only, never font sizes or control geometry. */
+html {
+    touch-action: manipulation;
 }
 
 html,
