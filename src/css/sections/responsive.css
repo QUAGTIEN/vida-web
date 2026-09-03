@@ -171,9 +171,24 @@
     }
 
     .btn-glass-back {
-        background: rgba(255, 255, 255, 0.1) !important;
-        backdrop-filter: blur(5px) !important;
-        border: 1px solid rgba(255, 255, 255, 0.2) !important;
+        position: relative;
+        isolation: isolate;
+        background: transparent !important;
+        border: 0 !important;
+    }
+
+    /* Keep the 44px hit area, while making the visible control 34px like the
+       compact logout control. This changes appearance only, not the button's
+       layout slot or its navigation handler. */
+    .btn-glass-back::before {
+        content: "";
+        position: absolute;
+        inset: 5px;
+        z-index: -1;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        border-radius: 9px;
+        background: rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(5px);
     }
 
     .btn-glass-logout,
@@ -218,7 +233,10 @@
 
     .btn-glass-back:active {
         transform: scale(0.9) !important;
-        background: rgba(255, 255, 255, 0.2) !important;
+    }
+
+    .btn-glass-back:active::before {
+        background: rgba(255, 255, 255, 0.2);
     }
 
     .btn-glass-logout:active::before {
