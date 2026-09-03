@@ -12,12 +12,12 @@
 
 ## Cấu hình Firebase VIDA
 
-Repository không chứa cấu hình Firebase của trung tâm cũ. Trước khi chạy hoặc triển khai:
+Repository đã kết nối với Firebase project riêng của VIDA (`vida-web-9ec43`). Khi thiết lập một môi trường mới:
 
 1. Tạo Firebase project riêng cho VIDA.
 2. Bật Firestore Database và Email/Password Authentication.
-3. Thay các giá trị `REPLACE_WITH_VIDA_*` trong `src/js/config/firebase.js`.
-4. Thay `REPLACE_WITH_VIDA_FIREBASE_PROJECT_ID` trong `.firebaserc`.
+3. Cập nhật cấu hình Web App trong `src/js/config/firebase.js` nếu dùng Firebase project khác.
+4. Cập nhật project alias trong `.firebaserc` nếu dùng Firebase project khác.
 5. Trong thư mục `functions`, chạy `npm ci` để cài dependency.
 
 Không đưa backup dữ liệu học sinh, `node_modules`, file log hoặc cấu hình máy cá nhân lên repository.
