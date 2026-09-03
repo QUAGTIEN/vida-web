@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>VIDA - HỆ THỐNG THEO DÕI HỌC SINH</title>
     <link rel="icon" href="assets/images/vida-logo.svg" type="image/svg+xml">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap" rel="stylesheet">
@@ -11,7 +11,7 @@
         integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB"
         crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-    <link rel="stylesheet" href="src/css/style.css?v=20260904-vida-controls-1">
+    <link rel="stylesheet" href="src/css/style.css?v=20260904-vida-mobile-polish-1">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.15.2/Sortable.min.js"></script>
 </head>
 
@@ -131,11 +131,11 @@
                 </button>
 
                 <h5 class="m-0 fw-bold text-white text-center">
-                    VIDA STUDENT TRACKER
+                    PHẦN MỀM NHẬN XÉT
                 </h5>
 
-                <button class="btn btn-sm shadow-sm btn-glass-logout" onclick="window.showMobileLogoutMenu()">
-                    <i class="fas fa-power-off"></i>
+                <button type="button" class="btn btn-sm shadow-sm btn-glass-logout" onclick="window.showMobileLogoutMenu()" aria-label="Mở menu tài khoản và đăng xuất">
+                    <i class="fas fa-power-off" aria-hidden="true"></i>
                 </button>
             </div>
 
@@ -163,7 +163,7 @@
                                             class="btn-toolbar admin-only dashboard-shortcut dashboard-shortcut-teachers"
                                             onclick="window.openAdminSection('sec-gv')" aria-label="Quản lý giáo viên">
                                             <span class="dashboard-shortcut-icon"><i class="fas fa-chalkboard-teacher"></i></span>
-                                            <span class="dashboard-shortcut-label">QL GV</span>
+                                            <span class="dashboard-shortcut-label"><span class="shortcut-desktop-label">QL GV</span><span class="shortcut-mobile-label">Giáo viên</span></span>
                                         </button>
                                         <button type="button"
                                             class="btn-toolbar admin-only dashboard-shortcut dashboard-shortcut-export"
@@ -875,18 +875,18 @@
             </div>
         </div>
 
-        <div class="bottom-nav-mobile" id="mobile-bottom-nav">
-            <div class="nav-item admin-only-flex active" onclick="window.switchTab('dashboard')" id="bot-tab-dashboard">
-                <i class="fas fa-home fa-lg mb-1"></i><span class="label">Trang Chủ</span>
-            </div>
-            <div class="nav-item" onclick="window.switchTab('nhap-lieu')" id="bot-tab-nhap-lieu"><i
-                    class="fas fa-edit fa-lg mb-1"></i><span class="label">Nhận Xét</span></div>
-            <div class="nav-item" onclick="window.switchTab('quan-ly')" id="bot-tab-quan-ly"><i
-                    class="fas fa-folder-open fa-lg mb-1"></i><span class="label">Xem Phiếu</span></div>
-            <div class="nav-item admin-only-flex" onclick="window.switchTab('du-lieu')" id="bot-tab-du-lieu">
-                <i class="fas fa-database fa-lg mb-1"></i><span class="label">Dữ Liệu</span>
-            </div>
-        </div>
+        <nav class="bottom-nav-mobile" id="mobile-bottom-nav" aria-label="Điều hướng chính">
+            <button type="button" class="nav-item admin-only-flex active" onclick="window.switchTab('dashboard')" id="bot-tab-dashboard">
+                <i class="fas fa-home" aria-hidden="true"></i><span class="label">Trang Chủ</span>
+            </button>
+            <button type="button" class="nav-item" onclick="window.switchTab('nhap-lieu')" id="bot-tab-nhap-lieu"><i
+                    class="fas fa-edit" aria-hidden="true"></i><span class="label">Nhận Xét</span></button>
+            <button type="button" class="nav-item" onclick="window.switchTab('quan-ly')" id="bot-tab-quan-ly"><i
+                    class="fas fa-folder-open" aria-hidden="true"></i><span class="label">Xem Phiếu</span></button>
+            <button type="button" class="nav-item admin-only-flex" onclick="window.switchTab('du-lieu')" id="bot-tab-du-lieu">
+                <i class="fas fa-database" aria-hidden="true"></i><span class="label">Dữ Liệu</span>
+            </button>
+        </nav>
     </div>
 
     <div id="exportModal" class="modal-overlay evaluation-export-modal" style="display: none;"

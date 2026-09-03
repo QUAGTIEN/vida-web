@@ -33,8 +33,14 @@
     --nav-border: #c5daf3;
     --nav-text: #244563;
     --nav-icon: #557b9f;
+    --mobile-nav-bg: #edf5ff;
+    --mobile-nav-active: #d6e8ff;
+    --mobile-nav-text: #526b82;
+    --mobile-nav-height: 62px;
+    --mobile-safe-bottom: max(10px, env(safe-area-inset-bottom, 0px));
     --danger: #d92d20;
     --danger-hover: #b42318;
+    --danger-soft: #fff0ee;
     --card-bg: var(--surface);
     --login-overlay-bg: var(--bg);
     --color-turquoise: var(--primary);

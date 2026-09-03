@@ -782,34 +782,6 @@ body .side-panel-body::-webkit-scrollbar-thumb:hover {
    ========================================================================= */
 
 @media (max-width: 768px) {
-    .mobile-header {
-        height: 52px !important;
-        min-height: 52px !important;
-        padding: 0 12px !important;
-        background: var(--primary) !important;
-        box-shadow: var(--shadow-soft) !important;
-    }
-
-    .mobile-header h5 {
-        font-size: 0.82rem !important;
-        line-height: 1.15 !important;
-        letter-spacing: 0 !important;
-        white-space: nowrap !important;
-    }
-
-    .btn-glass-logout,
-    .btn-glass-back {
-        width: 34px !important;
-        height: 34px !important;
-        border-radius: 10px !important;
-        box-shadow: none !important;
-    }
-
-    .btn-glass-logout i,
-    .btn-glass-back i {
-        font-size: 1rem !important;
-    }
-
     .main-container {
         padding-top: 14px !important;
     }

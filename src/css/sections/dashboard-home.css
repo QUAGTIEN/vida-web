@@ -113,7 +113,19 @@
     text-align: left;
 }
 
+.shortcut-mobile-label {
+    display: none;
+}
+
 @media (max-width: 768px) {
+    .shortcut-desktop-label {
+        display: none;
+    }
+
+    .shortcut-mobile-label {
+        display: inline;
+    }
+
     #dashboard .dashboard-home-heading {
         display: none !important;
     }
@@ -142,7 +154,7 @@
     }
 
     #dashboard #admin-toolbar-grid .btn-toolbar {
-        min-height: 94px !important;
+        min-height: 88px !important;
         padding: 12px 6px !important;
         border: 1px solid var(--dashboard-shortcut-border, var(--dashboard-function-border)) !important;
         border-radius: 9px !important;
@@ -150,17 +162,17 @@
         box-shadow: var(--shadow-soft) !important;
         flex-direction: column !important;
         justify-content: center !important;
-        gap: 6px !important;
+        gap: 8px !important;
     }
 
     #dashboard #admin-toolbar-grid .dashboard-shortcut-icon {
-        width: 36px !important;
-        height: 36px !important;
+        width: 30px !important;
+        height: 30px !important;
         margin: 0 !important;
         border-radius: 8px !important;
         background: rgba(255, 255, 255, .16) !important;
         color: var(--surface) !important;
-        flex-basis: 36px !important;
+        flex-basis: 30px !important;
     }
 
     #dashboard #admin-toolbar-grid .dashboard-shortcut-icon i {
@@ -184,9 +196,4 @@
         margin-bottom: 0 !important;
     }
 
-    #newsModal .dashboard-news-card {
-        height: calc(100dvh - 250px) !important;
-        min-height: 360px;
-        max-height: none !important;
-    }
 }

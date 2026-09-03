@@ -41,7 +41,7 @@
 
     .content-wrapper {
         margin-left: 0 !important;
-        padding-bottom: 80px !important;
+        padding-bottom: calc(var(--mobile-nav-height) + var(--mobile-safe-bottom) + 12px) !important;
         min-height: auto !important;
     }
 
@@ -52,7 +52,7 @@
         padding-bottom: 20px !important;
     }
 
-    /* NAV BOTTOM 3 NÚT RỘNG RÃI */
+    /* Mobile navigation owns its safe area; icon highlight does not shrink hit targets. */
     .bottom-nav-mobile {
         display: flex !important;
         justify-content: space-around;
@@ -61,8 +61,9 @@
         bottom: 0 !important;
         left: 0 !important;
         width: 100% !important;
-        height: 65px !important;
-        background: var(--nav-bg) !important;
+        height: calc(var(--mobile-nav-height) + var(--mobile-safe-bottom)) !important;
+        padding: 0 max(8px, env(safe-area-inset-right, 0px)) var(--mobile-safe-bottom) max(8px, env(safe-area-inset-left, 0px));
+        background: var(--mobile-nav-bg) !important;
         z-index: 9999 !important;
         border-top: 1px solid var(--nav-border) !important;
         box-shadow: 0 -2px 8px rgba(0, 82, 184, 0.04);
@@ -85,40 +86,56 @@
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        color: var(--nav-text) !important;
-        font-size: 0.75rem;
-        font-weight: 600;
+        color: var(--mobile-nav-text) !important;
+        font-family: inherit;
+        font-size: 12px;
+        line-height: 16px;
+        font-weight: 500;
         cursor: pointer;
-        width: 25% !important;
-        height: 100%;
+        flex: 1 1 0;
+        min-width: 0;
+        min-height: 44px;
+        height: var(--mobile-nav-height);
+        padding: 4px 0;
+        gap: 2px;
+        border: 0;
+        background: transparent;
+        -webkit-tap-highlight-color: transparent;
     }
 
-    /* Inset color panel keeps the existing navigation hit areas and spacing. */
-    .bottom-nav-mobile .nav-item::before {
-        content: "";
-        position: absolute;
-        inset: 6px 4px;
-        z-index: -1;
-        border-radius: 8px;
-        background: var(--nav-item-bg, transparent);
-    }
-
-    .bottom-nav-mobile .nav-item:hover,
     .bottom-nav-mobile .nav-item:focus-visible {
-        --nav-item-bg: var(--nav-hover);
+        outline: 2px solid var(--primary);
+        outline-offset: -3px;
+        border-radius: 8px;
+    }
+
+    .bottom-nav-mobile .nav-item:active i {
+        background: var(--mobile-nav-active);
     }
 
     .bottom-nav-mobile .nav-item.active {
-        --nav-item-bg: var(--primary);
-        --nav-item-icon: var(--surface);
-        color: var(--surface) !important;
+        --nav-item-bg: var(--mobile-nav-active);
+        --nav-item-icon: var(--primary);
+        color: var(--primary) !important;
         font-weight: 700;
     }
 
     .bottom-nav-mobile .nav-item i {
-        color: var(--nav-item-icon, var(--nav-icon));
-        font-size: 1.2rem;
-        margin-bottom: 4px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 48px;
+        height: 30px;
+        border-radius: 12px;
+        background: var(--nav-item-bg, transparent);
+        color: var(--nav-item-icon, var(--mobile-nav-text));
+        font-size: 22px;
+        line-height: 1;
+        margin: 0;
+    }
+
+    .bottom-nav-mobile .label {
+        white-space: nowrap;
     }
 
     /* XÓA CÁC NÚT QUAY LẠI CŨ THỪA THÃI TRÊN MOBILE */
@@ -135,15 +152,18 @@
         display: flex !important;
         justify-content: space-between !important;
         align-items: center !important;
-        height: 65px !important;
-        padding: 0 15px !important;
+        min-height: calc(52px + env(safe-area-inset-top, 0px));
+        padding: env(safe-area-inset-top, 0px) max(12px, env(safe-area-inset-right, 0px)) 0 max(12px, env(safe-area-inset-left, 0px)) !important;
+        box-shadow: var(--shadow-soft) !important;
     }
 
     .mobile-header h5 {
         color: var(--surface) !important;
         margin: 0 !important;
         font-weight: 800 !important;
-        font-size: 0.95rem !important;
+        font-size: 0.82rem !important;
+        line-height: 1.2;
+        min-width: 0;
         flex: 1;
         text-align: center;
     }
@@ -159,20 +179,39 @@
         color: var(--surface) !important;
         box-shadow: var(--shadow-soft) !important;
         border-radius: 8px !important;
-        width: 36px !important;
-        height: 36px !important;
+        width: 44px !important;
+        height: 44px !important;
+        flex: 0 0 44px;
         display: flex !important;
         justify-content: center !important;
         align-items: center !important;
-        transition: all 0.3s ease !important;
+        transition: background-color 0.18s ease !important;
         padding: 0 !important;
     }
 
     .btn-glass-logout {
         /* Bootstrap and legacy mobile-header utilities are important; this is their owning breakpoint. */
-        background: var(--danger) !important;
-        border: 1px solid var(--danger) !important;
+        position: relative;
+        isolation: isolate;
+        background: transparent !important;
+        border: 0 !important;
+        color: var(--danger) !important;
+        box-shadow: none !important;
         backdrop-filter: none !important;
+    }
+
+    .btn-glass-logout::before {
+        content: "";
+        position: absolute;
+        inset: 5px;
+        z-index: -1;
+        border-radius: 9px;
+        background: var(--danger-soft);
+    }
+
+    .btn-glass-logout:focus-visible {
+        outline: 2px solid var(--surface);
+        outline-offset: -2px;
     }
 
     .btn-glass-back:active {
@@ -180,10 +219,8 @@
         background: rgba(255, 255, 255, 0.2) !important;
     }
 
-    .btn-glass-logout:active {
-        transform: scale(0.9) !important;
-        background: var(--danger-hover) !important;
-        border-color: var(--danger-hover) !important;
+    .btn-glass-logout:active::before {
+        background: var(--surface);
     }
 
     body .corner-title,

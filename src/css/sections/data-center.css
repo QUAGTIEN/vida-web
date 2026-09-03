@@ -427,10 +427,6 @@
 }
 
 @media (max-width: 768px) {
-    body.role-quanly .bottom-nav-mobile .nav-item {
-        width: 20% !important;
-    }
-
     .data-center-header {
         margin-bottom: var(--page-heading-gap);
         padding-bottom: 0;

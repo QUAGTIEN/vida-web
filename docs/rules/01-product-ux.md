@@ -30,11 +30,14 @@ Khi có xung đột, ưu tiên theo thứ tự:
 
 - Nền sáng `#F5FAFF`, bề mặt trắng `#FFFFFF`; không dùng nền xám tối hoặc nhiều gradient.
 - Màu chủ đạo `#0066D6`, hover `#0052B8`, nền nhấn nhẹ `#EAF4FF`.
-- Thanh menu desktop/mobile dùng nền `#E3EFFF`, chữ `#244563`, icon `#557B9F`, viền `#C5DAF3`, hover `#D0E4FF`. Mục đang chọn nền `#0066D6`, chữ/icon trắng; giữ nguyên vị trí, kích thước vùng bấm và luồng điều hướng.
-- Đăng xuất dùng nền đỏ `#D92D20`, hover `#B42318` và chữ trắng trên desktop/mobile. Trong trang Nhận xét, nút Chỉnh cấu trúc dùng xám trung tính; ô tìm nhanh dùng nền `#EAF4FF`, ô nhập nội dung chung dùng nền `#E9F6F3`.
+- Menu desktop dùng nền `#E3EFFF`, chữ `#244563`, icon `#557B9F`, viền `#C5DAF3`, hover `#D0E4FF`; mục đang chọn nền `#0066D6`, chữ/icon trắng.
+- Menu mobile dùng nền `#EDF5FF`, chữ/icon thường `#526B82`; mục đang chọn chữ/icon xanh `#0066D6`, chỉ nền quanh icon là `#D6E8FF`. Phần điều hướng cao 62px cộng khoảng an toàn đáy; chia đều các mục đang hiển thị, vùng bấm tối thiểu 44px, không giữ nền hover sau khi chạm. Style do `responsive.css` sở hữu.
+- Đăng xuất desktop giữ nền đỏ `#D92D20`, hover `#B42318`, chữ trắng. Trên header mobile, icon đỏ trên nền đỏ nhạt `#FFF0EE`, phần nhìn 34px trong vùng bấm 44px. Header mobile hiển thị `PHẦN MỀM NHẬN XÉT`, có safe area phía trên.
+- Trong trang Nhận xét, nút Chỉnh cấu trúc dùng xám trung tính; ô tìm nhanh dùng nền `#EAF4FF`, ô nhập nội dung chung dùng nền `#E9F6F3`.
 - Thẻ chọn cơ sở trong trang Nhận xét chỉ hiển thị tên cơ sở, không có nhãn TDT. Tiêu đề phiếu xuất là `TRUNG TÂM NGOẠI NGỮ VIDA` và không hiển thị logo trong góc phiếu; logo ứng dụng ở menu, màn tải và favicon vẫn giữ nguyên.
 - Card nội dung dùng nền trắng; nền trung tính nhẹ `#F8FAFC`/`#F2F5F9` chỉ phân lớp header, nhãn và thao tác phụ. Không tô xanh toàn bộ các bề mặt.
-- Ba shortcut Trang chủ căn trái, có kích thước lớn và dùng nền màu tươi toàn thẻ: Hệ thống tím `#A437C3`, QL GV xanh ngọc `#0080A3`, Xuất File cam `#C65305`. Chữ và icon dùng màu trắng dễ đọc; giữ nguyên tên, thứ tự và thao tác của từng shortcut trên desktop lẫn mobile.
+- Ba shortcut Trang chủ căn trái, có kích thước lớn và dùng nền màu tươi toàn thẻ: Hệ thống tím `#A437C3`, QL GV xanh ngọc `#0080A3`, Xuất File cam `#C65305`. Chữ và icon dùng màu trắng; mobile dùng nhãn `Giáo viên`, icon nền 30px, thẻ tối thiểu 88px. Giữ nguyên thứ tự và thao tác.
+- Bảng tin mobile chỉ giữ một khung chính, bộ lọc 2 × 2 với vùng bấm 44px; nút Đã xem là thao tác phụ. Chiều cao co theo nội dung, danh sách dài cuộn riêng; không ép chiều cao theo viewport khi trống. Style do `admin.css` sở hữu.
 - Cột nhãn phiếu đánh giá dùng năm sắc xanh dương đậm dần từ Tháng đến Nhận xét: `#2276C4`, `#1268B8`, `#075AAB`, `#064C94`, `#063E7A`; chữ trắng, nền dữ liệu giữ nguyên. Palette này do `evaluation.css` sở hữu, không thay đổi mẫu xuất file.
 - Chữ chính `#16324F`, chữ phụ `#61758A`, viền `#DCEBFA`. Chữ nhỏ trên nền nhấn dùng chữ chính để giữ độ tương phản.
 - Dùng token trong `src/css/sections/base.css`; các tên token legacy được giữ làm alias để không đổi contract.
