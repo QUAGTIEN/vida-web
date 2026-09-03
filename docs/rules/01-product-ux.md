@@ -30,7 +30,9 @@ Khi có xung đột, ưu tiên theo thứ tự:
 
 - Nền sáng `#F5FAFF`, bề mặt trắng `#FFFFFF`; không dùng nền xám tối hoặc nhiều gradient.
 - Màu chủ đạo `#0066D6`, hover `#0052B8`, nền nhấn nhẹ `#EAF4FF`.
-- Menu desktop dùng nền `#E3EFFF`, chữ `#244563`, icon `#557B9F`, viền `#C5DAF3`, hover `#D0E4FF`; mục đang chọn nền `#0066D6`, chữ/icon trắng.
+- Màn chọn vai trò giữ cấu trúc hai khối cạnh nhau: Giáo viên nền xanh lam pastel `#DCEAFF`, chữ/icon `#24558A`; Quản lý nền lavender pastel `#EEE3FA`, chữ/icon `#674389`. Hai nền có độ sáng tương đồng; không dùng chữ trắng trên pastel, không đổi tiêu đề hay luồng đăng nhập.
+- Các mảng điều hướng đậm (header mobile và mục menu desktop đang chọn) dùng `--navigation-emphasis: #326FB5` để dịu mắt. Giữ `--primary: #0066D6` và hover `#0052B8` cho nút thao tác quan trọng; không giảm độ nổi của Lưu, Xem phiếu, xác nhận hoặc đổi màu ba thẻ Trang chủ.
+- Menu desktop dùng nền `#E3EFFF`, chữ `#244563`, icon `#557B9F`, viền `#C5DAF3`, hover `#D0E4FF`; mục đang chọn nền `#326FB5`, chữ/icon trắng.
 - Menu mobile dùng nền `#EDF5FF`, chữ/icon thường `#526B82`; mục đang chọn chữ/icon xanh `#0066D6`, chỉ nền quanh icon là `#D6E8FF`. Phần điều hướng cao 62px cộng khoảng an toàn đáy; chia đều các mục đang hiển thị, vùng bấm tối thiểu 44px, không giữ nền hover sau khi chạm. Style do `responsive.css` sở hữu.
 - Đăng xuất desktop giữ nền đỏ `#D92D20`, hover `#B42318`, chữ trắng. Trên header mobile, icon đỏ trên nền đỏ nhạt `#FFF0EE`, phần nhìn 34px trong vùng bấm 44px. Header mobile hiển thị `PHẦN MỀM NHẬN XÉT`, có safe area phía trên.
 - Trong trang Nhận xét, nút Chỉnh cấu trúc dùng xám trung tính; ô tìm nhanh dùng nền `#EAF4FF`, ô nhập nội dung chung dùng nền `#E9F6F3`.

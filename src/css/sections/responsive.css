@@ -147,7 +147,7 @@
 
     /* HEADER MOBILE */
     .mobile-header {
-        background-color: var(--primary) !important;
+        background-color: var(--navigation-emphasis) !important;
         border-bottom: 1px solid var(--app-dark-border) !important;
         display: flex !important;
         justify-content: space-between !important;

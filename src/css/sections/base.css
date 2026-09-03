@@ -6,6 +6,8 @@
     --primary: #0066d6;
     --primary-hover: #0052b8;
     --primary-soft: #eaf4ff;
+    /* Broad navigation surfaces are calmer; primary action colors stay vivid. */
+    --navigation-emphasis: #326fb5;
     --surface: #ffffff;
     --surface-subtle: #f8fafc;
     --neutral-soft: #f2f5f9;
@@ -43,6 +45,10 @@
     --danger-soft: #fff0ee;
     --card-bg: var(--surface);
     --login-overlay-bg: var(--bg);
+    --login-teacher-bg: #dceaff;
+    --login-teacher-text: #24558a;
+    --login-admin-bg: #eee3fa;
+    --login-admin-text: #674389;
     --color-turquoise: var(--primary);
     --color-admin-login: var(--primary-hover);
     --app-dark-bg: var(--surface);
@@ -514,7 +520,7 @@ body {
 }
 
 .sidebar .btn-tab.active {
-    background: var(--primary);
+    background: var(--navigation-emphasis);
     color: var(--surface);
     font-weight: 700;
     box-shadow: var(--shadow-soft);
@@ -1755,15 +1761,17 @@ button[onclick="window.openTemplateConfigModal()"] {
     cursor: pointer;
     transition: all 0.2s ease;
     border: none;
-    color: var(--surface) !important;
+    color: var(--login-role-text, var(--text-primary)) !important;
 }
 
 .login-btn-teacher {
-    background-color: var(--color-turquoise);
+    --login-role-text: var(--login-teacher-text);
+    background-color: var(--login-teacher-bg);
 }
 
 .login-btn-admin {
-    background-color: var(--color-admin-login);
+    --login-role-text: var(--login-admin-text);
+    background-color: var(--login-admin-bg);
 }
 
 .side-panel-overlay {
