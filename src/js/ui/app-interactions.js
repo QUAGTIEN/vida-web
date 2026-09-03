@@ -139,7 +139,7 @@ document.addEventListener('click', (e) => {
         const facilityOption = e.target.closest('.dashboard-facility-option[data-facility-index]');
         if (facilityOption) {
             const facility = window.allFacilities?.[Number(facilityOption.dataset.facilityIndex)];
-            if (facility) window.viewFacilityDetails(facility);
+            if (facility) window.openSystemListPage?.({ tab: 'categories', facility });
             const menu = document.getElementById('dashboard-facility-menu');
             const trigger = document.getElementById('dashboard-facility-trigger');
             if (menu) menu.hidden = true;

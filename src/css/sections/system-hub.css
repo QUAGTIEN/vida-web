@@ -1,0 +1,552 @@
+.system-hub {
+    --system-accent: #168b52;
+    --system-accent-dark: #0f6f40;
+    --system-border: #d8e1eb;
+    --system-muted: #64748b;
+    color: #142033;
+}
+
+#admin-management-panels[data-active-section="sec-system-list"] > .admin-management-topbar {
+    display: none;
+}
+
+.system-hub-header {
+    display: flex;
+    min-height: 44px;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 12px;
+    padding: 5px 10px;
+    border: 1px solid var(--system-border);
+    border-radius: 9px;
+    background: #fff;
+    box-shadow: 0 3px 10px rgba(15, 23, 42, .035);
+}
+
+.system-hub-back {
+    display: inline-flex;
+    min-height: 32px;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    padding: 0 11px;
+    border: 1px solid #cbd5e1;
+    border-radius: 7px;
+    background: #f8fafc;
+    color: #334155;
+    font-size: .78rem;
+    font-weight: 750;
+}
+
+.system-hub-back:hover,
+.system-hub-back:focus-visible {
+    border-color: #94a3b8;
+    background: #f1f5f9;
+    color: #172033;
+}
+
+.system-hub-panel-heading p {
+    margin: 5px 0 0;
+    color: var(--system-muted);
+    font-size: .88rem;
+}
+
+.system-hub-tabs {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 8px;
+    margin: 12px 0 10px;
+}
+
+.system-hub-tab {
+    position: relative;
+    min-height: 46px;
+    border: 1px solid var(--system-border);
+    border-radius: 10px;
+    background: #fff;
+    color: #334155;
+    font-size: .82rem;
+    font-weight: 750;
+}
+
+.system-hub-tab::after {
+    position: absolute;
+    right: 14px;
+    bottom: -1px;
+    left: 14px;
+    height: 3px;
+    border-radius: 3px 3px 0 0;
+    background: transparent;
+    content: "";
+}
+
+.system-hub-tab.is-active {
+    border-color: #91c9aa;
+    color: var(--system-accent-dark);
+    background: #fbfefc;
+}
+
+.system-hub-tab.is-active::after {
+    background: var(--system-accent);
+}
+
+.system-hub-panel {
+    overflow: hidden;
+    border: 1px solid var(--system-border);
+    border-radius: 12px;
+    background: #fff;
+    box-shadow: 0 10px 26px rgba(15, 23, 42, .055);
+}
+
+.system-hub-panel[hidden] {
+    display: none !important;
+}
+
+.system-hub-panel-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 14px 16px;
+    border-bottom: 1px solid var(--system-border);
+}
+
+.system-hub-panel-heading h3 {
+    margin: 0;
+    font-size: .94rem;
+    font-weight: 800;
+}
+
+.system-hub-primary,
+.system-hub-open,
+.system-hub-action {
+    min-height: 34px;
+    border-radius: 8px;
+    font-size: .78rem;
+    font-weight: 750;
+    white-space: nowrap;
+}
+
+.system-hub-primary {
+    padding: 0 14px;
+    border: 1px solid var(--system-accent);
+    background: var(--system-accent);
+    color: #fff;
+}
+
+.system-hub-primary:hover:not(:disabled) {
+    background: var(--system-accent-dark);
+}
+
+.system-hub-primary:disabled {
+    cursor: not-allowed;
+    opacity: .45;
+}
+
+.system-hub-filter-row,
+.system-hub-filter-grid {
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--system-border);
+    background: #f8fafc;
+}
+
+.system-hub-filter-row {
+    display: grid;
+    grid-template-columns: 120px minmax(220px, 440px);
+    align-items: center;
+    gap: 14px;
+}
+
+.system-hub-filter-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 360px));
+    gap: 14px;
+}
+
+.system-hub-filter-row label,
+.system-hub-filter-grid label {
+    display: block;
+    margin: 0 0 6px;
+    color: #475569;
+    font-size: .78rem;
+    font-weight: 750;
+}
+
+.system-hub-filter-row > label {
+    margin: 0;
+}
+
+.system-hub-entity-list {
+    display: grid;
+    gap: 8px;
+    padding: 12px 16px 16px;
+}
+
+.system-hub-entity {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 16px;
+    min-height: 56px;
+    padding: 8px 10px 8px 14px;
+    border: 1px solid var(--system-border);
+    border-radius: 10px;
+    background: #fff;
+}
+
+.system-hub-entity-main {
+    display: flex;
+    min-width: 0;
+    padding: 3px 0;
+    border: 0;
+    background: transparent;
+    flex-direction: column;
+    align-items: flex-start;
+    text-align: left;
+}
+
+.system-hub-entity-main strong {
+    color: #172033;
+    font-size: .88rem;
+}
+
+.system-hub-entity-main span {
+    margin-top: 3px;
+    color: var(--system-muted);
+    font-size: .76rem;
+}
+
+.system-hub-entity-actions {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+}
+
+.system-hub-open,
+.system-hub-action {
+    padding: 0 12px;
+    border: 1px solid #cbd5e1;
+    background: #fff;
+    color: #334155;
+}
+
+.system-hub-open {
+    border-color: #9acdb2;
+    color: var(--system-accent-dark);
+}
+
+.system-hub-action.is-danger {
+    border-color: #fecaca;
+    color: #c92a2a;
+    background: #fffafa;
+}
+
+.system-hub-empty,
+.system-hub-loading {
+    display: grid;
+    min-height: 150px;
+    place-items: center;
+    color: var(--system-muted);
+    font-size: .88rem;
+    text-align: center;
+}
+
+.system-hub-student-heading {
+    background: #fff;
+}
+
+.system-hub .admin-system-count {
+    display: inline-flex;
+    min-height: 30px;
+    padding: 0 12px;
+    border: 1px solid #b9dfca;
+    border-radius: 8px;
+    background: #effaf4;
+    color: #126b40;
+    align-items: center;
+    font-size: .75rem;
+    font-weight: 750;
+}
+
+.system-hub-student-filters {
+    display: grid;
+    grid-template-columns: minmax(150px, .8fr) minmax(150px, .8fr) minmax(220px, 1.2fr) minmax(150px, .8fr) auto;
+    gap: 10px;
+    align-items: center;
+}
+
+.system-hub .admin-system-filter-panel {
+    position: relative;
+    z-index: 1;
+    padding: 12px 16px !important;
+    background: #f8fafc !important;
+}
+
+#admin-management-panels .system-hub .system-list-add-student-btn {
+    display: inline-flex;
+    position: static !important;
+    inset: auto !important;
+    z-index: auto !important;
+    float: none !important;
+    transform: none !important;
+    width: auto;
+    min-width: 128px;
+    height: 40px !important;
+    min-height: 40px !important;
+    padding: 0 12px;
+    border: 1px solid var(--system-accent);
+    border-radius: 8px;
+    align-items: center;
+    justify-content: center;
+}
+
+#admin-management-panels .system-hub .admin-system-filter-panel .form-control,
+#admin-management-panels .system-hub .admin-system-filter-panel .form-select,
+#admin-management-panels .system-hub .system-hub-filter-row .form-select,
+#admin-management-panels .system-hub .system-hub-filter-grid .form-select {
+    height: 40px !important;
+    min-height: 40px !important;
+    padding-top: 6px;
+    padding-bottom: 6px;
+    font-size: .82rem;
+}
+
+.system-hub .admin-system-list-body {
+    position: relative;
+    z-index: 0;
+}
+
+#admin-management-panels .system-hub .admin-system-list-card {
+    min-height: 0;
+    padding: 0 !important;
+    border: 0;
+    border-radius: 0;
+    box-shadow: none;
+}
+
+@media (max-width: 991px) {
+    .system-hub-student-filters {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    #admin-management-panels .system-hub .system-list-add-student-btn {
+        width: 100%;
+    }
+}
+
+@media (max-width: 768px) {
+    #admin-toolbar-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+    }
+
+    .system-hub-header {
+        display: none;
+    }
+
+    .system-hub-tabs {
+        gap: 5px;
+        margin: 9px 0 9px;
+    }
+
+    .system-hub-tab {
+        min-height: 44px;
+        padding: 0 4px;
+        border-radius: 8px;
+        font-size: .73rem;
+    }
+
+    .system-hub-panel-heading {
+        align-items: flex-start;
+        padding: 12px;
+    }
+
+    .system-hub-panel-heading p {
+        display: none;
+    }
+
+    .system-hub-primary {
+        min-height: 34px;
+        padding: 0 12px;
+    }
+
+    .system-hub-filter-row,
+    .system-hub-filter-grid {
+        grid-template-columns: 1fr;
+        padding: 11px 12px;
+    }
+
+    .system-hub-filter-row > label {
+        margin-bottom: -7px;
+    }
+
+    .system-hub-entity-list {
+        padding: 9px;
+    }
+
+    .system-hub-entity {
+        grid-template-columns: 1fr;
+        gap: 7px;
+        padding: 10px;
+    }
+
+    .system-hub-entity-actions {
+        display: grid !important;
+        grid-template-columns: 1fr auto auto;
+        width: 100%;
+    }
+
+    .system-hub-open,
+    .system-hub-action {
+        min-height: 36px;
+    }
+
+    .system-hub-student-filters {
+        grid-template-columns: 1fr;
+        gap: 6px;
+    }
+
+    /* The legacy list modal caps this shared row at 200px. The full system
+       page needs its natural height so the add button stays above the cards. */
+    .system-hub #sys-filters-row {
+        height: auto;
+        max-height: none;
+        min-height: 0;
+        overflow: visible;
+        opacity: 1;
+        transition: none;
+    }
+
+    .system-hub-student-heading {
+        align-items: center;
+    }
+
+    .system-hub .admin-system-filter-panel {
+        padding: 8px !important;
+    }
+
+    #admin-management-panels .system-hub .admin-system-filter-panel .form-control,
+    #admin-management-panels .system-hub .admin-system-filter-panel .form-select {
+        width: 100%;
+        height: 38px !important;
+        min-height: 38px !important;
+        padding-top: 4px;
+        padding-bottom: 4px;
+        font-size: 16px;
+        line-height: 1.2;
+    }
+
+    #admin-management-panels .system-hub .system-list-add-student-btn {
+        display: inline-flex !important;
+        position: static !important;
+        width: 100% !important;
+        min-width: 0;
+        height: 36px !important;
+        min-height: 36px !important;
+        margin: 0 !important;
+        padding: 0 12px !important;
+        font-size: .78rem;
+    }
+
+    .system-hub .admin-system-list-body {
+        padding: 9px 9px 76px !important;
+        overflow: visible !important;
+        background: #f4f7fa !important;
+    }
+
+    .system-hub .table-responsive,
+    .system-hub .admin-system-table {
+        display: none !important;
+    }
+
+    .system-hub .system-list-cards {
+        display: grid !important;
+        gap: 8px;
+        padding: 0;
+    }
+
+    .system-hub .system-student-card,
+    .system-hub .system-student-card:nth-child(2n) {
+        display: grid;
+        min-width: 0;
+        gap: 6px;
+        padding: 10px;
+        overflow: hidden;
+        border: 1px solid #d7e0e8;
+        border-radius: 8px;
+        background: #fff;
+        box-shadow: 0 2px 7px rgba(15, 23, 42, .045);
+    }
+
+    .system-hub .system-student-card-head {
+        display: grid !important;
+        grid-template-columns: 28px minmax(0, 1fr) auto !important;
+        align-items: start !important;
+        gap: 7px !important;
+    }
+
+    .system-hub .system-student-index {
+        width: 28px;
+        height: 28px;
+        border-radius: 7px;
+        font-size: .72rem;
+    }
+
+    .system-hub .system-student-main {
+        min-width: 0;
+    }
+
+    .system-hub .system-student-main h4 {
+        margin: 1px 0 4px;
+        overflow-wrap: anywhere;
+        font-size: .82rem;
+        line-height: 1.25;
+    }
+
+    .system-hub .system-class-pill {
+        min-height: 24px;
+        padding: 2px 7px;
+        border-radius: 6px;
+        font-size: .68rem;
+    }
+
+    .system-hub .system-student-actions {
+        display: flex !important;
+        position: static !important;
+        align-items: flex-start;
+        gap: 4px;
+    }
+
+    .system-hub .system-student-action {
+        position: static !important;
+        width: 28px;
+        height: 28px;
+        min-width: 28px;
+        padding: 0;
+        border-radius: 7px;
+        transform: none !important;
+    }
+
+    .system-hub .system-student-meta {
+        min-width: 0;
+        margin-left: 35px;
+        overflow-wrap: anywhere;
+        color: #64748b;
+        font-size: .72rem;
+        line-height: 1.3;
+        text-align: left;
+    }
+}
+
+@media (max-width: 390px) {
+    .system-hub-tab {
+        font-size: .72rem;
+    }
+
+    .system-hub-entity-actions {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .system-hub-open {
+        grid-column: 1 / -1;
+    }
+}

@@ -2765,14 +2765,16 @@
     }
 
     .app-dialog-overlay {
-        align-items: flex-end;
+        min-height: 100dvh;
+        align-items: center;
+        justify-content: center;
         padding: 10px;
     }
 
     .app-dialog-overlay .app-dialog {
         width: 100%;
         max-width: none;
-        max-height: calc(100vh - 20px);
+        max-height: calc(100dvh - 20px);
         border-radius: 8px;
     }
 
@@ -2791,7 +2793,7 @@
     }
 
     .app-dialog-overlay .app-confirm-dialog {
-        margin: auto 0;
+        margin: 0;
         padding: 20px 16px 16px;
     }
 
@@ -2846,7 +2848,9 @@
     }
 
     .admin-confirm-overlay {
-        align-items: flex-end;
+        min-height: 100dvh;
+        align-items: center;
+        justify-content: center;
         padding: 10px;
     }
 

@@ -17,12 +17,12 @@ export const ensureDashboardFeature = () => loadFeatureOnce(
 
 export const ensureDataCenterFeature = () => loadFeatureOnce(
     "data-center",
-    () => import("../features/data-center.js?v=20260902-startup-performance-1")
+    () => import("../features/data-center.js?v=20260903-compact-data-1")
 );
 
 export const ensureSystemListFeature = () => loadFeatureOnce(
     "system-list",
-    () => import("../features/system-list.js?v=20260902-startup-performance-1")
+    () => import("../features/system-list.js?v=20260903-dashboard-functions-1")
 );
 
 export const ensureExportFeature = () => loadFeatureOnce(

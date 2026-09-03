@@ -11,6 +11,15 @@ import {
     where,
     writeBatch
 } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
+
+const refreshUnifiedSystemView = async (context, fallback) => {
+    if (typeof window.refreshSystemHub === "function") {
+        window.closePanel?.();
+        await window.refreshSystemHub(context);
+        return;
+    }
+    fallback?.();
+};
 window.promptDeleteFacility = (facName) => {
     window.showModal(`Bạn có chắc chắn muốn xóa cơ sở <b class="text-danger">${facName}</b> không?`, 'confirm', async () => {
         try {
@@ -29,7 +38,8 @@ window.promptDeleteFacility = (facName) => {
 
             window.closePanel();
             window.showModal("Đã xóa Cơ sở thành công!", "success");
-            await init();
+            await window.refreshSystemStaticData?.();
+            await refreshUnifiedSystemView({ tab: "facilities" });
             window.loadDashboardData();
         } catch (error) {
             window.showModal("Lỗi khi xóa: " + error.message, "error");
@@ -59,7 +69,11 @@ window.promptDeleteCategory = (facName, catName) => {
             if (window.facilityCategoriesMap[facName]) {
                 window.facilityCategoriesMap[facName] = window.facilityCategoriesMap[facName].filter(item => item !== catName);
             }
-            window.viewFacilityDetails(facName);
+            await window.refreshSystemStaticData?.();
+            await refreshUnifiedSystemView(
+                { tab: "categories", facility: facName },
+                () => window.viewFacilityDetails(facName)
+            );
             window.loadDashboardData();
         } catch (error) {
             console.error(error);
@@ -88,7 +102,10 @@ window.promptDeleteClass = (facName, catName, className) => {
             await batch.commit();
             window.invalidateStudentCaches?.();
             window.showToast('Đã xóa thành công Lớp và toàn bộ học sinh bên trong!', 'success');
-            window.viewCategoryDetails(facName, catName);
+            await refreshUnifiedSystemView(
+                { tab: "classes", facility: facName, category: catName },
+                () => window.viewCategoryDetails(facName, catName)
+            );
             window.loadDashboardData();
         } catch (error) {
             console.error(error);
@@ -179,8 +196,10 @@ window.promptCreateCategoryForFacility = (facName) => {
         if (nameInput) nameInput.value = name;
 
         await window.createKhoi();
-        await init();
-        window.viewFacilityDetails(facName);
+        await refreshUnifiedSystemView(
+            { tab: "categories", facility: facName },
+            () => window.viewFacilityDetails(facName)
+        );
     }, "", { placeholder: "Nh\u1eadp t\u00ean kh\u1ed1i..." });
 };
 
@@ -197,8 +216,10 @@ window.promptCreateClassForCategory = (facName, catName) => {
         if (nameInput) nameInput.value = name;
 
         await window.createClass();
-        await init();
-        window.viewCategoryDetails(facName, catName);
+        await refreshUnifiedSystemView(
+            { tab: "classes", facility: facName, category: catName },
+            () => window.viewCategoryDetails(facName, catName)
+        );
     }, "", { placeholder: "Nh\u1eadp t\u00ean l\u1edbp..." });
 };
 
@@ -296,8 +317,11 @@ window.promptRenameFacility = (oldName) => {
             window.invalidateStudentCaches?.();
 
             window.showModal("Đã đổi tên cơ sở thành công!", "success");
-            await init();
-            window.viewFacilityDetails(newName);
+            await window.refreshSystemStaticData?.();
+            await refreshUnifiedSystemView(
+                { tab: "categories", facility: newName },
+                () => window.viewFacilityDetails(newName)
+            );
             window.loadDashboardData();
         } catch (error) {
             console.error(error);
@@ -329,8 +353,11 @@ window.promptRenameCategory = (facName, oldName) => {
             window.invalidateStudentCaches?.();
 
             window.showToast("Đã đổi tên khối thành công!", "success");
-            await init();
-            window.viewFacilityDetails(facName);
+            await window.refreshSystemStaticData?.();
+            await refreshUnifiedSystemView(
+                { tab: "categories", facility: facName },
+                () => window.viewFacilityDetails(facName)
+            );
             window.loadDashboardData();
         } catch (error) {
             console.error(error);
@@ -364,7 +391,10 @@ window.promptRenameClass = (facName, catName, oldName) => {
             window.invalidateStudentCaches?.();
 
             window.showToast("Đã đổi tên lớp thành công!", "success");
-            window.viewCategoryDetails(facName, catName);
+            await refreshUnifiedSystemView(
+                { tab: "classes", facility: facName, category: catName },
+                () => window.viewCategoryDetails(facName, catName)
+            );
             window.loadDashboardData();
         } catch (error) {
             console.error(error);

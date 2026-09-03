@@ -11,7 +11,7 @@
         integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB"
         crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-    <link rel="stylesheet" href="src/css/style.css?v=20260903-mobile-zoom-reset-1">
+    <link rel="stylesheet" href="src/css/style.css?v=20260903-mobile-dialog-center-1">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.15.2/Sortable.min.js"></script>
 </head>
 
@@ -145,27 +145,25 @@
                     <div id="dashboard" class="page-section active">
 
                         <div id="dashboard-main-content">
-                            <div class="top-toolbar mb-4 admin-only-block">
+                            <div class="dashboard-home-heading admin-only-block">
+                                <h1>TRANG CHỦ</h1>
+                            </div>
+
+                            <div class="top-toolbar dashboard-functions mb-4 admin-only-block">
                                 <div class="toolbar-container">
                                     <div class="toolbar-title"><span>TRANG CHỦ</span></div>
                                     <div class="toolbar-buttons" id="admin-toolbar-grid">
                                         <button type="button"
                                             class="btn-toolbar admin-only dashboard-shortcut dashboard-shortcut-facility"
-                                            onclick="window.openAdminSection('sec-facility')" aria-label="Cơ Sở">
+                                            onclick="window.openSystemListPage({ tab: 'facilities' })" aria-label="Hệ thống">
                                             <span class="dashboard-shortcut-icon"><i class="fas fa-building"></i></span>
-                                            <span class="dashboard-shortcut-label">Cơ Sở</span>
+                                            <span class="dashboard-shortcut-label">Hệ Thống</span>
                                         </button>
                                         <button type="button"
                                             class="btn-toolbar admin-only dashboard-shortcut dashboard-shortcut-teachers"
                                             onclick="window.openAdminSection('sec-gv')" aria-label="Quản lý giáo viên">
                                             <span class="dashboard-shortcut-icon"><i class="fas fa-chalkboard-teacher"></i></span>
                                             <span class="dashboard-shortcut-label">QL GV</span>
-                                        </button>
-                                        <button type="button"
-                                            class="btn-toolbar admin-only dashboard-shortcut dashboard-shortcut-system-list"
-                                            onclick="window.openSystemListPage()" aria-label="Danh Sách">
-                                            <span class="dashboard-shortcut-icon"><i class="fas fa-list"></i></span>
-                                            <span class="dashboard-shortcut-label">Danh Sách</span>
                                         </button>
                                         <button type="button"
                                             class="btn-toolbar admin-only dashboard-shortcut dashboard-shortcut-export"
@@ -177,25 +175,6 @@
                                         <input type="file" id="importExcelFile" accept=".xlsx" style="display: none;"
                                             onchange="window.importFullExcel(event)">
                                     </div>
-                                </div>
-                            </div>
-
-                            <div id="facilities-overview-container"
-                                class="smooth-box border-0 shadow-sm p-4 mb-4 mt-4 admin-only-block bg-dashboard-gray">
-                                <h5 class="widget-title-modern text-dark mb-3">HỆ THỐNG CƠ SỞ</h5>
-                                <div class="dashboard-facility-toolbar">
-                                    <div class="dashboard-facility-picker" id="dashboard-facilities">
-                                        <button type="button" class="dashboard-facility-trigger" disabled>
-                                            <span class="dashboard-facility-trigger-copy">
-                                                <small>Cơ sở</small>
-                                                <strong>Đang tải dữ liệu...</strong>
-                                            </span>
-                                        </button>
-                                    </div>
-                                    <button type="button" class="dashboard-history-trigger"
-                                        onclick="window.switchTab('du-lieu')" aria-label="Mở phân hệ dữ liệu">
-                                        <span>Lịch sử</span>
-                                    </button>
                                 </div>
                             </div>
 
@@ -457,47 +436,80 @@
                                 </section>
                             </div>
 
-                            <div id="sec-system-list" class="admin-management-section admin-system-list-page" style="display: none;">
-                                <div class="admin-system-list-page-header">
-                                    <div>
-                                        <h6 class="fw-bold text-dark m-0 admin-section-title">
-                                            <i class="fas fa-users"></i><span>DANH SÁCH HỌC SINH</span>
-                                        </h6>
-                                        <p class="admin-system-list-page-subtitle">Tra cứu, lọc và quản lý học sinh theo cơ sở.</p>
+                            <div id="sec-system-list" class="admin-management-section admin-system-list-page system-hub" style="display: none;">
+                                <header class="system-hub-header">
+                                    <button type="button" class="system-hub-back" onclick="window.backToDashboardMain()"
+                                        aria-label="Quay lại trang chủ">
+                                        <i class="fas fa-arrow-left" aria-hidden="true"></i>
+                                        <span>Quay lại</span>
+                                    </button>
+                                </header>
+
+                                <nav class="system-hub-tabs" aria-label="Nhóm dữ liệu hệ thống">
+                                    <button type="button" class="system-hub-tab is-active" data-system-tab="facilities" onclick="window.switchSystemTab('facilities')">Cơ sở</button>
+                                    <button type="button" class="system-hub-tab" data-system-tab="categories" onclick="window.switchSystemTab('categories')">Khối</button>
+                                    <button type="button" class="system-hub-tab" data-system-tab="classes" onclick="window.switchSystemTab('classes')">Lớp</button>
+                                    <button type="button" class="system-hub-tab" data-system-tab="students" onclick="window.switchSystemTab('students')">Học sinh</button>
+                                </nav>
+
+                                <section class="system-hub-panel" data-system-panel="facilities">
+                                    <div class="system-hub-panel-heading">
+                                        <h3>Danh sách cơ sở</h3>
+                                        <button type="button" class="system-hub-primary admin-only" onclick="window.promptCreateFacilityFromSystemHub()">Thêm cơ sở</button>
                                     </div>
-                                </div>
-                                <div class="admin-management-card admin-system-list-card">
-                                    <div class="p-3 border-bottom bg-light admin-system-filter-panel" id="sys-filter-panel">
-                                        <div class="row align-items-center mb-3">
-                                            <div class="col-md-6"><label class="form-label fw-bold text-muted mb-1">Chọn cơ sở để xem:</label><select id="systemListFacSelect" class="form-select fw-bold"
-                                                    onchange="window.loadSystemListFacility({ resetFilters: true })">
-                                                    <option value="">-- Chọn Cơ sở --</option>
-                                                </select></div>
-                                            <div class="col-md-6 text-end"><span class="badge bg-info py-2 px-3 mt-3 admin-system-count" id="systemListCount">Tổng: 0 HS</span></div>
+                                    <div id="systemHubFacilityList" class="system-hub-entity-list" aria-live="polite"></div>
+                                </section>
+
+                                <section class="system-hub-panel" data-system-panel="categories" hidden>
+                                    <div class="system-hub-panel-heading">
+                                        <h3>Danh sách khối</h3>
+                                        <button id="systemHubAddCategory" type="button" class="system-hub-primary admin-only" onclick="window.promptCreateCategoryFromSystemHub()">Thêm khối</button>
+                                    </div>
+                                    <div class="system-hub-filter-row">
+                                        <label for="systemHubCategoryFacility">Cơ sở</label>
+                                        <select id="systemHubCategoryFacility" class="form-select" onchange="window.handleSystemHubCategoryFacilityChange()"></select>
+                                    </div>
+                                    <div id="systemHubCategoryList" class="system-hub-entity-list" aria-live="polite"></div>
+                                </section>
+
+                                <section class="system-hub-panel" data-system-panel="classes" hidden>
+                                    <div class="system-hub-panel-heading">
+                                        <h3>Danh sách lớp</h3>
+                                        <button id="systemHubAddClass" type="button" class="system-hub-primary admin-only" onclick="window.promptCreateClassFromSystemHub()">Thêm lớp</button>
+                                    </div>
+                                    <div class="system-hub-filter-grid">
+                                        <div><label for="systemHubClassFacility">Cơ sở</label><select id="systemHubClassFacility" class="form-select" onchange="window.handleSystemHubClassFacilityChange()"></select></div>
+                                        <div><label for="systemHubClassCategory">Khối</label><select id="systemHubClassCategory" class="form-select" onchange="window.handleSystemHubClassCategoryChange()"></select></div>
+                                    </div>
+                                    <div id="systemHubClassList" class="system-hub-entity-list" aria-live="polite"></div>
+                                </section>
+
+                                <section class="system-hub-panel" data-system-panel="students" hidden>
+                                    <div class="admin-management-card admin-system-list-card">
+                                        <div class="system-hub-panel-heading system-hub-student-heading">
+                                            <h3>Danh sách học sinh</h3>
+                                            <span class="admin-system-count" id="systemListCount">0 học sinh</span>
                                         </div>
-                                        <div class="row align-items-center" id="sys-filters-row">
-                                            <div class="col-md-4 mb-2"><input type="text" id="sys-filter-name" class="form-control form-control-sm fw-bold" placeholder="Tìm tên học sinh..." oninput="window.filterSystemList()"></div>
-                                            <div class="col-md-4 mb-2">
-                                                <div class="system-class-filter-group">
-                                                    <select id="sys-filter-class" class="form-select form-select-sm fw-bold" onchange="window.handleSystemListClassChange()"><option value="">Tất cả Lớp</option></select>
-                                                    <button type="button" id="systemListAddStudentBtn" class="system-list-add-student-btn" onclick="window.promptAddStudentsFromSystemList()" disabled title="Chọn một lớp để thêm học sinh" aria-label="Thêm học sinh vào lớp đã chọn"><i class="fas fa-plus" aria-hidden="true"></i></button>
-                                                </div>
+                                        <div class="p-3 border-bottom admin-system-filter-panel" id="sys-filter-panel">
+                                            <div class="system-hub-student-filters" id="sys-filters-row">
+                                                <select id="systemListFacSelect" class="form-select fw-bold" onchange="window.handleSystemHubStudentFacilityChange()"><option value="">Tất cả cơ sở</option></select>
+                                                <select id="sys-filter-class" class="form-select fw-bold" onchange="window.handleSystemListClassChange()"><option value="">Tất cả lớp</option></select>
+                                                <input type="text" id="sys-filter-name" class="form-control fw-bold" placeholder="Tìm tên học sinh..." oninput="window.filterSystemList()">
+                                                <select id="sys-filter-school" class="form-select fw-bold" onchange="window.filterSystemList()"><option value="">Tất cả trường</option></select>
+                                                <button type="button" id="systemListAddStudentBtn" class="system-hub-primary system-list-add-student-btn" onclick="window.promptAddStudentsFromSystemList()" disabled>Thêm học sinh</button>
                                             </div>
-                                            <div class="col-md-4 mb-2"><select id="sys-filter-school" class="form-select form-select-sm fw-bold" onchange="window.filterSystemList()"><option value="">Tất cả Trường</option></select></div>
+                                        </div>
+                                        <div class="admin-system-list-body">
+                                            <div class="table-responsive">
+                                                <table class="table table-hover align-middle mb-0 admin-system-table">
+                                                    <thead class="table-light text-center"><tr><th class="system-col-index">STT</th><th class="system-col-name">Họ và tên</th><th class="system-col-class">Lớp</th><th class="system-col-school">Trường</th><th class="system-col-actions">Thao tác</th></tr></thead>
+                                                    <tbody id="systemListTableBody"><tr><td colspan="5" class="text-center text-muted py-4">Chọn cơ sở để xem học sinh</td></tr></tbody>
+                                                </table>
+                                            </div>
+                                            <div id="systemListCards" class="system-list-cards"></div>
                                         </div>
                                     </div>
-                                    <div class="admin-system-list-body">
-                                        <div class="table-responsive">
-                                            <table class="table table-hover align-middle mb-0 admin-system-table">
-                                                <thead class="table-light text-center">
-                                                    <tr><th class="system-col-index">STT</th><th class="system-col-name">Họ và tên</th><th class="system-col-class">Lớp</th><th class="system-col-school">Trường</th><th class="system-col-actions">Thao tác</th></tr>
-                                                </thead>
-                                                <tbody id="systemListTableBody"><tr><td colspan="5" class="text-center text-muted py-4">Vui lòng chọn cơ sở</td></tr></tbody>
-                                            </table>
-                                        </div>
-                                        <div id="systemListCards" class="system-list-cards"></div>
-                                    </div>
-                                </div>
+                                </section>
                             </div>
                         </div>
 
@@ -758,7 +770,6 @@
                                 <label>
                                     <span class="data-policy-copy">
                                         <strong>Mốc rà soát</strong>
-                                        <small>Liệt kê học sinh có số phiếu từ mốc đã chọn</small>
                                     </span>
                                     <span class="data-policy-input">
                                         <select id="data-cleanup-threshold" onchange="window.renderCleanupInventory()"
@@ -872,9 +883,6 @@
                     class="fas fa-edit fa-lg mb-1"></i><span class="label">Nhận Xét</span></div>
             <div class="nav-item" onclick="window.switchTab('quan-ly')" id="bot-tab-quan-ly"><i
                     class="fas fa-folder-open fa-lg mb-1"></i><span class="label">Xem Phiếu</span></div>
-            <div class="nav-item admin-only-flex" onclick="window.openSystemListPage()" id="bot-tab-danh-sach">
-                <i class="fas fa-users fa-lg mb-1 text-danger"></i><span class="label text-danger">Danh Sách</span>
-            </div>
             <div class="nav-item admin-only-flex" onclick="window.switchTab('du-lieu')" id="bot-tab-du-lieu">
                 <i class="fas fa-database fa-lg mb-1"></i><span class="label">Dữ Liệu</span>
             </div>
@@ -1053,7 +1061,7 @@
         </div>
     </div>
 
-    <script type="module" src="src/js/app.js?v=20260902-loading-performance-1"></script>
+    <script type="module" src="src/js/app.js?v=20260903-compact-data-1"></script>
 
     <script src="src/js/ui/mobile-controls.js?v=20260902-ios-focus-zoom-5"></script>
 </body>

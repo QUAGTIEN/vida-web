@@ -1,15 +1,15 @@
 import "./core/data-utils.js?v=20260902-loading-performance-1";
 import "./core/format.js";
 import "./ui/feedback.js";
-import "./features/system-management.js?v=20260902-teacher-periods-1";
-import "./ui/app-interactions.js?v=20260901-management-navigation-2";
+import "./features/system-management.js?v=20260903-system-hub-1";
+import "./ui/app-interactions.js?v=20260903-system-hub-1";
 import { ensureExcelAssets } from "./core/lazy-assets.js";
 import {
     ensureDashboardFeature,
     ensureDataCenterFeature,
     ensureExportFeature,
     ensureSystemListFeature
-} from "./core/lazy-features.js";
+} from "./core/lazy-features.js?v=20260903-compact-data-1";
 import { collection, addDoc, getDocs, query, where, orderBy, limit, startAfter, getCountFromServer, runTransaction, serverTimestamp, writeBatch, doc, setDoc, deleteDoc, getDoc, updateDoc, increment, onSnapshot } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
 import { signInWithEmailAndPassword, signOut, onAuthStateChanged, updatePassword, updateEmail, EmailAuthProvider, reauthenticateWithCredential } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-auth.js";
 import { auth, db } from "./config/firebase.js?v=20260826-data-center-2";
@@ -2313,7 +2313,9 @@ window.closeModal = () => {
 window.openAdminSection = function (sectionId) {
     try {
         document.getElementById('dashboard-main-content').style.display = 'none';
-        document.getElementById('admin-management-panels').style.display = 'block';
+        const adminPanels = document.getElementById('admin-management-panels');
+        adminPanels.style.display = 'block';
+        adminPanels.dataset.activeSection = sectionId;
         const sections = ['sec-facility', 'sec-khoi', 'sec-lop', 'sec-gv', 'sec-system-list'];
         sections.forEach(sec => {
             let el = document.getElementById(sec);
@@ -2335,9 +2337,14 @@ window.backToDashboardMain = function () {
         let dashMain = document.getElementById('dashboard-main-content');
         let adminPanels = document.getElementById('admin-management-panels');
         if (dashMain) dashMain.style.display = 'block';
-        if (adminPanels) adminPanels.style.display = 'none';
+        if (adminPanels) {
+            adminPanels.style.display = 'none';
+            delete adminPanels.dataset.activeSection;
+        }
         const systemListPage = document.getElementById('sec-system-list');
         if (systemListPage) systemListPage.style.display = 'none';
+        document.querySelectorAll('.bottom-nav-mobile .nav-item').forEach(item => item.classList.remove('active'));
+        document.getElementById('bot-tab-dashboard')?.classList.add('active');
         window.updateBackButtonVisibility?.();
     } catch (error) {
         console.error('[backToDashboardMain] UI error:', error);
@@ -2757,6 +2764,8 @@ async function init() {
         window.loadTeachersList();
     }
 }
+
+window.refreshSystemStaticData = init;
 
 window.retryInitialStaticData = () => {
     window.initPromise = init();

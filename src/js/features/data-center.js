@@ -269,7 +269,7 @@ window.renderDataHistory = () => {
             <td>${escapeHtml(item.teacher)}</td>
             <td><strong>${escapeHtml(item.facility)}</strong><span>${escapeHtml(item.className)}</span></td>
             <td><span class="data-count-badge"${names}>${item.studentCount}</span></td>
-            <td><span class="data-status-badge">Đã ghi DB</span></td>
+            <td><span class="data-status-badge">Đã lưu</span></td>
         </tr>`;
     }).join("") : `<tr class="data-empty-row"><td colspan="5">Không có lượt ghi thành công trong ${escapeHtml(getSelectedHistoryRange().label)}.</td></tr>`;
 

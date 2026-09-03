@@ -1,0 +1,191 @@
+/* Dashboard hierarchy: compact page title, then one clear function group. */
+#dashboard .dashboard-home-heading {
+    margin: 0 0 18px;
+    padding: 0 0 14px;
+    border-bottom: 4px solid #172033;
+}
+
+#dashboard .dashboard-home-heading h1 {
+    margin: 0;
+    color: #172033;
+    font-size: 1.35rem;
+    font-weight: 800;
+    letter-spacing: -.02em;
+}
+
+#dashboard .dashboard-functions {
+    padding: 0;
+    border: 0;
+    border-radius: 0;
+    background: transparent;
+    box-shadow: none;
+}
+
+#dashboard .dashboard-functions .toolbar-container {
+    display: block;
+}
+
+#dashboard .dashboard-functions .toolbar-title {
+    display: none;
+}
+
+#dashboard #admin-toolbar-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 12px;
+    width: 100%;
+    max-width: 780px;
+    margin: 0 auto;
+    padding: 0;
+}
+
+#dashboard #admin-toolbar-grid::before,
+#dashboard #admin-toolbar-grid::after {
+    content: none !important;
+    display: none !important;
+}
+
+#dashboard #admin-toolbar-grid .btn-toolbar {
+    display: flex;
+    min-height: 50px;
+    margin: 0;
+    padding: 7px 12px;
+    border: 1px solid var(--dashboard-function-color);
+    border-radius: 9px;
+    background: var(--dashboard-function-color);
+    box-shadow: 0 4px 10px color-mix(in srgb, var(--dashboard-function-color) 18%, transparent);
+    color: #fff;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 9px;
+}
+
+#dashboard #admin-toolbar-grid .btn-toolbar:hover,
+#dashboard #admin-toolbar-grid .btn-toolbar:focus-visible {
+    border-color: var(--dashboard-function-color);
+    background: var(--dashboard-function-color);
+    color: #fff;
+    filter: brightness(.94);
+    transform: translateY(-1px);
+}
+
+#dashboard #admin-toolbar-grid .dashboard-shortcut-facility {
+    --dashboard-function-color: #18a99b;
+}
+
+#dashboard #admin-toolbar-grid .dashboard-shortcut-teachers {
+    --dashboard-function-color: #3b7ee8;
+}
+
+#dashboard #admin-toolbar-grid .dashboard-shortcut-export {
+    --dashboard-function-color: #269953;
+}
+
+#dashboard #admin-toolbar-grid .dashboard-shortcut-icon {
+    display: inline-flex;
+    width: 30px;
+    height: 30px;
+    margin: 0;
+    border-radius: 7px;
+    background: rgba(255, 255, 255, .18);
+    box-shadow: none;
+    color: #fff;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 30px;
+}
+
+#dashboard #admin-toolbar-grid .dashboard-shortcut-icon i {
+    font-size: .9rem;
+}
+
+#dashboard #admin-toolbar-grid .dashboard-shortcut-label {
+    display: block;
+    min-height: 0;
+    color: inherit;
+    font-size: .84rem;
+    font-weight: 750;
+    line-height: 1.2;
+    text-align: left;
+}
+
+@media (max-width: 768px) {
+    #dashboard .dashboard-home-heading {
+        display: none !important;
+    }
+
+    #dashboard .dashboard-functions {
+        margin-bottom: 16px !important;
+        padding: 0;
+        border: 0;
+        background: transparent;
+        box-shadow: none;
+    }
+
+    #dashboard .dashboard-functions .toolbar-title {
+        display: flex !important;
+        margin-bottom: 12px;
+        padding: 0;
+        border: 0;
+        color: #172033 !important;
+        font-size: 1rem;
+        font-weight: 800;
+    }
+
+    #dashboard #admin-toolbar-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+        gap: 8px !important;
+        max-width: none;
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+
+    #dashboard #admin-toolbar-grid .btn-toolbar {
+        min-height: 76px !important;
+        padding: 9px 5px !important;
+        border: 1px solid var(--dashboard-function-color) !important;
+        border-radius: 9px !important;
+        background: var(--dashboard-function-color) !important;
+        box-shadow: 0 6px 14px color-mix(in srgb, var(--dashboard-function-color) 28%, transparent) !important;
+        flex-direction: column !important;
+        justify-content: center !important;
+        gap: 6px !important;
+    }
+
+    #dashboard #admin-toolbar-grid .dashboard-shortcut-icon {
+        width: 32px !important;
+        height: 32px !important;
+        margin: 0 !important;
+        border-radius: 8px !important;
+        background: rgba(255, 255, 255, .2) !important;
+        color: #fff !important;
+        flex-basis: 32px !important;
+    }
+
+    #dashboard #admin-toolbar-grid .dashboard-shortcut-icon i {
+        font-size: 1rem !important;
+    }
+
+    #dashboard #admin-toolbar-grid .dashboard-shortcut-label {
+        min-height: 0 !important;
+        color: #fff !important;
+        font-size: .7rem !important;
+        line-height: 1.15 !important;
+        text-align: center !important;
+    }
+
+    #dashboard-widgets-row {
+        margin-top: 0 !important;
+        margin-bottom: 0 !important;
+    }
+
+    #newsModal {
+        margin-bottom: 0 !important;
+    }
+
+    #newsModal .dashboard-news-card {
+        height: calc(100dvh - 250px) !important;
+        min-height: 360px;
+        max-height: none !important;
+    }
+}

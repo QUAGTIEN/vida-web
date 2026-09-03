@@ -3,5 +3,19 @@
 @import url("./sections/enhancements.css?v=20260902-mobile-shortcuts-1");
 @import url("./sections/review.css?v=20260903-mobile-zoom-reset-1");
 @import url("./sections/evaluation.css?v=20260831-mobile-polish-3");
-@import url("./sections/admin.css?v=20260902-teacher-cards-1");
-@import url("./sections/data-center.css?v=20260826-data-header-1");
+@import url("./sections/admin.css?v=20260903-mobile-dialog-center-1");
+@import url("./sections/data-center.css?v=20260903-compact-data-1");
+@import url("./sections/system-hub.css?v=20260903-compact-data-1");
+@import url("./sections/dashboard-home.css?v=20260903-dashboard-functions-5");
+
+@media (max-width: 768px) {
+    #dashboard .dashboard-functions .toolbar-title,
+    #nhap-lieu .review-page-header .page-title,
+    #quan-ly .evaluation-page-header .page-title,
+    #du-lieu .data-center-header .page-title {
+        font-size: 1rem !important;
+        font-weight: 800 !important;
+        line-height: 1.2 !important;
+        letter-spacing: 0 !important;
+    }
+}

@@ -1,5 +1,255 @@
 import { db } from "../config/firebase.js?v=20260826-data-center-2";
 import { collection, doc, getDoc, getDocs, query, serverTimestamp, updateDoc, where, writeBatch } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
+
+const SYSTEM_TABS = ["facilities", "categories", "classes", "students"];
+const systemHubState = {
+    activeTab: "facilities",
+    facility: "",
+    category: "",
+    className: "",
+    classRequestId: 0,
+    studentRequestId: 0
+};
+const systemHubClassCache = new Map();
+
+const getFacilities = () => (Array.isArray(window.allFacilities) ? [...window.allFacilities] : [])
+    .filter(Boolean)
+    .sort((a, b) => a.localeCompare(b, "vi"));
+
+const getCategories = facility => [...new Set(window.facilityCategoriesMap?.[facility] || [])]
+    .filter(Boolean)
+    .sort((a, b) => a.localeCompare(b, "vi"));
+
+const setHubSelectOptions = (select, placeholder, values, selectedValue = "") => {
+    if (!select) return "";
+    const options = [...new Set(values || [])].filter(Boolean);
+    const resolved = options.includes(selectedValue) ? selectedValue : (options[0] || "");
+    select.innerHTML = `<option value="">${window.escapeHtml(placeholder)}</option>` + options
+        .map(value => `<option value="${window.escapeHtml(value)}"${value === resolved ? " selected" : ""}>${window.escapeHtml(value)}</option>`)
+        .join("");
+    select.value = resolved;
+    return resolved;
+};
+
+const renderHubEmpty = message => `<div class="system-hub-empty">${window.escapeHtml(message)}</div>`;
+
+const renderHubEntity = ({ title, meta, openLabel, openAction, renameAction, deleteAction }) => `
+    <article class="system-hub-entity">
+        <button type="button" class="system-hub-entity-main" onclick="${openAction}">
+            <strong>${window.escapeHtml(title)}</strong>
+            <span>${window.escapeHtml(meta)}</span>
+        </button>
+        <div class="system-hub-entity-actions admin-only-flex">
+            <button type="button" class="system-hub-open" onclick="${openAction}">${window.escapeHtml(openLabel)}</button>
+            <button type="button" class="system-hub-action" onclick="${renameAction}">Đổi tên</button>
+            <button type="button" class="system-hub-action is-danger" onclick="${deleteAction}">Xóa</button>
+        </div>
+    </article>`;
+
+const loadHubClasses = async facility => {
+    const normalizedFacility = String(facility || "").trim();
+    if (!normalizedFacility) return [];
+    if (systemHubClassCache.has(normalizedFacility)) return systemHubClassCache.get(normalizedFacility);
+
+    const requestId = ++systemHubState.classRequestId;
+    const snap = await getDocs(query(collection(db, "classes"), where("facility", "==", normalizedFacility)));
+    const classes = snap.docs.map(item => ({ id: item.id, ...item.data() }))
+        .filter(item => item.name)
+        .sort((a, b) => String(a.name).localeCompare(String(b.name), "vi"));
+    if (requestId === systemHubState.classRequestId) {
+        systemHubClassCache.set(normalizedFacility, classes);
+        classes.forEach(item => {
+            if (item.category) window.classCategoryMap[item.name] = item.category;
+            const key = JSON.stringify([normalizedFacility, item.category || ""]);
+            const values = window.classesByFacilityCategory?.[key] || [];
+            if (!values.includes(item.name)) {
+                window.classesByFacilityCategory = window.classesByFacilityCategory || {};
+                window.classesByFacilityCategory[key] = [...values, item.name];
+            }
+        });
+    }
+    return classes;
+};
+
+const renderFacilityHub = () => {
+    const list = document.getElementById("systemHubFacilityList");
+    if (!list) return;
+    const facilities = getFacilities();
+    if (!facilities.length) {
+        list.innerHTML = renderHubEmpty("Chưa có cơ sở nào trong hệ thống.");
+        return;
+    }
+    list.innerHTML = facilities.map(facility => renderHubEntity({
+        title: facility,
+        meta: `${getCategories(facility).length} khối`,
+        openLabel: "Xem khối",
+        openAction: `window.switchSystemTab('categories', { facility: ${window.jsArg(facility)} })`,
+        renameAction: `window.promptRenameFacility(${window.jsArg(facility)})`,
+        deleteAction: `window.promptDeleteFacility(${window.jsArg(facility)})`
+    })).join("");
+    window.applyRolePermissions?.();
+};
+
+const renderCategoryHub = () => {
+    const select = document.getElementById("systemHubCategoryFacility");
+    systemHubState.facility = setHubSelectOptions(select, "Chọn cơ sở", getFacilities(), systemHubState.facility);
+    const addButton = document.getElementById("systemHubAddCategory");
+    if (addButton) addButton.disabled = !systemHubState.facility;
+    const list = document.getElementById("systemHubCategoryList");
+    if (!list) return;
+    if (!systemHubState.facility) {
+        list.innerHTML = renderHubEmpty("Chưa có cơ sở để quản lý khối.");
+        return;
+    }
+    const categories = getCategories(systemHubState.facility);
+    if (!categories.length) {
+        list.innerHTML = renderHubEmpty("Cơ sở này chưa có khối nào.");
+        return;
+    }
+    list.innerHTML = categories.map(category => renderHubEntity({
+        title: category,
+        meta: systemHubState.facility,
+        openLabel: "Xem lớp",
+        openAction: `window.switchSystemTab('classes', { facility: ${window.jsArg(systemHubState.facility)}, category: ${window.jsArg(category)} })`,
+        renameAction: `window.promptRenameCategory(${window.jsArg(systemHubState.facility)}, ${window.jsArg(category)})`,
+        deleteAction: `window.promptDeleteCategory(${window.jsArg(systemHubState.facility)}, ${window.jsArg(category)})`
+    })).join("");
+    window.applyRolePermissions?.();
+};
+
+const renderClassHub = async () => {
+    const facilitySelect = document.getElementById("systemHubClassFacility");
+    systemHubState.facility = setHubSelectOptions(facilitySelect, "Chọn cơ sở", getFacilities(), systemHubState.facility);
+    const categorySelect = document.getElementById("systemHubClassCategory");
+    systemHubState.category = setHubSelectOptions(categorySelect, "Chọn khối", getCategories(systemHubState.facility), systemHubState.category);
+    const addButton = document.getElementById("systemHubAddClass");
+    if (addButton) addButton.disabled = !systemHubState.facility || !systemHubState.category;
+    const list = document.getElementById("systemHubClassList");
+    if (!list) return;
+    if (!systemHubState.facility || !systemHubState.category) {
+        list.innerHTML = renderHubEmpty("Chọn cơ sở và khối để xem danh sách lớp.");
+        return;
+    }
+    const requestedFacility = systemHubState.facility;
+    const requestedCategory = systemHubState.category;
+    list.innerHTML = '<div class="system-hub-loading">Đang tải danh sách lớp...</div>';
+    try {
+        const allClasses = await loadHubClasses(requestedFacility);
+        if (systemHubState.activeTab !== "classes"
+            || systemHubState.facility !== requestedFacility
+            || systemHubState.category !== requestedCategory) return;
+        const classes = allClasses.filter(item => item.category === requestedCategory);
+        if (!classes.length) {
+            list.innerHTML = renderHubEmpty("Khối này chưa có lớp nào.");
+            return;
+        }
+        list.innerHTML = classes.map(item => renderHubEntity({
+            title: item.name,
+            meta: `${requestedCategory} · ${requestedFacility}`,
+            openLabel: "Xem học sinh",
+            openAction: `window.switchSystemTab('students', { facility: ${window.jsArg(requestedFacility)}, className: ${window.jsArg(item.name)} })`,
+            renameAction: `window.promptRenameClass(${window.jsArg(requestedFacility)}, ${window.jsArg(requestedCategory)}, ${window.jsArg(item.name)})`,
+            deleteAction: `window.promptDeleteClass(${window.jsArg(requestedFacility)}, ${window.jsArg(requestedCategory)}, ${window.jsArg(item.name)})`
+        })).join("");
+        window.applyRolePermissions?.();
+    } catch (error) {
+        console.error("Lỗi tải danh sách lớp hệ thống:", error);
+        list.innerHTML = renderHubEmpty("Không thể tải danh sách lớp. Vui lòng thử lại.");
+    }
+};
+
+const renderStudentHub = async () => {
+    const facilitySelect = document.getElementById("systemListFacSelect");
+    systemHubState.facility = setHubSelectOptions(facilitySelect, "Chọn cơ sở", getFacilities(), systemHubState.facility);
+    if (!systemHubState.facility) {
+        await window.loadSystemListFacility({ resetFilters: true });
+        return;
+    }
+    try {
+        await loadHubClasses(systemHubState.facility);
+    } catch (error) {
+        console.warn("Không tải được danh mục lớp trước danh sách học sinh:", error);
+    }
+    await window.loadSystemListFacility({ selectedClass: systemHubState.className });
+    systemHubState.className = "";
+};
+
+window.switchSystemTab = async (tabName, context = {}) => {
+    const tab = SYSTEM_TABS.includes(tabName) ? tabName : "facilities";
+    if (Object.prototype.hasOwnProperty.call(context, "facility")) systemHubState.facility = context.facility || "";
+    if (Object.prototype.hasOwnProperty.call(context, "category")) systemHubState.category = context.category || "";
+    if (Object.prototype.hasOwnProperty.call(context, "className")) systemHubState.className = context.className || "";
+    systemHubState.activeTab = tab;
+
+    document.querySelectorAll("[data-system-tab]").forEach(button => {
+        const active = button.dataset.systemTab === tab;
+        button.classList.toggle("is-active", active);
+        button.setAttribute("aria-selected", String(active));
+    });
+    document.querySelectorAll("[data-system-panel]").forEach(panel => {
+        panel.hidden = panel.dataset.systemPanel !== tab;
+    });
+
+    if (tab === "facilities") renderFacilityHub();
+    if (tab === "categories") renderCategoryHub();
+    if (tab === "classes") await renderClassHub();
+    if (tab === "students") await renderStudentHub();
+};
+
+window.handleSystemHubCategoryFacilityChange = () => {
+    systemHubState.facility = document.getElementById("systemHubCategoryFacility")?.value || "";
+    renderCategoryHub();
+};
+
+window.handleSystemHubClassFacilityChange = () => {
+    systemHubState.facility = document.getElementById("systemHubClassFacility")?.value || "";
+    systemHubState.category = "";
+    renderClassHub();
+};
+
+window.handleSystemHubClassCategoryChange = () => {
+    systemHubState.category = document.getElementById("systemHubClassCategory")?.value || "";
+    renderClassHub();
+};
+
+window.handleSystemHubStudentFacilityChange = async () => {
+    systemHubState.facility = document.getElementById("systemListFacSelect")?.value || "";
+    systemHubState.className = "";
+    systemHubClassCache.delete(systemHubState.facility);
+    if (systemHubState.facility) {
+        try {
+            await loadHubClasses(systemHubState.facility);
+        } catch (error) {
+            console.warn("Không tải được danh mục lớp:", error);
+        }
+    }
+    await window.loadSystemListFacility({ resetFilters: true });
+};
+
+window.promptCreateFacilityFromSystemHub = () => {
+    window.showModal("Nhập tên cơ sở mới:", "prompt", async rawName => {
+        const input = document.getElementById("new-facility-input");
+        if (input) input.value = String(rawName || "").trim();
+        await window.createFacility();
+        await window.refreshSystemHub({ tab: "facilities" });
+    }, "", { placeholder: "Ví dụ: CS4" });
+};
+
+window.promptCreateCategoryFromSystemHub = () => {
+    if (!systemHubState.facility) return window.showModal("Vui lòng chọn cơ sở trước.", "error");
+    window.promptCreateCategoryForFacility(systemHubState.facility);
+};
+
+window.promptCreateClassFromSystemHub = () => {
+    if (!systemHubState.facility || !systemHubState.category) return window.showModal("Vui lòng chọn cơ sở và khối trước.", "error");
+    window.promptCreateClassForCategory(systemHubState.facility, systemHubState.category);
+};
+
+window.refreshSystemHub = async (context = {}) => {
+    systemHubClassCache.clear();
+    if (context.reloadStatic) await window.refreshSystemStaticData?.();
+    return window.switchSystemTab(context.tab || systemHubState.activeTab, context);
+};
 window.getSystemClassesForFacility = (facilityName = "") => {
     const facility = String(facilityName || "").trim();
     if (!facility) return [];
@@ -108,36 +358,24 @@ window.promptAddStudentsFromSystemList = () => {
     }, "", { placeholder: "Nguyễn Văn A\nTrần Thị B" });
 };
 
-window.openSystemListPage = async () => {
+window.openSystemListPage = async (options = {}) => {
+    window.closePanel?.();
     window.openAdminSection?.('sec-system-list');
-    window.showGlobalLoading('Đang tải danh sách hệ thống...');
-
-    document.getElementById('systemListFacSelect').value = "";
-    document.getElementById('sys-filter-name').value = "";
-    document.getElementById('sys-filter-class').value = "";
-    document.getElementById('sys-filter-school').value = "";
-    document.getElementById('systemListTableBody').innerHTML = '<tr><td colspan="5" class="text-center text-muted py-4">Vui lòng chọn cơ sở ở trên</td></tr>';
-    document.getElementById('systemListCount').innerText = "Tổng: 0 HS";
-    const cardsEl = document.getElementById('systemListCards');
-    if (cardsEl) cardsEl.innerHTML = '';
-    window.currentSystemStudents = [];
-    window.updateSystemListAddStudentButton();
-
-    try {
-        if (window.allFacilities.length === 0) await init();
-        await window.loadAllStudentsForGlobalSearch();
-    } catch (error) {
-        console.error('Lỗi khi tải dữ liệu hệ thống:', error);
-    } finally {
-        window.hideGlobalLoading();
-        document.getElementById('sec-system-list').style.display = 'block';
-    }
+    document.querySelectorAll('.bottom-nav-mobile .nav-item').forEach(item => item.classList.remove('active'));
+    document.getElementById('bot-tab-dashboard')?.classList.add('active');
+    const section = document.getElementById('sec-system-list');
+    if (section) section.style.display = 'block';
+    if (!getFacilities().length) await window.refreshSystemStaticData?.();
+    await window.switchSystemTab(options.tab || "facilities", options);
 };
 
 window.openSystemListModal = window.openSystemListPage;
+window.openSystemPage = window.openSystemListPage;
 
 window.loadSystemListFacility = async (options = {}) => {
     const fac = document.getElementById('systemListFacSelect').value;
+    const requestId = ++systemHubState.studentRequestId;
+    systemHubState.facility = fac || "";
     const tbody = document.getElementById('systemListTableBody');
     const cardsEl = document.getElementById('systemListCards');
     const countEl = document.getElementById('systemListCount');
@@ -152,7 +390,7 @@ window.loadSystemListFacility = async (options = {}) => {
 
     if (!fac || fac === '-- Chọn Cơ sở --' || fac === '') {
         tbody.innerHTML = '<tr><td colspan="5" class="text-center py-4 fw-semibold text-muted">Vui lòng chọn Cơ sở để xem danh sách học sinh.</td></tr>';
-        countEl.innerText = "Tổng: 0 HS";
+        countEl.innerText = "0 học sinh";
         if (cardsEl) cardsEl.innerHTML = '<div class="system-empty-card">Vui lòng chọn cơ sở để xem danh sách học sinh.</div>';
         window.currentSystemStudents = [];
         window.setSelectOptions(classSelect, 'Tất cả Lớp', []);
@@ -165,6 +403,7 @@ window.loadSystemListFacility = async (options = {}) => {
 
     try {
         const snap = await getDocs(query(collection(db, "students"), where("facility", "==", fac)));
+        if (requestId !== systemHubState.studentRequestId) return;
         let students = [];
         snap.forEach(d => students.push({ id: d.id, ...d.data() }));
 
@@ -193,7 +432,7 @@ window.loadSystemListFacility = async (options = {}) => {
     } catch (error) {
         console.error('Lỗi tải danh sách hệ thống:', error);
         tbody.innerHTML = `<tr><td colspan="5" class="text-center py-4 text-danger"><i class="fas fa-exclamation-triangle fa-2x mb-2"></i><p class="mt-2">Đã xảy ra lỗi khi tải dữ liệu: ${error.message}</p></td></tr>`;
-        countEl.innerText = "Tổng: 0 HS";
+        countEl.innerText = "0 học sinh";
         window.updateSystemListAddStudentButton();
     }
 };
@@ -209,8 +448,8 @@ window.filterSystemList = () => {
     }
 
     const filtered = window.currentSystemStudents.filter(s => {
-        const matchName = s.studentName.toLowerCase().includes(nameF);
-        const matchClass = !classF || s.className.toLowerCase() === classF;
+        const matchName = String(s.studentName || "").toLowerCase().includes(nameF);
+        const matchClass = !classF || String(s.className || "").toLowerCase() === classF;
         const matchSchool = (s.school || "").toLowerCase().includes(schoolF);
         return matchName && matchClass && matchSchool;
     });
@@ -223,7 +462,7 @@ window.renderSystemListTable = (data) => {
     const cardsEl = document.getElementById('systemListCards');
     const countEl = document.getElementById('systemListCount');
 
-    countEl.innerText = `Tổng: ${data.length} HS`;
+    countEl.innerText = `${data.length} học sinh`;
 
     if (data.length === 0) {
         tbody.innerHTML = '<tr><td colspan="5" class="text-center text-danger py-4">Không tìm thấy học sinh nào!</td></tr>';
@@ -244,9 +483,9 @@ window.renderSystemListTable = (data) => {
         html += `
         <tr class="text-center align-middle admin-system-row">
             <td class="fw-bold align-middle">${idx + 1}</td>
-            <td class="fw-bold text-dark align-middle text-start">${s.studentName}</td>
-            <td class="align-middle"><span class="system-class-pill" data-system-student-index="${idx}">Lớp ${window.formatClassName(s.className, s.facility)}</span></td>
-            <td class="align-middle text-start">${s.school || ''}</td>
+            <td class="fw-bold text-dark align-middle text-start">${safeName}</td>
+            <td class="align-middle"><span class="system-class-pill" data-system-student-index="${idx}">Lớp ${safeClass}</span></td>
+            <td class="align-middle text-start">${safeSchool}</td>
             <td class="align-middle">
                 <div class="d-flex align-items-center justify-content-center gap-2 admin-system-row-actions">
                     <button type="button" class="btn btn-sm admin-table-action admin-table-action-edit" onclick="window.editStudentSystem(${window.jsArg(s.id)})" title="Sửa thông tin"><i class="fas fa-edit"></i><span>Sửa</span></button>
