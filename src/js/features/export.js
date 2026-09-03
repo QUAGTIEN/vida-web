@@ -179,7 +179,7 @@ window.previewExport = async (isPrint = false, dataToExport, monthLabel = "") =>
     let printHtml = `
         <div id="capture-area" style="width: 1000px; padding: 40px; background: white; color: black; font-family: 'Times New Roman', serif;">
             <div style="position: relative; text-align: center; margin-bottom: 30px; min-height: 86px; display: flex; align-items: center; justify-content: center;">
-                <img src="assets/images/vida-placeholder.svg" alt="Logo VIDA" style="position: absolute; left: 0; top: 50%; transform: translateY(-50%); width: 86px; height: 86px; object-fit: contain;">
+                <img src="assets/images/vida-logo.svg" alt="Logo VIDA" style="position: absolute; left: 0; top: 50%; transform: translateY(-50%); width: 86px; height: 86px; object-fit: contain;">
                 <div>
                     <h2 style="margin: 0; font-size: 26px; font-weight: bold; text-transform: uppercase; color: #16a34a;">TRUNG TÂM VIDA</h2>
                     <h3 style="margin: 10px 0 0 0; font-size: 20px; font-weight: bold; text-transform: uppercase;">PHIẾU ĐÁNH GIÁ HỌC TẬP${monthLabel}</h3>
