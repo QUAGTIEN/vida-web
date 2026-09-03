@@ -40,10 +40,12 @@
     --mobile-nav-bg: #edf5ff;
     --mobile-nav-active: #d6e8ff;
     --mobile-nav-text: #526b82;
-    --mobile-nav-height: clamp(48px, min(13vw, 10svh), 56px);
+    --mobile-nav-height: clamp(44px, 10.5vw, 46px);
     --mobile-nav-icon-size: clamp(18px, 5vw, 20px);
     --mobile-nav-label-size: clamp(11px, 2.9vw, 12px);
-    --mobile-safe-bottom: max(4px, env(safe-area-inset-bottom, 0px));
+    /* Compact mode requested by the user: retain a proportional Home-indicator
+       clearance instead of reserving the entire inset below the 44px targets. */
+    --mobile-safe-bottom: max(4px, calc(env(safe-area-inset-bottom, 0px) * 0.55));
     --danger: #d92d20;
     --danger-hover: #b42318;
     --danger-soft: #fff0ee;

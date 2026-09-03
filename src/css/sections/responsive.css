@@ -52,7 +52,7 @@
         padding-bottom: 20px !important;
     }
 
-    /* Mobile navigation owns its safe area; icon highlight does not shrink hit targets. */
+    /* Compact Home clearance is separate from the unchanged 44px hit targets. */
     .bottom-nav-mobile {
         display: flex !important;
         justify-content: space-around;
@@ -61,7 +61,7 @@
         bottom: 0 !important;
         left: 0 !important;
         width: 100% !important;
-        height: calc(var(--mobile-nav-height) + var(--mobile-safe-bottom)) !important;
+        height: calc(var(--mobile-nav-height) + var(--mobile-safe-bottom) + 1px) !important;
         padding: 0 max(8px, env(safe-area-inset-right, 0px)) var(--mobile-safe-bottom) max(8px, env(safe-area-inset-left, 0px));
         background: var(--mobile-nav-bg) !important;
         z-index: 9999 !important;
@@ -96,8 +96,8 @@
         min-width: 0;
         min-height: 44px;
         height: var(--mobile-nav-height);
-        padding: 2px 0;
-        gap: 2px;
+        padding: 1px 0;
+        gap: 0;
         border: 0;
         background: transparent;
         -webkit-tap-highlight-color: transparent;
