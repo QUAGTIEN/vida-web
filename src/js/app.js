@@ -9,7 +9,7 @@ import {
     ensureDataCenterFeature,
     ensureExportFeature,
     ensureSystemListFeature
-} from "./core/lazy-features.js?v=20260903-compact-data-1";
+} from "./core/lazy-features.js?v=20260904-vida-branding-1";
 import { collection, addDoc, getDocs, query, where, orderBy, limit, startAfter, getCountFromServer, runTransaction, serverTimestamp, writeBatch, doc, setDoc, deleteDoc, getDoc, updateDoc, increment, onSnapshot } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
 import { signInWithEmailAndPassword, signOut, onAuthStateChanged, updatePassword, updateEmail, EmailAuthProvider, reauthenticateWithCredential } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-auth.js";
 import { auth, db } from "./config/firebase.js?v=20260826-data-center-2";
@@ -2089,12 +2089,12 @@ window.updateStudentIndices = () => {
 };
 
 const pastelColors = [
-    { bg: "#f4fdf8", text: "#16a34a" },
-    { bg: "#f4f9ff", text: "#2563eb" },
-    { bg: "#fffcf5", text: "#ea580c" },
-    { bg: "#fff5f7", text: "#db2777" },
-    { bg: "#f7f7ff", text: "#6366f1" },
-    { bg: "#fdf8f5", text: "#9a3412" }
+    { bg: "#eaf4ff", text: "#0066d6" },
+    { bg: "#eaf4ff", text: "#0066d6" },
+    { bg: "#eaf4ff", text: "#0066d6" },
+    { bg: "#eaf4ff", text: "#0066d6" },
+    { bg: "#eaf4ff", text: "#0066d6" },
+    { bg: "#eaf4ff", text: "#0066d6" }
 ];
 
 window.categoryColorMap = {};
@@ -2775,10 +2775,11 @@ window.retryInitialStaticData = () => {
 const renderFacilityUI = (containerId, inputId, targetKhoiId) => {
     try {
         let html = "";
+        const showWordmark = containerId !== "ui-facility-nhap-lieu";
         if (window.allFacilities.length === 0) html = "<i class='text-muted small'>Chưa có dữ liệu Cơ sở</i>";
         window.allFacilities.forEach((f, index) => {
             html += `<button type="button" class="btn-pill cs-${(index % 10) + 1}" onclick="window.handleSelectFacility(event, '${f}', '${inputId}', '${containerId}', '${targetKhoiId}')">
-    <span class="tdt-wordart">TDT</span>
+    ${showWordmark ? '<span class="tdt-wordart">TDT</span>' : ''}
     <span class="cs-text">${f}</span>
 </button>`;
         });
@@ -4434,7 +4435,7 @@ window.showGlobalDropdownA2 = async () => {
             const name = document.createElement("div");
             name.className = "text-truncate me-2 evaluation-search-result-name";
             name.textContent = hs.name;
-            const categoryColor = window.categoryColorMap[hs.category] || { bg: "#f0fdf4", text: "#166534" };
+            const categoryColor = window.categoryColorMap[hs.category] || { bg: "#eaf4ff", text: "#0066d6" };
             const classBadge = document.createElement("span");
             classBadge.className = "badge flex-shrink-0 evaluation-search-result-badge";
             classBadge.style.setProperty("--evaluation-badge-bg", categoryColor.bg);
@@ -4650,7 +4651,7 @@ window.renderA2FilterStudentList = (students = [], listArea = document.getElemen
     let html = `<div class="filter-student-list-mobile">`;
     filtered.forEach((hs, index) => {
         const name = hs.name || hs.studentName || "";
-        const catColor = window.categoryColorMap?.[hs.category] || { bg: '#f0fdf4', text: '#166534' };
+        const catColor = window.categoryColorMap?.[hs.category] || { bg: '#eaf4ff', text: '#0066d6' };
         badgeColors.push(catColor);
         html += `
             <div class="filter-student-item" onclick="window.viewStudentFromFilter(${window.jsArg(name)}, ${window.jsArg(hs.className)}, ${window.jsArg(hs.id || '')}, ${window.jsArg(hs.facility || '')}, ${window.jsArg(hs.category || '')})">

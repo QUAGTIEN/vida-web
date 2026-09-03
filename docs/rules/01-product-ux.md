@@ -23,10 +23,28 @@ Khi có xung đột, ưu tiên theo thứ tự:
 - MUST không tạo dashboard với số liệu, biểu đồ hoặc shortcut giả chỉ để lấp đầy không gian.
 - MUST không tự redesign toàn màn hình khi yêu cầu chỉ liên quan một lỗi hoặc một component.
 - SHOULD ưu tiên bề mặt trắng/trung tính, border rõ và shadow nhẹ.
-- SHOULD dùng navy/xám đậm cho cấu trúc, xanh lá cho hành động chính và màu phụ cho trạng thái có ý nghĩa.
+- SHOULD dùng chữ xanh đậm trên nền sáng, xanh dương cho hành động chính và màu phụ chỉ cho trạng thái có ý nghĩa.
 - SHOULD giữ một ngôn ngữ thiết kế xuyên suốt thay vì mỗi section có một phong cách riêng.
 
+## Bộ màu VIDA
+
+- Nền sáng `#F5FAFF`, bề mặt trắng `#FFFFFF`; không dùng nền xám tối hoặc nhiều gradient.
+- Màu chủ đạo `#0066D6`, hover `#0052B8`, nền nhấn nhẹ `#EAF4FF`.
+- Thanh menu desktop/mobile dùng nền `#E3EFFF`, chữ `#244563`, icon `#557B9F`, viền `#C5DAF3`, hover `#D0E4FF`. Mục đang chọn nền `#0066D6`, chữ/icon trắng; giữ nguyên vị trí, kích thước vùng bấm và luồng điều hướng.
+- Đăng xuất dùng nền đỏ `#D92D20`, hover `#B42318` và chữ trắng trên desktop/mobile. Trong trang Nhận xét, nút Chỉnh cấu trúc dùng xám trung tính; ô tìm nhanh dùng nền `#EAF4FF`, ô nhập nội dung chung dùng nền `#E9F6F3`.
+- Thẻ chọn cơ sở trong trang Nhận xét chỉ hiển thị tên cơ sở, không có nhãn TDT. Tiêu đề phiếu xuất là `TRUNG TÂM NGOẠI NGỮ VIDA` và không hiển thị logo trong góc phiếu; logo ứng dụng ở menu, màn tải và favicon vẫn giữ nguyên.
+- Card nội dung dùng nền trắng; nền trung tính nhẹ `#F8FAFC`/`#F2F5F9` chỉ phân lớp header, nhãn và thao tác phụ. Không tô xanh toàn bộ các bề mặt.
+- Ba shortcut Trang chủ căn trái, có kích thước lớn và dùng nền màu tươi toàn thẻ: Hệ thống tím `#A437C3`, QL GV xanh ngọc `#0080A3`, Xuất File cam `#C65305`. Chữ và icon dùng màu trắng dễ đọc; giữ nguyên tên, thứ tự và thao tác của từng shortcut trên desktop lẫn mobile.
+- Cột nhãn phiếu đánh giá dùng năm sắc xanh dương đậm dần từ Tháng đến Nhận xét: `#2276C4`, `#1268B8`, `#075AAB`, `#064C94`, `#063E7A`; chữ trắng, nền dữ liệu giữ nguyên. Palette này do `evaluation.css` sở hữu, không thay đổi mẫu xuất file.
+- Chữ chính `#16324F`, chữ phụ `#61758A`, viền `#DCEBFA`. Chữ nhỏ trên nền nhấn dùng chữ chính để giữ độ tương phản.
+- Dùng token trong `src/css/sections/base.css`; các tên token legacy được giữ làm alias để không đổi contract.
+- Logo VIDA giữ nguyên màu xanh lá/đỏ riêng; không lấy hai màu logo làm bộ màu giao diện.
+- Giữ màu ngữ nghĩa cho lỗi, cảnh báo và xác nhận thành công. Đổi màu không được thay đổi nội dung, bố cục hoặc chức năng.
+
 ## Phân cấp và bố cục
+
+- Tiêu đề bốn phân hệ dùng chung `20px`, độ đậm `800`, line-height `1.3`, màu xanh than trên cả desktop/mobile; không có gạch ngang dưới tiêu đề. Typography được sở hữu tại `base.css`, không ghi đè riêng ở từng màn.
+- Khoảng cách dưới tiêu đề dùng token `--page-heading-gap`; giữ nguyên nhãn, DOM ID và luồng điều hướng.
 
 - Mỗi màn hình MUST có một mục tiêu chính và tối đa một primary action nổi bật tại cùng thời điểm.
 - Thứ tự đọc MUST phản ánh thứ tự làm việc thực tế.

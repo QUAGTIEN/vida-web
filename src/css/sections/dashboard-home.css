@@ -1,16 +1,12 @@
 /* Dashboard hierarchy: compact page title, then one clear function group. */
 #dashboard .dashboard-home-heading {
-    margin: 0 0 18px;
-    padding: 0 0 14px;
-    border-bottom: 4px solid #172033;
+    margin: 0 0 var(--page-heading-gap);
+    padding: 0;
+    border-bottom: 0;
 }
 
 #dashboard .dashboard-home-heading h1 {
     margin: 0;
-    color: #172033;
-    font-size: 1.35rem;
-    font-weight: 800;
-    letter-spacing: -.02em;
 }
 
 #dashboard .dashboard-functions {
@@ -34,8 +30,8 @@
     grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 12px;
     width: 100%;
-    max-width: 780px;
-    margin: 0 auto;
+    max-width: none;
+    margin: 0;
     padding: 0;
 }
 
@@ -47,14 +43,14 @@
 
 #dashboard #admin-toolbar-grid .btn-toolbar {
     display: flex;
-    min-height: 50px;
+    min-height: 82px;
     margin: 0;
-    padding: 7px 12px;
-    border: 1px solid var(--dashboard-function-color);
+    padding: 16px 18px;
+    border: 1px solid var(--dashboard-shortcut-border, var(--dashboard-function-border));
     border-radius: 9px;
-    background: var(--dashboard-function-color);
-    box-shadow: 0 4px 10px color-mix(in srgb, var(--dashboard-function-color) 18%, transparent);
-    color: #fff;
+    background: var(--dashboard-shortcut-bg, var(--dashboard-function-soft));
+    box-shadow: var(--shadow-soft);
+    color: var(--surface);
     align-items: center;
     justify-content: flex-start;
     gap: 9px;
@@ -62,48 +58,56 @@
 
 #dashboard #admin-toolbar-grid .btn-toolbar:hover,
 #dashboard #admin-toolbar-grid .btn-toolbar:focus-visible {
+    --dashboard-shortcut-border: var(--dashboard-function-color);
+    --dashboard-shortcut-bg: var(--dashboard-function-soft);
     border-color: var(--dashboard-function-color);
-    background: var(--dashboard-function-color);
-    color: #fff;
+    background: var(--dashboard-function-soft);
+    color: var(--surface);
     filter: brightness(.94);
     transform: translateY(-1px);
 }
 
 #dashboard #admin-toolbar-grid .dashboard-shortcut-facility {
-    --dashboard-function-color: #18a99b;
+    --dashboard-function-color: #A437C3;
+    --dashboard-function-soft: #A437C3;
+    --dashboard-function-border: #A437C3;
 }
 
 #dashboard #admin-toolbar-grid .dashboard-shortcut-teachers {
-    --dashboard-function-color: #3b7ee8;
+    --dashboard-function-color: #0080A3;
+    --dashboard-function-soft: #0080A3;
+    --dashboard-function-border: #0080A3;
 }
 
 #dashboard #admin-toolbar-grid .dashboard-shortcut-export {
-    --dashboard-function-color: #269953;
+    --dashboard-function-color: #C65305;
+    --dashboard-function-soft: #C65305;
+    --dashboard-function-border: #C65305;
 }
 
 #dashboard #admin-toolbar-grid .dashboard-shortcut-icon {
     display: inline-flex;
-    width: 30px;
-    height: 30px;
+    width: 40px;
+    height: 40px;
     margin: 0;
-    border-radius: 7px;
-    background: rgba(255, 255, 255, .18);
+    border-radius: 9px;
+    background: rgba(255, 255, 255, .16);
     box-shadow: none;
-    color: #fff;
+    color: var(--surface);
     align-items: center;
     justify-content: center;
-    flex: 0 0 30px;
+    flex: 0 0 40px;
 }
 
 #dashboard #admin-toolbar-grid .dashboard-shortcut-icon i {
-    font-size: .9rem;
+    font-size: 1.05rem;
 }
 
 #dashboard #admin-toolbar-grid .dashboard-shortcut-label {
     display: block;
     min-height: 0;
     color: inherit;
-    font-size: .84rem;
+    font-size: .96rem;
     font-weight: 750;
     line-height: 1.2;
     text-align: left;
@@ -124,12 +128,9 @@
 
     #dashboard .dashboard-functions .toolbar-title {
         display: flex !important;
-        margin-bottom: 12px;
+        margin-bottom: var(--page-heading-gap);
         padding: 0;
         border: 0;
-        color: #172033 !important;
-        font-size: 1rem;
-        font-weight: 800;
     }
 
     #dashboard #admin-toolbar-grid {
@@ -141,25 +142,25 @@
     }
 
     #dashboard #admin-toolbar-grid .btn-toolbar {
-        min-height: 76px !important;
-        padding: 9px 5px !important;
-        border: 1px solid var(--dashboard-function-color) !important;
+        min-height: 94px !important;
+        padding: 12px 6px !important;
+        border: 1px solid var(--dashboard-shortcut-border, var(--dashboard-function-border)) !important;
         border-radius: 9px !important;
-        background: var(--dashboard-function-color) !important;
-        box-shadow: 0 6px 14px color-mix(in srgb, var(--dashboard-function-color) 28%, transparent) !important;
+        background: var(--dashboard-shortcut-bg, var(--dashboard-function-soft)) !important;
+        box-shadow: var(--shadow-soft) !important;
         flex-direction: column !important;
         justify-content: center !important;
         gap: 6px !important;
     }
 
     #dashboard #admin-toolbar-grid .dashboard-shortcut-icon {
-        width: 32px !important;
-        height: 32px !important;
+        width: 36px !important;
+        height: 36px !important;
         margin: 0 !important;
         border-radius: 8px !important;
-        background: rgba(255, 255, 255, .2) !important;
-        color: #fff !important;
-        flex-basis: 32px !important;
+        background: rgba(255, 255, 255, .16) !important;
+        color: var(--surface) !important;
+        flex-basis: 36px !important;
     }
 
     #dashboard #admin-toolbar-grid .dashboard-shortcut-icon i {
@@ -168,8 +169,8 @@
 
     #dashboard #admin-toolbar-grid .dashboard-shortcut-label {
         min-height: 0 !important;
-        color: #fff !important;
-        font-size: .7rem !important;
+        color: var(--surface) !important;
+        font-size: 14px !important;
         line-height: 1.15 !important;
         text-align: center !important;
     }

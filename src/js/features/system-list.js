@@ -478,7 +478,7 @@ window.renderSystemListTable = (data) => {
         const safeClass = window.escapeHtml(window.formatClassName(s.className, s.facility));
 
         let categoryName = window.classCategoryMap[s.className];
-        let catColor = window.categoryColorMap[categoryName] || { bg: '#f0fdf4', text: '#166534' };
+        let catColor = window.categoryColorMap[categoryName] || { bg: '#eaf4ff', text: '#0066d6' };
 
         html += `
         <tr class="text-center align-middle admin-system-row">
@@ -523,7 +523,7 @@ window.renderSystemListTable = (data) => {
         const studentIndex = Number(badge.dataset.systemStudentIndex);
         const student = data[studentIndex];
         const category = window.classCategoryMap[student?.className];
-        const color = window.categoryColorMap[category] || { bg: '#f0fdf4', text: '#166534' };
+        const color = window.categoryColorMap[category] || { bg: '#eaf4ff', text: '#0066d6' };
         badge.style.setProperty('--system-pill-bg', color.bg);
         badge.style.setProperty('--system-pill-text', color.text);
     });

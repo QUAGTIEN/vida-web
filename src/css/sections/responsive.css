@@ -62,9 +62,10 @@
         left: 0 !important;
         width: 100% !important;
         height: 65px !important;
-        background: var(--app-dark-bg) !important;
+        background: var(--nav-bg) !important;
         z-index: 9999 !important;
-        border-top: 1px solid var(--app-dark-border) !important;
+        border-top: 1px solid var(--nav-border) !important;
+        box-shadow: 0 -2px 8px rgba(0, 82, 184, 0.04);
         transition: transform 0.22s ease, opacity 0.22s ease, visibility 0.22s ease;
     }
 
@@ -78,11 +79,13 @@
     }
 
     .bottom-nav-mobile .nav-item {
+        position: relative;
+        isolation: isolate;
         display: flex;
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        color: var(--text-secondary) !important;
+        color: var(--nav-text) !important;
         font-size: 0.75rem;
         font-weight: 600;
         cursor: pointer;
@@ -90,11 +93,30 @@
         height: 100%;
     }
 
+    /* Inset color panel keeps the existing navigation hit areas and spacing. */
+    .bottom-nav-mobile .nav-item::before {
+        content: "";
+        position: absolute;
+        inset: 6px 4px;
+        z-index: -1;
+        border-radius: 8px;
+        background: var(--nav-item-bg, transparent);
+    }
+
+    .bottom-nav-mobile .nav-item:hover,
+    .bottom-nav-mobile .nav-item:focus-visible {
+        --nav-item-bg: var(--nav-hover);
+    }
+
     .bottom-nav-mobile .nav-item.active {
-        color: var(--primary) !important;
+        --nav-item-bg: var(--primary);
+        --nav-item-icon: var(--surface);
+        color: var(--surface) !important;
+        font-weight: 700;
     }
 
     .bottom-nav-mobile .nav-item i {
+        color: var(--nav-item-icon, var(--nav-icon));
         font-size: 1.2rem;
         margin-bottom: 4px;
     }
@@ -108,7 +130,7 @@
 
     /* HEADER MOBILE */
     .mobile-header {
-        background-color: #111827 !important;
+        background-color: var(--primary) !important;
         border-bottom: 1px solid var(--app-dark-border) !important;
         display: flex !important;
         justify-content: space-between !important;
@@ -118,7 +140,7 @@
     }
 
     .mobile-header h5 {
-        color: #ffffff !important;
+        color: var(--surface) !important;
         margin: 0 !important;
         font-weight: 800 !important;
         font-size: 0.95rem !important;
@@ -126,13 +148,16 @@
         text-align: center;
     }
 
-    .btn-glass-logout,
     .btn-glass-back {
         background: rgba(255, 255, 255, 0.1) !important;
         backdrop-filter: blur(5px) !important;
         border: 1px solid rgba(255, 255, 255, 0.2) !important;
-        color: #ffffff !important;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1) !important;
+    }
+
+    .btn-glass-logout,
+    .btn-glass-back {
+        color: var(--surface) !important;
+        box-shadow: var(--shadow-soft) !important;
         border-radius: 8px !important;
         width: 36px !important;
         height: 36px !important;
@@ -143,10 +168,22 @@
         padding: 0 !important;
     }
 
-    .btn-glass-logout:active,
+    .btn-glass-logout {
+        /* Bootstrap and legacy mobile-header utilities are important; this is their owning breakpoint. */
+        background: var(--danger) !important;
+        border: 1px solid var(--danger) !important;
+        backdrop-filter: none !important;
+    }
+
     .btn-glass-back:active {
         transform: scale(0.9) !important;
         background: rgba(255, 255, 255, 0.2) !important;
+    }
+
+    .btn-glass-logout:active {
+        transform: scale(0.9) !important;
+        background: var(--danger-hover) !important;
+        border-color: var(--danger-hover) !important;
     }
 
     body .corner-title,
@@ -164,7 +201,7 @@
         left: 0;
         width: 100%;
         height: 100%;
-        background: rgba(0, 0, 0, 0.5);
+        background: rgba(22, 50, 79, 0.44);
         z-index: 9998;
         display: none;
     }
@@ -180,14 +217,14 @@
         transform: translate(-50%, -50%);
         width: 80%;
         max-width: 300px;
-        background: #ffffff;
+        background: var(--surface);
         border-radius: 12px;
         padding: 20px;
         z-index: 9999;
         display: none;
         flex-direction: column;
         gap: 10px;
-        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        box-shadow: var(--shadow-soft);
         text-align: center;
     }
 
@@ -200,7 +237,7 @@
         margin-bottom: 15px;
         font-weight: 800;
         font-size: 1.1rem;
-        color: #1e293b;
+        color: var(--text-primary);
     }
 
     .mobile-logout-menu button {
@@ -214,22 +251,22 @@
     }
 
     .btn-update {
-        background: #f1f5f9;
-        color: #334155;
-        border: 1px solid #cbd5e1;
+        background: var(--bg);
+        color: var(--text-primary);
+        border: 1px solid var(--border-color);
     }
 
     .btn-update:hover {
-        background: #e2e8f0;
+        background: var(--primary-soft);
     }
 
     .btn-logout-final {
-        background: #ef4444;
-        color: white;
+        background: var(--danger);
+        color: var(--surface);
     }
 
     .btn-logout-final:hover {
-        background: #dc2626;
+        background: var(--danger-hover);
     }
 
     /* ÉP 2 NÚT ĐĂNG NHẬP NẰM NGANG TRÊN MOBILE */
@@ -261,7 +298,7 @@
         left: 0;
         width: 100%;
         height: 100%;
-        background: #ffffff;
+        background: var(--surface);
         z-index: 100000;
         display: none;
         justify-content: center;
@@ -274,18 +311,18 @@
     }
 
     .login-card-light {
-        background: #ffffff;
-        border: 1px solid #e2e8f0;
+        background: var(--surface);
+        border: 1px solid var(--border-color);
         padding: 40px 30px;
         border-radius: 16px;
         max-width: 400px;
         width: 100%;
         text-align: left;
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        box-shadow: var(--shadow-soft);
     }
 
     .login-card-light h3 {
-        color: #000000;
+        color: var(--text-primary);
         font-weight: 900;
         font-size: 1.5rem;
         margin-top: 0;
@@ -293,7 +330,7 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        border-bottom: 2px solid #f1f5f9;
+        border-bottom: 2px solid var(--border-color);
         padding-bottom: 15px;
     }
 
@@ -301,31 +338,31 @@
         display: block;
         font-size: 0.9rem;
         font-weight: 700;
-        color: #334155;
+        color: var(--text-primary);
         margin-bottom: 8px;
         margin-top: 15px;
     }
 
     .login-card-light input {
         width: 100%;
-        border: 1px solid #cbd5e1;
+        border: 1px solid var(--border-color);
         border-radius: 8px;
         padding: 14px 15px;
         font-size: 1rem;
         outline: none;
-        background: #f8fafc;
-        color: #0f172a;
+        background: var(--bg);
+        color: var(--text-primary);
         transition: 0.3s;
     }
 
     .login-card-light input:focus {
         border-color: var(--primary);
-        box-shadow: 0 0 0 3px rgba(22, 163, 74, 0.15);
+        box-shadow: 0 0 0 3px var(--focus-ring);
     }
 
     .btn-submit {
         background: var(--primary);
-        color: white;
+        color: var(--surface);
         border: none;
         border-radius: 8px;
         padding: 14px;
@@ -335,16 +372,16 @@
         width: 100%;
         margin-top: 25px;
         transition: all 0.2s;
-        box-shadow: 0 4px 0 #14532d;
+        box-shadow: var(--shadow-soft);
     }
 
     .btn-submit:active {
         transform: translateY(4px);
-        box-shadow: 0 0 0 #14532d;
+        box-shadow: var(--shadow-soft);
     }
 
     .btn-cancel {
-        color: #64748b;
+        color: var(--text-secondary);
         background: transparent;
         border: none;
         font-weight: 600;
@@ -355,7 +392,7 @@
     }
 
     .btn-cancel:hover {
-        color: #0f172a;
+        color: var(--text-primary);
     }
 
     /* DASHBOARD TRANG CHỦ MOBILE */
@@ -384,7 +421,7 @@
         grid-column: 1 / -1;
         font-size: 1.1rem !important;
         font-weight: 800 !important;
-        color: #1e293b !important;
+        color: var(--text-primary) !important;
         margin-bottom: 5px !important;
     }
 
@@ -417,8 +454,8 @@
         display: flex !important;
         align-items: center !important;
         justify-content: center !important;
-        background: #f8fafc !important;
-        box-shadow: inset 0 0 0 1px rgba(148, 163, 184, 0.18) !important;
+        background: var(--bg) !important;
+        box-shadow: inset 0 0 0 1px rgba(0, 102, 214, 0.14) !important;
     }
 
     #admin-toolbar-grid .dashboard-shortcut-icon i {
@@ -430,30 +467,30 @@
         font-family: 'Roboto', sans-serif !important;
         font-size: 0.7rem !important;
         font-weight: 700 !important;
-        color: #475569 !important;
+        color: var(--text-secondary) !important;
         text-align: center !important;
         display: block !important;
         line-height: 1.2 !important;
     }
 
     #admin-toolbar-grid .dashboard-shortcut-facility .dashboard-shortcut-icon {
-        background: #eff6ff !important;
-        color: #3b82f6 !important;
+        background: var(--primary-soft) !important;
+        color: var(--primary) !important;
     }
 
     #admin-toolbar-grid .dashboard-shortcut-teachers .dashboard-shortcut-icon {
-        background: #eef2ff !important;
-        color: #6366f1 !important;
+        background: var(--primary-soft) !important;
+        color: var(--primary) !important;
     }
 
     #admin-toolbar-grid .dashboard-shortcut-system-list .dashboard-shortcut-icon {
-        background: #faf5ff !important;
-        color: #a855f7 !important;
+        background: var(--primary-soft) !important;
+        color: var(--primary) !important;
     }
 
     #admin-toolbar-grid .dashboard-shortcut-export .dashboard-shortcut-icon {
-        background: #dcfce7 !important;
-        color: #10b981 !important;
+        background: var(--primary-soft) !important;
+        color: var(--primary) !important;
     }
 
     body .bg-dashboard-gray {
@@ -468,7 +505,7 @@
         display: block !important;
         font-size: 1.1rem !important;
         font-weight: 800 !important;
-        color: #1e293b !important;
+        color: var(--text-primary) !important;
         margin-bottom: 12px !important;
         border-left: none !important;
         padding-left: 0 !important;
@@ -487,7 +524,7 @@
         min-height: 112px;
         padding: 13px 10px 11px;
         border-width: 1px;
-        box-shadow: 0 7px 15px rgba(15, 23, 42, 0.09);
+        box-shadow: var(--shadow-soft);
     }
 
     .dashboard-facility-heading {
@@ -574,11 +611,11 @@
     /* FORM NHẬP LIỆU BƯỚC 1: NÚT CƠ SỞ 3D CÓ TRƯỜNG HỌC       */
     /* KHUNG 4 THANH CÔNG CỤ */
     #filter-4-bars {
-        background: #ffffff;
+        background: var(--surface);
         border-radius: 12px;
         padding: 15px;
-        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
-        border: 1px solid #e2e8f0;
+        box-shadow: var(--shadow-soft);
+        border: 1px solid var(--border-color);
         margin-bottom: 15px;
     }
 
@@ -608,7 +645,7 @@
         font-size: 0.7rem !important;
         margin-bottom: 6px !important;
         white-space: nowrap;
-        color: #16a34a !important;
+        color: var(--primary) !important;
     }
 
     .seamless-input {
@@ -653,15 +690,15 @@
     }
 
     #search-student-container .search-navy-input {
-        background-color: #1e293b !important;
-        color: #f8fafc !important;
-        box-shadow: 0 4px 10px rgba(30, 41, 59, 0.2) !important;
+        background-color: var(--surface) !important;
+        color: var(--text-primary) !important;
+        box-shadow: var(--shadow-soft) !important;
     }
 
     #search-student-container .search-green-input {
-        background-color: #20c997 !important;
-        color: #ffffff !important;
-        box-shadow: 0 4px 10px rgba(32, 201, 151, 0.25) !important;
+        background-color: var(--surface) !important;
+        color: var(--text-primary) !important;
+        box-shadow: var(--shadow-soft) !important;
     }
 
     /* LƯỚT NGANG THẺ HỌC SINH */
@@ -746,8 +783,8 @@
     }
 
     #a2-filter-area .section-title {
-        background-color: #ffedd5 !important;
-        color: #c2410c !important;
+        background-color: var(--primary-soft) !important;
+        color: var(--primary) !important;
         padding: 12px 20px !important;
         border-radius: 12px !important;
         border-left: none !important;
@@ -758,7 +795,7 @@
         margin-top: 15px !important;
         margin-bottom: 15px !important;
         font-weight: 800 !important;
-        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05) !important;
+        box-shadow: var(--shadow-soft) !important;
         cursor: pointer !important;
         transition: all 0.2s ease !important;
     }
@@ -809,9 +846,9 @@
 
     /* YÊU CẦU 1: Thanh tìm kiếm màu trắng */
     #a2-search-area .search-input-wrapper input {
-        background-color: #ffffff !important;
-        color: #1e293b !important;
-        border: 1px solid #cbd5e1 !important;
+        background-color: var(--surface) !important;
+        color: var(--text-primary) !important;
+        border: 1px solid var(--border-color) !important;
         border-radius: 30px !important;
         height: 48px !important;
     }
@@ -849,19 +886,19 @@
     .filter-student-item {
         display: flex !important;
         align-items: center !important;
-        background: #ffffff !important;
-        border: 1px solid #e2e8f0 !important;
+        background: var(--surface) !important;
+        border: 1px solid var(--border-color) !important;
         border-radius: 12px !important;
         padding: 14px 12px !important;
         cursor: pointer !important;
         transition: all 0.15s ease !important;
-        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04) !important;
+        box-shadow: var(--shadow-soft) !important;
         gap: 10px !important;
         min-height: 52px !important;
     }
 
     .filter-student-item:active {
-        background: #f1f5f9 !important;
+        background: var(--bg) !important;
         transform: scale(0.98) !important;
     }
 
@@ -869,7 +906,7 @@
         width: 36px !important;
         height: 36px !important;
         border-radius: 50% !important;
-        background: #d1fae5 !important;
+        background: var(--primary-soft) !important;
         display: flex !important;
         align-items: center !important;
         justify-content: center !important;
@@ -878,14 +915,14 @@
 
     .fsi-icon i {
         font-size: 0.9rem !important;
-        color: #16a34a !important;
+        color: var(--primary) !important;
     }
 
     .fsi-name {
         flex: 1 !important;
         font-size: 0.95rem !important;
         font-weight: 700 !important;
-        color: #1e293b !important;
+        color: var(--text-primary) !important;
         white-space: nowrap !important;
         overflow: hidden !important;
         text-overflow: ellipsis !important;
@@ -903,7 +940,7 @@
 
     .fsi-arrow {
         flex-shrink: 0 !important;
-        color: #94a3b8 !important;
+        color: var(--text-secondary) !important;
         font-size: 0.8rem !important;
     }
 
@@ -964,7 +1001,7 @@
         word-break: break-word !important;
         min-width: 120px !important;
         padding: 10px !important;
-        border: 1px solid #cbd5e1 !important;
+        border: 1px solid var(--border-color) !important;
     }
 
     /* THANH CÔNG CỤ NHỎ GỌN */

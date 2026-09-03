@@ -1,37 +1,51 @@
 /* Teacher review workspace. Keep every rule scoped to #nhap-lieu. */
 #nhap-lieu.teacher-review-page {
-    --review-accent: #0f9f72;
-    --review-accent-dark: #087a59;
-    --review-navy: #17243a;
-    --review-surface: #ffffff;
-    --review-surface-soft: #f6f8fb;
-    --review-border: #dce4ec;
-    --review-text: #172033;
-    --review-muted: #68758a;
+    --review-accent:var(--primary);
+    --review-accent-dark:var(--primary-hover);
+    --review-navy:var(--text-primary);
+    --review-surface:var(--surface);
+    --review-surface-soft:var(--bg);
+    --review-border:var(--border-color);
+    --review-text:var(--text-primary);
+    --review-muted:var(--text-secondary);
 }
 
 #nhap-lieu .review-page-header {
-    margin-bottom: 22px;
+    margin-bottom: var(--page-heading-gap);
 }
 
 #nhap-lieu .review-config-btn,
 #nhap-lieu .review-back-button,
 #nhap-lieu .review-filter-toggle {
     min-height: 42px;
-    border: 1px solid rgba(15, 159, 114, 0.35);
+    border: 1px solid var(--border-color);
     border-radius: 9px;
-    background: #effaf6;
-    color: var(--review-accent-dark);
-    box-shadow: 0 4px 12px rgba(15, 23, 42, 0.06);
+    background: var(--surface);
+    color: var(--text-primary);
+    box-shadow: var(--shadow-soft);
     padding: 9px 16px;
 }
 
 #nhap-lieu .review-config-btn:hover,
 #nhap-lieu .review-back-button:hover,
 #nhap-lieu .review-filter-toggle:hover {
-    background: #e1f5ed;
-    color: #065f46;
-    border-color: rgba(15, 159, 114, 0.55);
+    background: var(--neutral-soft);
+    color: var(--text-primary);
+    border-color: var(--control-border);
+}
+
+#nhap-lieu .review-config-btn {
+    border-color: #c4ced8;
+    background: #e3e8ee;
+    color: #435466;
+    box-shadow: none;
+}
+
+#nhap-lieu .review-config-btn:hover,
+#nhap-lieu .review-config-btn:focus-visible {
+    border-color: #aebac6;
+    background: #d4dbe3;
+    color: #354556;
 }
 
 #nhap-lieu .review-step-card,
@@ -40,7 +54,7 @@
     background: var(--review-surface);
     border: 1px solid var(--review-border);
     border-radius: 12px;
-    box-shadow: 0 8px 24px rgba(15, 23, 42, 0.07);
+    box-shadow: var(--shadow-soft);
 }
 
 #nhap-lieu #filter-4-bars.review-toolbar {
@@ -64,7 +78,7 @@
 #nhap-lieu .review-field-label {
     display: block;
     margin: 0 0 7px;
-    color: #536174;
+    color: var(--text-secondary);
     font-size: 0.75rem;
     font-weight: 800;
     line-height: 1.25;
@@ -73,9 +87,9 @@
 
 #nhap-lieu .review-field .seamless-input {
     height: 44px;
-    border: 1px solid #cdd8e4 !important;
+    border: 1px solid var(--border-color) !important;
     border-radius: 9px !important;
-    background-color: #fbfcfe !important;
+    background-color: var(--surface) !important;
     color: var(--review-text) !important;
     font-size: 0.9rem;
     box-shadow: none;
@@ -83,8 +97,8 @@
 
 #nhap-lieu .review-field .seamless-input:focus {
     border-color: var(--review-accent) !important;
-    background-color: #ffffff !important;
-    box-shadow: 0 0 0 3px rgba(15, 159, 114, 0.12) !important;
+    background-color: var(--surface) !important;
+    box-shadow: 0 0 0 3px var(--focus-ring) !important;
 }
 
 #nhap-lieu .review-quick-tools {
@@ -112,21 +126,22 @@
 }
 
 #nhap-lieu .review-quick-tools .search-navy-input {
-    border: 1px solid var(--review-navy) !important;
-    background: var(--review-navy) !important;
-    box-shadow: 0 5px 14px rgba(23, 36, 58, 0.16) !important;
+    border: 1px solid #9fc8f4 !important;
+    background: #eaf4ff !important;
+    color: var(--text-primary) !important;
+    box-shadow: var(--shadow-soft) !important;
 }
 
 #nhap-lieu .review-quick-tools .search-green-input {
-    border: 1px solid #cbd5e1 !important;
-    background: #ffffff !important;
-    color: var(--review-text) !important;
+    border: 1px solid #a8dcd0 !important;
+    background: #e9f6f3 !important;
+    color: var(--text-primary) !important;
     box-shadow: none !important;
 }
 
 #nhap-lieu .review-load-status {
     margin-top: 0.45rem;
-    color: #64748b;
+    color: var(--text-secondary);
     font-size: 0.78rem;
     font-weight: 600;
     line-height: 1.35;
@@ -159,13 +174,13 @@
 }
 
 #nhap-lieu .review-quick-tools .search-green-input::placeholder {
-    color: #64748b !important;
+    color: var(--text-secondary) !important;
 }
 
 #nhap-lieu .review-quick-tools .search-green-input:focus {
     border-color: var(--review-accent) !important;
-    background: #ffffff !important;
-    box-shadow: 0 0 0 3px rgba(15, 159, 114, 0.12) !important;
+    background: #e9f6f3 !important;
+    box-shadow: 0 0 0 3px var(--focus-ring) !important;
 }
 
 #nhap-lieu #area-cards.review-student-list {
@@ -176,7 +191,7 @@
 
 #nhap-lieu #empty-card-msg,
 #nhap-lieu #loading-card-msg {
-    border: 1px dashed #cbd7e3;
+    border: 1px dashed var(--border-color);
     border-radius: 12px;
     background: rgba(255, 255, 255, 0.72);
     box-shadow: none;
@@ -186,11 +201,11 @@
     height: auto !important;
     min-height: 0 !important;
     padding: 15px 16px;
-    border: 1px solid #d7e1ea;
+    border: 1px solid var(--border-color);
     border-left: 4px solid var(--review-accent);
     border-radius: 11px;
     background: var(--review-surface);
-    box-shadow: 0 5px 16px rgba(15, 23, 42, 0.07);
+    box-shadow: var(--shadow-soft);
 }
 
 #nhap-lieu #area-cards .review-student-card.is-removing {
@@ -218,9 +233,9 @@
 }
 
 #nhap-lieu #area-cards .review-student-card:hover {
-    border-color: #b9d9cd;
+    border-color: var(--border-color);
     border-left-color: var(--review-accent-dark);
-    box-shadow: 0 9px 22px rgba(15, 23, 42, 0.1);
+    box-shadow: var(--shadow-soft);
 }
 
 #nhap-lieu .student-card-header {
@@ -266,8 +281,8 @@
     height: 34px;
     padding: 0;
     border-radius: 8px;
-    background: #ffffff;
-    box-shadow: 0 2px 6px rgba(15, 23, 42, 0.06);
+    background: var(--surface);
+    box-shadow: var(--shadow-soft);
 }
 
 #nhap-lieu button.review-button-pressed,
@@ -288,9 +303,9 @@
     min-width: 0 !important;
     width: 100% !important;
     height: 42px;
-    border: 1px solid #d5dee8;
+    border: 1px solid var(--border-color);
     border-radius: 8px;
-    background: #fbfcfe !important;
+    background: var(--surface) !important;
     color: var(--review-text);
     font-size: 0.88rem;
     box-shadow: none;
@@ -298,16 +313,16 @@
 
 #nhap-lieu #area-cards .review-student-card .form-control:focus {
     border-color: var(--review-accent);
-    background: #ffffff !important;
-    box-shadow: 0 0 0 3px rgba(15, 159, 114, 0.1);
+    background: var(--surface) !important;
+    box-shadow: 0 0 0 3px var(--focus-ring);
 }
 
 #nhap-lieu .review-report-card {
     padding: 20px !important;
-    border: 1px solid #dce7ee;
+    border: 1px solid var(--border-color);
     border-radius: 8px;
-    background: #ffffff;
-    box-shadow: 0 4px 14px rgba(23, 32, 51, 0.05) !important;
+    background: var(--surface);
+    box-shadow: var(--shadow-soft) !important;
 }
 
 #nhap-lieu .review-report-header {
@@ -320,14 +335,14 @@
 }
 
 #nhap-lieu .review-report-title {
-    color: #17324d;
+    color: var(--primary-hover);
     font-size: 0.92rem;
     letter-spacing: 0.01em;
 }
 
 #nhap-lieu .review-report-subtitle {
     margin-top: 4px !important;
-    color: #718096;
+    color: var(--text-secondary);
     font-size: 0.75rem;
     line-height: 1.4;
 }
@@ -336,25 +351,25 @@
     min-height: 40px;
     flex: 0 0 auto;
     padding: 8px 14px;
-    border: 1px solid #78c4c0;
+    border: 1px solid var(--primary);
     border-radius: 7px;
-    background: #ffffff;
-    color: #147f78;
+    background: var(--surface);
+    color: var(--primary-hover);
     font-size: 0.8rem;
     box-shadow: none;
 }
 
 #nhap-lieu .review-report-generate:hover,
 #nhap-lieu .review-report-generate:focus-visible {
-    border-color: #168f87;
-    background: #edf8f7;
-    color: #0f6f69;
+    border-color: var(--primary);
+    background: var(--primary-soft);
+    color: var(--primary-hover);
 }
 
 #nhap-lieu .review-report-label {
     display: block;
     margin-bottom: 7px;
-    color: #536174;
+    color: var(--text-secondary);
     font-size: 0.72rem;
     font-weight: 700;
 }
@@ -362,10 +377,10 @@
 #nhap-lieu .review-report-output {
     min-height: 145px;
     padding: 12px 14px;
-    border: 1px solid #d5e0e8;
+    border: 1px solid var(--border-color);
     border-radius: 8px;
-    background: #f7fafc;
-    color: #334155;
+    background: var(--surface-subtle);
+    color: var(--text-primary);
     font-size: 0.86rem;
     line-height: 1.55;
     resize: vertical;
@@ -373,9 +388,9 @@
 }
 
 #nhap-lieu .review-report-output:focus {
-    border-color: #63aaa5;
-    background: #ffffff;
-    box-shadow: 0 0 0 3px rgba(22, 143, 135, 0.1);
+    border-color: var(--primary);
+    background: var(--surface);
+    box-shadow: 0 0 0 3px var(--focus-ring);
 }
 
 #nhap-lieu .review-report-footer {
@@ -385,7 +400,7 @@
     gap: 14px;
     margin-top: 16px;
     padding-top: 16px;
-    border-top: 1px solid #e2e8f0;
+    border-top: 1px solid var(--border-color);
 }
 
 #nhap-lieu .review-report-actions {
@@ -404,17 +419,17 @@
 }
 
 #nhap-lieu .review-report-secondary {
-    border: 1px solid #cbd7e2;
-    background: #ffffff;
-    color: #405268;
+    border: 1px solid var(--border-color);
+    background: var(--surface);
+    color: var(--text-primary);
     box-shadow: none !important;
 }
 
 #nhap-lieu .review-report-secondary:hover,
 #nhap-lieu .review-report-secondary:focus-visible {
-    border-color: #9dafbf;
-    background: #f5f8fa;
-    color: #17324d;
+    border-color: var(--control-border);
+    background: var(--neutral-soft);
+    color: var(--text-primary);
 }
 
 #nhap-lieu .review-save-row {
@@ -424,20 +439,20 @@
 
 #nhap-lieu .review-system-save {
     min-width: 230px;
-    border: 1px solid #168a4b;
+    border: 1px solid var(--primary);
     border-radius: 7px;
-    background: #168a4b !important;
+    background: var(--primary) !important;
     background-image: none !important;
-    color: #ffffff;
+    color: var(--surface);
     box-shadow: none !important;
     text-transform: none;
 }
 
 #nhap-lieu .review-system-save:hover,
 #nhap-lieu .review-system-save:focus-visible {
-    border-color: #116f3d;
-    background: #116f3d !important;
-    color: #ffffff;
+    border-color: var(--primary);
+    background: var(--primary-hover) !important;
+    color: var(--surface);
 }
 
 #nhap-lieu .review-system-save:active {
@@ -447,7 +462,7 @@
 
 @media (max-width: 768px) {
     #nhap-lieu .review-page-header {
-        margin-bottom: 16px;
+        margin-bottom: var(--page-heading-gap);
     }
 
     #nhap-lieu #filter-4-bars.review-toolbar {
@@ -467,7 +482,7 @@
 
     #nhap-lieu .review-field-label {
         margin-bottom: 6px !important;
-        color: #536174 !important;
+        color: var(--text-secondary) !important;
         font-size: 0.68rem !important;
     }
 
@@ -504,7 +519,7 @@
 
     #nhap-lieu #area-cards .review-student-card:hover {
         transform: none !important;
-        box-shadow: 0 5px 16px rgba(15, 23, 42, 0.07);
+        box-shadow: var(--shadow-soft);
     }
 
     #nhap-lieu .student-card-header {
@@ -550,15 +565,15 @@
 
     #nhap-lieu .student-card-action:active,
     #nhap-lieu .student-card .d-flex > button.student-card-action:active {
-        box-shadow: 0 2px 6px rgba(15, 23, 42, 0.06);
+        box-shadow: var(--shadow-soft);
         transform: none;
     }
 
     #nhap-lieu .student-card-action.btn-outline-info:hover,
     #nhap-lieu .student-card-action.btn-outline-info:focus {
-        border-color: #0dcaf0;
-        background: #ffffff;
-        color: #0dcaf0;
+        border-color: var(--primary);
+        background: var(--surface);
+        color: var(--primary);
     }
 
     #nhap-lieu .student-card-action.btn-outline-danger:hover,
@@ -577,9 +592,9 @@
 
     #nhap-lieu .student-card-action.btn-outline-secondary:hover,
     #nhap-lieu .student-card-action.btn-outline-secondary:focus {
-        border-color: #6c757d;
-        background: #ffffff;
-        color: #6c757d;
+        border-color: var(--control-border);
+        background: var(--surface);
+        color: var(--text-secondary);
     }
 
     #nhap-lieu #area-cards .review-student-card .dynamic-inputs-container {
@@ -701,8 +716,8 @@
     padding: 15px 20px;
     border: 1.5px solid transparent;
     border-radius: 20px;
-    color: #142033;
-    box-shadow: 0 14px 26px rgba(15, 23, 42, 0.09);
+    color: var(--text-primary);
+    box-shadow: var(--shadow-soft);
     font-size: 1.15rem;
     font-weight: 900;
     text-transform: uppercase;
@@ -721,13 +736,11 @@
     z-index: 0;
     display: block;
     background:
-        radial-gradient(circle at 18% 12%, rgba(255, 255, 255, 0.65), transparent 30%),
-        radial-gradient(circle at 92% 18%, rgba(255, 255, 255, 0.36), transparent 28%);
+        none;
     content: "";
     pointer-events: none;
 }
 
-#nhap-lieu #ui-facility-nhap-lieu .tdt-wordart,
 #nhap-lieu #ui-facility-nhap-lieu .cs-text {
     position: relative;
     z-index: 1;
@@ -735,111 +748,96 @@
     letter-spacing: 0;
 }
 
-#nhap-lieu #ui-facility-nhap-lieu .tdt-wordart {
-    margin-bottom: 5px;
-    color: #119b51;
-    font-family: "Arial Black", Impact, sans-serif;
-    font-size: 2.2rem;
-    font-style: italic;
-    font-weight: 900;
-    line-height: 1;
-    text-shadow:
-        1px 1px 0 #ffffff,
-        2px 2px 0 #fde047,
-        3px 3px 0 #0284c7,
-        0 8px 16px rgba(15, 23, 42, 0.18);
-}
-
 #nhap-lieu #ui-facility-nhap-lieu .cs-text {
-    color: #142033;
+    color: var(--text-primary);
     font-size: 1rem;
     font-weight: 900;
     text-transform: uppercase;
 }
 
 #nhap-lieu #ui-facility-nhap-lieu .btn-pill.cs-1 {
-    border-color: #16a34a;
-    background: linear-gradient(135deg, #45d88a 0%, #9bf0bd 48%, #e3fff1 100%);
-    box-shadow: 0 14px 26px rgba(22, 163, 74, 0.18);
+    border-color: var(--primary);
+    background: var(--surface);
+    box-shadow: var(--shadow-soft);
 }
 
 #nhap-lieu #ui-facility-nhap-lieu .btn-pill.cs-2 {
-    border-color: #3b82f6;
-    background: linear-gradient(135deg, #60a5fa 0%, #a7cfff 48%, #eef6ff 100%);
-    box-shadow: 0 14px 26px rgba(59, 130, 246, 0.18);
+    border-color: var(--primary);
+    background: var(--surface);
+    box-shadow: var(--shadow-soft);
 }
 
 #nhap-lieu #ui-facility-nhap-lieu .btn-pill.cs-3 {
-    border-color: #eab308;
-    background: linear-gradient(135deg, #facc15 0%, #fff176 48%, #fff8c7 100%);
-    box-shadow: 0 14px 26px rgba(234, 179, 8, 0.18);
+    border-color: var(--primary);
+    background: var(--surface);
+    box-shadow: var(--shadow-soft);
 }
 
 #nhap-lieu #ui-facility-nhap-lieu .btn-pill.cs-4 {
-    border-color: #f43f5e;
-    background: linear-gradient(135deg, #fb7185 0%, #fecdd3 52%, #fff1f2 100%);
+    border-color: var(--primary);
+    background: var(--surface);
 }
 
 #nhap-lieu #ui-facility-nhap-lieu .btn-pill.cs-5 {
-    border-color: #8b5cf6;
-    background: linear-gradient(135deg, #a78bfa 0%, #ddd6fe 52%, #f5f3ff 100%);
+    border-color: var(--primary);
+    background: var(--surface);
 }
 
 #nhap-lieu #ui-facility-nhap-lieu .btn-pill.cs-6 {
-    border-color: #06b6d4;
-    background: linear-gradient(135deg, #22d3ee 0%, #a5f3fc 52%, #ecfeff 100%);
+    border-color: var(--primary);
+    background: var(--surface);
 }
 
 #nhap-lieu #ui-facility-nhap-lieu .btn-pill.cs-7 {
-    border-color: #ec4899;
-    background: linear-gradient(135deg, #f472b6 0%, #fbcfe8 52%, #fdf2f8 100%);
+    border-color: var(--primary);
+    background: var(--surface);
 }
 
 #nhap-lieu #ui-facility-nhap-lieu .btn-pill.cs-8 {
-    border-color: #84cc16;
-    background: linear-gradient(135deg, #a3e635 0%, #d9f99d 52%, #f7fee7 100%);
+    border-color: var(--primary);
+    background: var(--surface);
 }
 
 #nhap-lieu #ui-facility-nhap-lieu .btn-pill.cs-9 {
-    border-color: #f97316;
-    background: linear-gradient(135deg, #fb923c 0%, #fed7aa 52%, #fff7ed 100%);
+    border-color: var(--primary);
+    background: var(--surface);
 }
 
 #nhap-lieu #ui-facility-nhap-lieu .btn-pill.cs-10 {
-    border-color: #14b8a6;
-    background: linear-gradient(135deg, #2dd4bf 0%, #99f6e4 52%, #f0fdfa 100%);
+    border-color: var(--primary);
+    background: var(--surface);
 }
 
 #nhap-lieu #ui-facility-nhap-lieu .btn-pill:hover {
     transform: translateY(-2px);
     filter: saturate(1.04);
-    box-shadow: 0 18px 32px rgba(15, 23, 42, 0.12);
+    box-shadow: var(--shadow-soft);
 }
 
 #nhap-lieu #ui-facility-nhap-lieu .btn-pill:active,
 #nhap-lieu #ui-facility-nhap-lieu .btn-pill.active {
     transform: translateY(2px) scale(0.99);
     filter: saturate(1.08) brightness(0.98);
-    box-shadow: 0 8px 18px rgba(15, 23, 42, 0.12), inset 0 0 0 2px rgba(255, 255, 255, 0.48);
+    box-shadow: 0 8px 18px rgba(0, 102, 214, 0.12), inset 0 0 0 2px rgba(255, 255, 255, 0.48);
 }
 
 @media (max-width: 768px) {
     #nhap-lieu .review-config-btn {
         min-height: 44px;
         padding: 8px 14px;
-        border-color: #cbd6e2;
+        border-color: #c4ced8;
         border-radius: 8px;
-        background: #ffffff;
-        color: #334155;
+        background: #e3e8ee;
+        color: #435466;
         font-size: 0.84rem;
-        box-shadow: 0 2px 6px rgba(15, 23, 42, 0.06);
+        box-shadow: none;
     }
 
     #nhap-lieu .review-config-btn:hover,
     #nhap-lieu .review-config-btn:focus-visible {
-        border-color: #94a3b8;
-        background: #f8fafc;
-        color: #172033;
+        border-color: #aebac6;
+        background: #d4dbe3;
+        color: #354556;
         outline: none;
     }
 
@@ -854,11 +852,7 @@
         gap: 10px;
         padding: 16px 20px;
         border-radius: 18px;
-        box-shadow: 0 8px 18px rgba(15, 23, 42, 0.09);
-    }
-
-    #nhap-lieu #ui-facility-nhap-lieu .tdt-wordart {
-        font-size: 2rem;
+        box-shadow: var(--shadow-soft);
     }
 
     #nhap-lieu #ui-facility-nhap-lieu .cs-text {
@@ -874,10 +868,6 @@
     #nhap-lieu #ui-facility-nhap-lieu .btn-pill {
         min-height: 112px;
         padding: 14px 16px;
-    }
-
-    #nhap-lieu #ui-facility-nhap-lieu .tdt-wordart {
-        font-size: 1.8rem;
     }
 
     #nhap-lieu #ui-facility-nhap-lieu .cs-text {

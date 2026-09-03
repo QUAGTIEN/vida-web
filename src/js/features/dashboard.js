@@ -108,7 +108,7 @@ window.loadDashboardFacilitiesOverview = async (recordsList, attendanceSummary =
             });
         }
 
-        const colors = ['#10b981', '#3b82f6', '#f43f5e', '#f59e0b', '#8b5cf6'];
+        const colors = ['#0066d6', '#4595e8', '#8abff0', '#0052b8', '#61758a'];
         const datasets = window.allFacilities.map((fac, index) => {
             return {
                 label: fac,
@@ -134,7 +134,7 @@ window.loadDashboardFacilitiesOverview = async (recordsList, attendanceSummary =
                     intersect: false,
                 },
                 plugins: {
-                    legend: { display: true, position: 'bottom', labels: { color: '#fff', usePointStyle: true, boxWidth: 10 } },
+                    legend: { display: true, position: 'bottom', labels: { color: '#16324f', usePointStyle: true, boxWidth: 10 } },
                     tooltip: {
                         backgroundColor: 'rgba(15, 23, 42, 0.9)',
                         titleColor: '#fff',
@@ -147,13 +147,13 @@ window.loadDashboardFacilitiesOverview = async (recordsList, attendanceSummary =
                 scales: {
                     x: {
                         grid: { display: false },
-                        ticks: { color: '#fff' },
+                        ticks: { color: '#61758a' },
                         stacked: false
                     },
                     y: {
                         beginAtZero: true,
-                        ticks: { stepSize: 1, color: '#fff', precision: 0 },
-                        grid: { color: '#334155', borderDash: [4, 4] },
+                        ticks: { stepSize: 1, color: '#61758a', precision: 0 },
+                        grid: { color: '#dcebfa', borderDash: [4, 4] },
                         stacked: false
                     }
                 }
@@ -697,7 +697,7 @@ window.toggleMobileWidget = (id) => {
             el.style.width = '100%';
             el.style.height = '100%';
             el.style.zIndex = '9999';
-            el.style.backgroundColor = 'rgba(0,0,0,0.8)';
+            el.style.backgroundColor = 'rgba(22,50,79,0.44)';
             el.style.display = 'flex';
             el.style.alignItems = 'center';
             el.style.justifyContent = 'center';

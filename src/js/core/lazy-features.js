@@ -12,7 +12,7 @@ const loadFeatureOnce = (key, importer) => {
 
 export const ensureDashboardFeature = () => loadFeatureOnce(
     "dashboard",
-    () => import("../features/dashboard.js?v=20260902-startup-performance-1")
+    () => import("../features/dashboard.js?v=20260903-vida-blue-1")
 );
 
 export const ensureDataCenterFeature = () => loadFeatureOnce(
@@ -22,10 +22,10 @@ export const ensureDataCenterFeature = () => loadFeatureOnce(
 
 export const ensureSystemListFeature = () => loadFeatureOnce(
     "system-list",
-    () => import("../features/system-list.js?v=20260903-dashboard-functions-1")
+    () => import("../features/system-list.js?v=20260903-vida-blue-1")
 );
 
 export const ensureExportFeature = () => loadFeatureOnce(
     "export",
-    () => import("../features/export.js?v=20260902-startup-performance-1")
+    () => import("../features/export.js?v=20260904-vida-branding-1")
 );

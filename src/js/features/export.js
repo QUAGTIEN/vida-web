@@ -71,7 +71,7 @@ window.preparePagedExportArea = (captureArea) => {
 
     const pagedArea = document.createElement('div');
     pagedArea.id = 'paged-export-area';
-    pagedArea.style.cssText = 'width:1000px;background:#f1f5f9;color:#000;font-family:Times New Roman,serif;';
+    pagedArea.style.cssText = 'width:1000px;background:#f5faff;color:#000;font-family:Times New Roman,serif;';
     captureArea.replaceWith(pagedArea);
 
     const createPage = () => {
@@ -178,16 +178,15 @@ window.previewExport = async (isPrint = false, dataToExport, monthLabel = "") =>
 
     let printHtml = `
         <div id="capture-area" style="width: 1000px; padding: 40px; background: white; color: black; font-family: 'Times New Roman', serif;">
-            <div style="position: relative; text-align: center; margin-bottom: 30px; min-height: 86px; display: flex; align-items: center; justify-content: center;">
-                <img src="assets/images/vida-logo.svg" alt="Logo VIDA" style="position: absolute; left: 0; top: 50%; transform: translateY(-50%); width: 86px; height: 86px; object-fit: contain;">
+            <div style="text-align: center; margin-bottom: 30px; display: flex; align-items: center; justify-content: center;">
                 <div>
-                    <h2 style="margin: 0; font-size: 26px; font-weight: bold; text-transform: uppercase; color: #16a34a;">TRUNG TÂM VIDA</h2>
+                    <h2 style="margin: 0; font-size: 26px; font-weight: bold; text-transform: uppercase; color: #0066d6;">TRUNG TÂM NGOẠI NGỮ VIDA</h2>
                     <h3 style="margin: 10px 0 0 0; font-size: 20px; font-weight: bold; text-transform: uppercase;">PHIẾU ĐÁNH GIÁ HỌC TẬP${monthLabel}</h3>
                 </div>
             </div>
-            <div style="margin-bottom: 30px; border: 2px solid #16a34a; padding: 15px; background: #f8fafc; border-radius: 12px; text-align: left;">
-                <p style="margin: 0 0 8px 0; font-weight: bold; font-size: 18px; color: #1e293b;">Họ tên học sinh: ${studentName.toUpperCase()}</p>
-                <p style="margin: 0; font-weight: bold; font-size: 18px; color: #1e293b;">Lớp: ${className}</p>
+            <div style="margin-bottom: 30px; border: 2px solid #0066d6; padding: 15px; background: #f5faff; border-radius: 12px; text-align: left;">
+                <p style="margin: 0 0 8px 0; font-weight: bold; font-size: 18px; color: #16324f;">Họ tên học sinh: ${studentName.toUpperCase()}</p>
+                <p style="margin: 0; font-weight: bold; font-size: 18px; color: #16324f;">Lớp: ${className}</p>
             </div>
     `;
 
@@ -201,30 +200,30 @@ window.previewExport = async (isPrint = false, dataToExport, monthLabel = "") =>
 
         printHtml += `
             <div class="khu-vuc-nhan-xet" style="page-break-inside: avoid; break-inside: avoid; margin-bottom: 30px;">
-                <table style="width: 100%; border-collapse: collapse; text-align: center; border: 2px solid #cbd5e1; table-layout: fixed; word-wrap: break-word;">
+                <table style="width: 100%; border-collapse: collapse; text-align: center; border: 2px solid #dcebfa; table-layout: fixed; word-wrap: break-word;">
                     <colgroup>
                         <col style="width: 12%;">
                         ${Array.from({ length: lessonsPerBlock }).map(() => `<col style="width: ${exportDataColWidth}%;">`).join('')}
                     </colgroup>
                     <tbody>
                         <tr>
-                            <th style="background: #e2e8f0 !important; color: #1e293b !important; border: 1px solid #cbd5e1; padding: 12px; font-weight: bold; text-transform: uppercase; -webkit-print-color-adjust: exact; print-color-adjust: exact;">THÁNG</th>
+                            <th style="background: #eaf4ff !important; color: #16324f !important; border: 1px solid #dcebfa; padding: 12px; font-weight: bold; text-transform: uppercase; -webkit-print-color-adjust: exact; print-color-adjust: exact;">THÁNG</th>
                             ${block.map(r => {
             let m = parseInt(r.date.split('/')[1]);
-            return `<th style="border: 1px solid #cbd5e1; padding: 12px; background-color: #f1f5f9 !important; color: #1e293b !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; font-weight: bold; font-size: 18px;">THÁNG ${m}</th>`;
+            return `<th style="border: 1px solid #dcebfa; padding: 12px; background-color: #f5faff !important; color: #16324f !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; font-weight: bold; font-size: 18px;">THÁNG ${m}</th>`;
         }).join('')}${getInvisibleCellsExport()}
                         </tr>
                         <tr>
-                            <th style="background: #e2e8f0 !important; color: #1e293b !important; border: 1px solid #cbd5e1; padding: 12px; font-weight: bold; text-transform: uppercase; -webkit-print-color-adjust: exact; print-color-adjust: exact;">NGÀY</th>
-                            ${block.map(r => `<td style="border: 1px solid #cbd5e1; padding: 12px; font-weight: bold; font-size: 16px; color: #111827; text-align: center; vertical-align: middle;">${r.date}</td>`).join('')}${getInvisibleCellsExport()}
+                            <th style="background: #eaf4ff !important; color: #16324f !important; border: 1px solid #dcebfa; padding: 12px; font-weight: bold; text-transform: uppercase; -webkit-print-color-adjust: exact; print-color-adjust: exact;">NGÀY</th>
+                            ${block.map(r => `<td style="border: 1px solid #dcebfa; padding: 12px; font-weight: bold; font-size: 16px; color: #16324f; text-align: center; vertical-align: middle;">${r.date}</td>`).join('')}${getInvisibleCellsExport()}
                         </tr>
                         <tr>
-                            <th style="background: #e2e8f0 !important; color: #1e293b !important; border: 1px solid #cbd5e1; padding: 12px; font-weight: bold; text-transform: uppercase; -webkit-print-color-adjust: exact; print-color-adjust: exact;">NỘI<br>DUNG</th>
-                            ${block.map(r => `<td style="border: 1px solid #cbd5e1; padding: 12px; font-size: 16px; text-align: center; vertical-align: middle;">${(r.content || '').replace(/tbc:|tbm:/gi, '').trim()}</td>`).join('')}${getInvisibleCellsExport()}
+                            <th style="background: #eaf4ff !important; color: #16324f !important; border: 1px solid #dcebfa; padding: 12px; font-weight: bold; text-transform: uppercase; -webkit-print-color-adjust: exact; print-color-adjust: exact;">NỘI<br>DUNG</th>
+                            ${block.map(r => `<td style="border: 1px solid #dcebfa; padding: 12px; font-size: 16px; text-align: center; vertical-align: middle;">${(r.content || '').replace(/tbc:|tbm:/gi, '').trim()}</td>`).join('')}${getInvisibleCellsExport()}
                         </tr>
                         <tr>
-                            <th style="background: #e2e8f0 !important; color: #1e293b !important; border: 1px solid #cbd5e1; padding: 12px; font-weight: bold; text-transform: uppercase; -webkit-print-color-adjust: exact; print-color-adjust: exact;">NHẬN<br>XÉT</th>
-                            ${block.map(r => `<td class="eval-comment-cell" style="border: 1px solid #cbd5e1; padding: 12px; font-size: 16px; text-align: center; vertical-align: middle;">${window.renderCommentHtml(r.comment)}</td>`).join('')}${getInvisibleCellsExport()}
+                            <th style="background: #eaf4ff !important; color: #16324f !important; border: 1px solid #dcebfa; padding: 12px; font-weight: bold; text-transform: uppercase; -webkit-print-color-adjust: exact; print-color-adjust: exact;">NHẬN<br>XÉT</th>
+                            ${block.map(r => `<td class="eval-comment-cell" style="border: 1px solid #dcebfa; padding: 12px; font-size: 16px; text-align: center; vertical-align: middle;">${window.renderCommentHtml(r.comment)}</td>`).join('')}${getInvisibleCellsExport()}
                         </tr>
                     </tbody>
                 </table>
@@ -233,7 +232,7 @@ window.previewExport = async (isPrint = false, dataToExport, monthLabel = "") =>
     });
 
     printHtml += `
-            <div style="text-align: center; margin-top: 40px; font-style: italic; color: #64748b; font-size: 16px;">
+            <div style="text-align: center; margin-top: 40px; font-style: italic; color: #61758a; font-size: 16px;">
                 <p>Hệ thống Đánh giá - VIDA (Ngày in: ${new Date().toLocaleDateString('vi-VN')})</p>
             </div>
         </div>
@@ -296,7 +295,7 @@ window.previewExport = async (isPrint = false, dataToExport, monthLabel = "") =>
             window.currentPreviewMode = "pdf";
             const pic = document.getElementById('previewImageContainer');
             if (pic) {
-                pic.innerHTML = `<div style="background:#fff;border-radius:12px;padding:22px;text-align:center;color:#334155;"><i class="fas fa-file-pdf" style="font-size:42px;color:#dc2626;margin-bottom:12px;"></i><div style="font-weight:900;font-size:1.05rem;">PDF đã được tạo</div><div style="font-size:0.9rem;color:#64748b;margin-top:6px;">Bạn có thể tải file hoặc chia sẻ bằng nút bên dưới.</div></div>`;
+                pic.innerHTML = `<div style="background:#fff;border-radius:12px;padding:22px;text-align:center;color:#16324f;"><i class="fas fa-file-pdf" style="font-size:42px;color:#dc2626;margin-bottom:12px;"></i><div style="font-weight:900;font-size:1.05rem;">PDF đã được tạo</div><div style="font-size:0.9rem;color:#61758a;margin-top:6px;">Bạn có thể tải file hoặc chia sẻ bằng nút bên dưới.</div></div>`;
             }
             window.updatePreviewModalActions?.("pdf", canvases.length);
             const ipm = document.getElementById('imagePreviewModal');
@@ -313,7 +312,7 @@ window.previewExport = async (isPrint = false, dataToExport, monthLabel = "") =>
             img.src = dataUrl;
             img.style.maxWidth = "100%";
             img.style.borderRadius = "8px";
-            img.style.boxShadow = "0 4px 15px rgba(0,0,0,0.2)";
+            img.style.boxShadow = "0 4px 15px rgba(0,82,184,0.08)";
             // Nhấn giữ trên mobile để lưu/copy
             img.style.webkitTouchCallout = 'default';
             img.style.userSelect = 'auto';
@@ -327,7 +326,7 @@ window.previewExport = async (isPrint = false, dataToExport, monthLabel = "") =>
                 const isMobile = /Mobi|Android|iPhone|iPad/i.test(navigator.userAgent);
                 if (isMobile) {
                     const hint = document.createElement('p');
-                    hint.style.cssText = 'margin-top:12px; color:#64748b; font-size:0.88rem; text-align:center; font-style:italic;';
+                    hint.style.cssText = 'margin-top:12px; color:#61758a; font-size:0.88rem; text-align:center; font-style:italic;';
                     hint.innerHTML = '📌 Nhấn giữ vào ảnh 2 giây → chọn <b>Lưu ảnh</b> hoặc <b>Sao chép</b> để gửi Zalo';
                     pic.appendChild(hint);
                 }
@@ -338,13 +337,13 @@ window.previewExport = async (isPrint = false, dataToExport, monthLabel = "") =>
                 pic.innerHTML = '';
                 canvases.forEach((pageCanvas, index) => {
                     const pageLabel = document.createElement('div');
-                    pageLabel.style.cssText = 'font-weight:800;color:#334155;margin:8px 0 10px;text-align:left;';
+                    pageLabel.style.cssText = 'font-weight:800;color:#16324f;margin:8px 0 10px;text-align:left;';
                     pageLabel.textContent = `Ảnh ${index + 1}/${canvases.length}`;
                     const pageImg = document.createElement('img');
                     pageImg.src = pageCanvas.toDataURL("image/png");
                     pageImg.style.maxWidth = "100%";
                     pageImg.style.borderRadius = "8px";
-                    pageImg.style.boxShadow = "0 4px 15px rgba(0,0,0,0.2)";
+                    pageImg.style.boxShadow = "0 4px 15px rgba(0,82,184,0.08)";
                     pageImg.style.marginBottom = "18px";
                     pageImg.style.webkitTouchCallout = 'default';
                     pageImg.style.userSelect = 'auto';
